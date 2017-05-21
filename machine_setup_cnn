@@ -1,0 +1,13 @@
+'''machine set up for CNN image classification'''
+
+Using Pillow and OpenCV for image manipulation.
+http://python-guide-pt-br.readthedocs.io/en/latest/scenarios/imaging/
+
+Support packages for Pillow
+https://pillow.readthedocs.io/en/3.0.0/installation.html
+
+# for PNG file access:
+conda install zlib
+
+pip install littlecms
+pip install Pillow

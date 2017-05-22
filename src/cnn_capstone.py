@@ -164,13 +164,15 @@ def cnn_model(nb_filters, kernel_size, batch_size, nb_epoch, X_test, Y_test, X_t
     model.fit(X_train, Y_train, batch_size=batch_size, epochs=nb_epoch,
               verbose=1, validation_data=(X_test, Y_test))
     score = model.evaluate(X_test, Y_test, verbose=0)
+    ypred = model.predict(X_test)
     print('Test score:', score[0])
     print('Test accuracy:', score[1])
+    return ypred
 
 if __name__ == '__main__':
     # filelist = my_list_dir('../data_images/')
     # clean_file_paths('../data_images/')
-    batch_size = 8
+    batch_size = 5
     # number of flowers in dataset
     nb_classes = 11
     #number of repeats of entire model
@@ -194,4 +196,5 @@ if __name__ == '__main__':
     X_train, X_test = image_rgb_unit_scale(X_train, X_test)
     print_X_shapes(X_train, X_test)
     Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
-    cnn_model(nb_filters, kernel_size, batch_size, nb_epoch, X_test, Y_test, X_train, Y_train)
+    ypred = cnn_model(nb_filters, kernel_size, batch_size, nb_epoch, X_test, Y_test, X_train, Y_train)
+    # ypred = cnn_model(nb_filters, kernel_size, batch_size, nb_epoch, X_test, Y_test, X_train, Y_train)

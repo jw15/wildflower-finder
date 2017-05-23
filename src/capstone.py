@@ -76,4 +76,6 @@ A1252
 
 '''
 ***predict_proba to predict whether plant is in one category vs all other plants. returns tuple. can give you probability plant is in x category. then can return category with max probability.***
+
+Is there some way to use verbal descriptions of flower appearances in the neural net?
 '''

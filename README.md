@@ -1,4 +1,4 @@
-## Image Classification of Wildflowers in Colorado’s Front Range
+# Image Classification of Wildflowers in Colorado’s Front Range
 
 This project uses convolutional neural nets to classify images of wildflowers found in Colorado's Front Range.
 

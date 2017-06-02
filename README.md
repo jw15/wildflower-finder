@@ -41,4 +41,6 @@ Jaderberg, M., Simonyan, K., Zisserman, A., & Kavukcuoglu, K. (2016). Spatial tr
 Simonyan, K., & Zisserman, A. (2015). Very deep convolutional networks for large­scale image recognition. Published as conference paper at ICLR. [(link)](https://arxiv.org/pdf/1409.1556.pdf)
 Package [here](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
 
+### Resources for Possible Future Work
+
 Socher, R., Huval, B., Bhat, B., Manning, C. D., & Ng, A. Y. (2014). Convolutional­ recursive deep learning for 3D object classification. [(link)](http://bit.ly/2rQHJHV)

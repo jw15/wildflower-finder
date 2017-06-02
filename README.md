@@ -2,7 +2,6 @@
 
 This project uses convolutional neural nets to classify images of wildflowers found in Colorado's Front Range.
 
-## Project Proposal
 ### Motivation
 
 Accurate identification of wildflowers is a task with relevance to both recreation and environmental management. Currently, there are several mobile apps designed to identify flowers using images; however, none of these apps are particularly accurate for identification of flowers in North America, probably because they were trained primarily on species prevalent in Europe. It seems reasonable that a model trained primarily on images of flora prevalent in the Front Range of Colorado would be more likely to correctly identify images of local wildflowers than global apps trained on flora located primarily in other regions of the world. The primary aim of this project is to develop a model for classification of wildflowers native to the Front Range in Colorado. A secondary aim is to develop a model that, in future, could take advantage of metadata provided by users of a mobile app while photographing wildflowers in order to provide more accurate classifications.

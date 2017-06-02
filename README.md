@@ -15,9 +15,9 @@ To date, I have successfully trained a very basic convolutional neural net using
 
 I also have several hundred additional photos representing ‘challenging cases’ (i.e., photos that are less well focused, are side views, or that feature a less clear image of the flower) and flower classes (7­10 species) that currently have insufficient numbers of images to include in the model. I plan to collect many more images over the next few weeks. There is currently some class imbalance in the data that I hope to correct by collecting more images; I also plan to include more of those underrepresented species in the model. Table 1 contains a summary of current image data.
 
-[Figure 1](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
+![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
 
-[Table 1](https://cloud.githubusercontent.com/assets/17363251/26746372/55c2b064-47ac-11e7-8585-e48d41d8e018.png)
+![](https://cloud.githubusercontent.com/assets/17363251/26746372/55c2b064-47ac-11e7-8585-e48d41d8e018.png)
 
 ### Data Project
 

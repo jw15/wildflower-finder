@@ -34,11 +34,11 @@ I also have several hundred additional photos representing ‘challenging cases�
 
 ### References
 
-[Dodge, S., & Karam, L. (2016). Understanding how image quality affects deep neural networks.](https://arxiv.org/pdf/1604.04004.pdf)
+Dodge, S., & Karam, L. (2016). Understanding how image quality affects deep neural networks.[link](https://arxiv.org/pdf/1604.04004.pdf)
 
-[Jaderberg, M., Simonyan, K., Zisserman, A., & Kavukcuoglu, K. (2016). Spatial transformer networks.](https://arxiv.org/pdf/1506.02025.pdf)
+Jaderberg, M., Simonyan, K., Zisserman, A., & Kavukcuoglu, K. (2016). Spatial transformer networks.[link](https://arxiv.org/pdf/1506.02025.pdf)
 
-[Simonyan, K., & Zisserman, A. (2015). Very deep convolutional networks for large­scale image recognition. Published as conference paper at ICLR.](https://arxiv.org/pdf/1409.1556.pdf)
+Simonyan, K., & Zisserman, A. (2015). Very deep convolutional networks for large­scale image recognition. Published as conference paper at ICLR.[link](https://arxiv.org/pdf/1409.1556.pdf)
 Package [here](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
 
-[Socher, R., Huval, B., Bhat, B., Manning, C. D., & Ng, A. Y. (2014). Convolutional­ recursive deep learning for 3D object classification.](http://bit.ly/2rQHJHV)
+Socher, R., Huval, B., Bhat, B., Manning, C. D., & Ng, A. Y. (2014). Convolutional­ recursive deep learning for 3D object classification.[link](http://bit.ly/2rQHJHV)

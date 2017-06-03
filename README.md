@@ -39,4 +39,4 @@ Dodge, S., & Karam, L. (2016). Understanding how image quality affects deep neur
 Jaderberg, M., Simonyan, K., Zisserman, A., & Kavukcuoglu, K. (2016). Spatial transformer networks. [(https://arxiv.org/pdf/1506.02025.pdf)](https://arxiv.org/pdf/1506.02025.pdf)
 
 Simonyan, K., & Zisserman, A. (2015). Very deep convolutional networks for large­scale image recognition. Published as conference paper at ICLR. [(https://arxiv.org/pdf/1409.1556.pdf)](https://arxiv.org/pdf/1409.1556.pdf)
-Package: [https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
+Package: [(https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)

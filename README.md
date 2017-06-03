@@ -10,9 +10,9 @@ Accurate identification of wildflowers is a task with relevance to both recreati
 
 ### Data
 
-Initially, I planned to collect images via web scraping. However, my preliminary efforts suggested that web scraping would be very time intensive as most websites with images of wildflowers have only a few images of each species. Additionally, when considering ways to improve upon existing flower identification apps, it seemed to me that having photographs tagged with date/time and GPS location could be potentially useful. In the long term, historical GPS and date/time information could be used to improve prediction of flower species; each species is more common in particular areas/elevations and at particular times of the year. More immediately, GPS information could permit clustering of photos by location (perhaps even clustering photos of one specific plant together). For all these reasons, I chose to collect photographs of local wildflowers using my iPhone, a point and shoot camera, and iPhones of friends/family.
+Initially, I planned to collect images via web scraping. However, my preliminary efforts suggested that web scraping would be very time intensive as most websites with images of wildflowers have only a few images of each species. Additionally, when considering ways to improve upon existing flower identification apps, it seemed to me that having photographs tagged with date/time and GPS location could be potentially useful. In the long term, historical GPS and date/time information could be used to improve prediction of flower species; each species is more common in particular areas/elevations and at particular times of the year. More immediately, GPS information could permit clustering of photos by location (perhaps even clustering photos of one specific plant together). For all these reasons, I chose to collect photographs of local wildflowers using my iPhone and a point and shoot camera. I also gathered mobile phone photos from friends and family.
 
-To date, I have successfully trained a very basic convolutional neural net using Keras (with 88% accuracy) on 651 categorized and in­-focus photos representing 11 local wildflower species. The misclassified images suggest that I need more photos of one particular species (i.e., penstemon virens) and may need to run a model using higher resolution images (Fig. 1).
+To date, I have successfully trained a very basic convolutional neural net using Keras (with 88% accuracy) on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
 
 ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
 
@@ -24,13 +24,14 @@ I also have several hundred additional photos representing ‘challenging cases�
 2. Resize and normalize images
 3. Apply convolutional neural network for image classification
     * Current CNN model using images resized to 120 x 90 correctly classifies approximately 9/10 of the images.
+        * Next steps: crop images to square; randomly generate dataset with flipped, rotated images to feed into training model
     * Experiment with training models using both high and low resolution images. Existing research suggests that high resolution images may be helpful for identifying some challenging features in networks, although training on lower resolution images is likely to produce a model that is better at classifying other less­ than ­perfect images (e.g., Dodge & Karam, 2016). Also include images from cameras other than my iPhone 6.
     * Experiment with existing deep learning models (e.g., run my model on top of VGG16 16­layer network model for Keras (Simoyan & Zisserman, 2015).
     * Experiment with adding spatial transformer to first layer of network (e.g., Jaderberg et al., 2016)
     * Possibly experiment with using video or multiple photos of a single flower to produce 3D images and train a neural net on those.
 4. Utilize AWS (EC2) to complete analyses, store images on AWS (S3)
-5. Build a web app to serve as precursor to a mobile app. Web app will accept images of wildflowers and provide classification outcome, information about matched flower species, image of matched species.
-6. Tools: Python (Numpy, Pandas, Keras, Theano, OpenCV, Scikit­Learn, SciKit­Image, Flask, possibly BeautifulSoup), AWS (EC2, S3), probably Spark
+5. Build a web app to serve as precursor to a mobile app. Web app will accept images of wildflowers and provide classification outcome and predicted probability, information about matched flower species, image of matched species.
+6. Tools: Python (Numpy, Pandas, Keras, Theano, OpenCV, Scikit­-Learn, SciKit-­Image, Flask, possibly BeautifulSoup), AWS (EC2, S3), probably Spark, ImageMagick
 
 ### References
 

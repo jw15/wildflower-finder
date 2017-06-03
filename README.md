@@ -20,7 +20,7 @@ I also have several hundred additional photos representing ‘challenging cases�
 
 ### Data Project
 
-1. Collect photographs of Colorado wildflowers with my iPhone, point and shoot camera, and others’ iPhones. Possibly supplement them with images scraped from websites, such as Bing, easterncoloradowildflowers.com, etc.
+1. Collect photographs of Colorado wildflowers with my iPhone, point and shoot camera, and others’ iPhones. Possibly supplement them with images scraped from websites, such as Bing, [easterncoloradowildflowers.com](www.easterncoloradowildflowers.com), etc.
 2. Resize and normalize images
 3. Apply convolutional neural network for image classification
     * Current CNN model using images resized to 120 x 90 correctly classifies approximately 9/10 of the images.

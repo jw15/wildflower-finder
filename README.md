@@ -14,9 +14,9 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 To date, I have successfully trained a very basic convolutional neural net using Keras (with 88% accuracy) on 651 categorized and in­-focus photos representing 11 local wildflower species. The misclassified images suggest that I need more photos of one particular species (i.e., penstemon virens) and may need to run a model using higher resolution images (Fig. 1).
 
-I also have several hundred additional photos representing ‘challenging cases’ (i.e., photos that are less well focused, are side views, or that feature a less clear image of the flower) and flower classes (10 species) that currently have insufficient numbers of images to include in the model. I plan to collect many more images over the next few weeks. There is  some class imbalance in the data that I hope to correct by collecting more images; I also plan to include more of those underrepresented species in the model.
-
 ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
+
+I also have several hundred additional photos representing ‘challenging cases’ (i.e., photos that are less well focused, are side views, or that feature a less clear image of the flower) and flower classes (10 species) that currently have insufficient numbers of images to include in the model. I plan to collect many more images over the next few weeks. There is  some class imbalance in the data that I hope to correct by collecting more images; I also plan to include more of those underrepresented species in the model.
 
 ### Data Project
 

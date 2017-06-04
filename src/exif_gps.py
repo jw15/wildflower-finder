@@ -9,14 +9,17 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import folium
 from itertools import combinations
+from sklearn.preprocessing import LabelEncoder
+# from multi_column_encoder import MultiColumnLabelEncoder
 
 # from https://gist.github.com/snakeye/fdc372dbf11370fe29eb
 # based on https://gist.github.com/erans/983821
 
+pd.options.display.max_rows = 400
+
 def _get_if_exist(data, key):
     if key in data:
         return data[key]
-
     return None
 
 def _convert_to_degrees(value):
@@ -82,22 +85,62 @@ def gps_to_array_map(img_root):
 
 def plot_img_locations(location_arr):
     flower_map = folium.Map(location = [39.74675277777778, -105.2436], zoom_start = 10, tiles="Stamen Terrain")
+    # for gps label in zip(df['gps'], df['label']):
+    #     for label in df['label'].unique():
     for i in range(len(location_arr)):
         lat = location_arr[i][1]
         lon = location_arr[i][2]
         category = location_arr[i][3]
-        folium.Marker(location = [lat, lon], popup = category).add_to(flower_map)
-    return flower_map.save("flower_map.html")
+        folium.CircleMarker(location = [lat, lon],radius = 5, popup = category,
+                    fill_color='#ff5050', ).add_to(flower_map)
+        # folium.Marker(location = [lat, lon], popup = category).add_to(flower_map)
+    return flower_map.save("../maps/flower_map.html")
 
 def make_plant_instances(location_arr):
     '''
     Groups individual images into plant instances (i.e., multiple images were taken of the same plant) based on GPS location.
+    Input: numpy array containing filename, latitude, longitude, plant species label
+    Output: pandas dataframe containing filename, lat (latitude), lon (longitude), gps (tuple of lat, lon), and gps_instances (numerically encoded plant instances based on matching gps locations)
     '''
-    results = find_rows(location_arr))
-    for pair in results:
-        location_arr[location_arr['']]
-    for i in range(len(location_arr)):
-        coords = ((location_arr[i][1], location_arr[i][2]))
+    location_df = pd.DataFrame({'filename': location_arr[:,0], 'lat': location_arr[:,1], 'lon': location_arr[:,2], 'label': location_arr[:,3]})
+    location_df['gps'] = list(zip(location_df.lat, location_df.lon))
+    le = LabelEncoder()
+    location_df['gps_instances'] = le.fit_transform(location_df['gps'])
+    return location_df
+
+def check_equal(lst):
+    return lst.count(lst[0]) == len(lst)
+
+def check_all_same_species(location_df):
+    result_list = []
+    one_longs = []
+    all_same = True
+    for i in range(location_df['gps_instances'].min(), location_df['gps_instances'].max()):
+        subset = location_df[location_df['gps_instances'] == i]
+        same_species = check_equal(list(subset['label']))
+        if same_species == False:
+            result_list.append('gps_instance {} has more than one species.'.format(i))
+            all_same = False
+        # else:
+        #     subset_len.append((i, len(subset)))
+    total_instances = location_df['gps_instances'].nunique()
+    min_instances = location_df['gps_instances'].value_counts().min()
+    max_instances = location_df['gps_instances'].value_counts().max()
+    # if len(location_df[location_df['gps_instances']].value_counts()) == 1:
+    #     one_longs.append(df['gps_instances'])
+    # instances_with_one_img =  set(one_longs)
+    # proportion_with_one_img = instances_with_one_img / total_instances
+    print('GPS Instances (unique plants): {}\n Min images per plant: {}\n Max images per plant: {}'.format(total_instances, min_instances, max_instances))
+    if all_same == True:
+        print('All instances contain only one species. Hooray!')
+    else:
+        print(result_list)
+    return all_same
+    # results = find_rows(location_arr)
+    # for pair in results:
+    #     location_arr[location_arr['']]
+    # for i in range(len(location_arr)):
+    #     coords = ((location_arr[i][1], location_arr[i][2]))
 
 def find_rows(location_arr):
     iterable = zip(location_arr[:,0], location_arr[:,1])

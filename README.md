@@ -1,4 +1,4 @@
-# Colorado Wildflower Classification with Convolutional Neural Nets
+# Colorado Wildflower Classification from Mobile Phone Images
 
 ![](https://cloud.githubusercontent.com/assets/17363251/26757751/d79740ea-4884-11e7-8c55-51cadfe08fb4.jpg)
 <sup>Images &copy; Jennifer Waller 2017</sup>

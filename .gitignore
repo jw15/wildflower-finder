@@ -10,7 +10,12 @@ capstone_proposal.md
 instructor_meeting_notes.txt
 Jennifer_Waller_capstone_proposal.pdf
 vegetation_eda.ipynb
+imgs_for_readme
+imgs_for_readme_rsz
 
+# Old code not using
+src_notusing
+imagemagick-identify-parser
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,6 +1,6 @@
 # Hi, Frank!
 
-My project readme ([https://github.com/jw15/capstone/blob/master/README.md](https://github.com/jw15/capstone/blob/master/README.md)) is pretty long and I figured you wouldn't want to wade through all of it. If you do, you can see my thrilling (joking!) project website with rather sparse looking zoomable plot of image GPS data (also here: [http://ec2-34-226-23-205.compute-1.amazonaws.com:8105/#](http://ec2-34-226-23-205.compute-1.amazonaws.com:8105/#))
+My project readme ([https://github.com/jw15/capstone/blob/master/README.md](https://github.com/jw15/capstone/blob/master/README.md)) is a conglomeration of my proposal and some updates and I figured you wouldn't want to wade through all of it. (Although... it does feature my thrilling (joking!) project website with rather sparse looking zoomable plot of image GPS data (also here: [http://ec2-34-226-23-205.compute-1.amazonaws.com:8105/#](http://ec2-34-226-23-205.compute-1.amazonaws.com:8105/#)))
 
 ### Aims
 
@@ -13,7 +13,7 @@ A summary/review of LifeCLEF 2015 entries/strategy: ([https://github.com/jw15/ca
 
 There's an annual international competition for plant recognition based on images collected in the field from mobile devices called LifeCLEF ([http://www.imageclef.org/lifeclef/2017/plant](http://www.imageclef.org/lifeclef/2017/plant)). It's integrated with the Pl@ntNet app development out of France. Lots of resources from that, including a giant dataset for the 2017 competition (which just ended) that I downloaded. I think a lot of it is photos collected from the Pl@ntNet app, which is potentially pretty useful (although most of the data is from plants native to Europe).
 
-### Method similar to my project:
+### Method similar to my project
 
 LifeCLEF 2016 entry built on ResNet: ([https://github.com/jw15/capstone/blob/master/references/plant_recognition/Sulc_LifeCLEF16_slides.pdf](https://github.com/jw15/capstone/blob/master/references/plant_recognition/Sulc_LifeCLEF16_slides.pdf))
 

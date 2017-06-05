@@ -3,8 +3,6 @@
 ![](https://cloud.githubusercontent.com/assets/17363251/26757751/d79740ea-4884-11e7-8c55-51cadfe08fb4.jpg)
 <sup>Images &copy; Jennifer Waller 2017</sup>
 
-### Summary
-
 This project uses convolutional neural nets to classify images of wildflowers found in Colorado's Front Range.
 
 ### Motivation

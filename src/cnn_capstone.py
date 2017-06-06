@@ -20,6 +20,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
+from keras.applications import ResNet50
 from keras import backend as K
 
 # def load_data(directory_path):
@@ -39,20 +40,20 @@ from keras import backend as K
 #         new_name = name2.replace('-', '_')
 #         os.replace(filename, new_name)
 
-def my_image_resize(basewidth, root, resized_root):
-    files = [f for f in listdir(root) if isfile(join(root, f))]
-    resized_files = [f for f in listdir(resized_root) if isfile(join(resized_root, f))]
-    # os.mkdir('../resized_images')
-    # for path, subdirs, files in os.walk(root):
-    for name in files:
-        if not (name.startswith('.')):
-            if not ('{}_resized.png'.format(name[:-4])) in resized_files:
-            # if name != 'cnn_capstone.py':
-                img = Image.open('{}{}'.format(root, name))
-                wpercent = (basewidth / float(img.size[0]))
-                hsize = int((float(img.size[1]) * float(wpercent)))
-                img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-                img.save('../resized_images/{}_resized.png'.format(name[:-4]))
+# def my_image_resize(basewidth, root, resized_root):
+#     files = [f for f in listdir(root) if isfile(join(root, f))]
+#     resized_files = [f for f in listdir(resized_root) if isfile(join(resized_root, f))]
+#     # os.mkdir('../resized_images')
+#     # for path, subdirs, files in os.walk(root):
+#     for name in files:
+#         if not (name.startswith('.')):
+#             if not ('{}_resized.png'.format(name[:-4])) in resized_files:
+#             # if name != 'cnn_capstone.py':
+#                 img = Image.open('{}{}'.format(root, name))
+#                 wpercent = (basewidth / float(img.size[0]))
+#                 hsize = int((float(img.size[1]) * float(wpercent)))
+#                 img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+#                 img.save('../resized_images/{}_resized.png'.format(name[:-4]))
 
 def image_categories(resized_root):
     ''' A dictionary that stores the image path name and flower species for each image
@@ -169,6 +170,36 @@ def cnn_model(nb_filters, kernel_size, batch_size, nb_epoch, X_test, Y_test, X_t
     print('Test accuracy:', score[1])
     return ypred
 
+def cnn_model_resnet50(nb_filters, kernel_size, batch_size, nb_epoch, X_test, Y_test, X_train, Y_train, input_shape=(224,224,3)):
+    '''
+    Builds and runs keras cnn on top of pre-trained ResNet50. Data are generated from X_train.
+    '''
+    base_model = applications.ResNet50(weights='imagenet', include_top=False, input_shape=input_shape)
+
+    add_model = Sequential()
+    add_model.add(Flatten(input_shape=base_model.output_shape[1:]))
+    add_model.add(Dense(512, activation='relu'))
+    # model.add(Activation('relu'))
+    add_model.add(Dropout(0.5))
+    model.add(Dense(nb_classes, activation='softmax'))
+    # model.add(Activation('softmax'))
+
+    model = Model(inputs=base_model.input, outputs=add_model(base_model.output))
+
+    model.compile(loss='categorical_crossentropy',
+                  optimizer='adadelta',
+                  metrics=['accuracy'])
+    model.summary()
+
+
+    model.fit(X_train, Y_train, batch_size=batch_size, epochs=nb_epoch,
+              verbose=1, validation_data=(X_test, Y_test))
+    score = model.evaluate(X_test, Y_test, verbose=0)
+    ypred = model.predict(X_test)
+    print('Test score:', score[0])
+    print('Test accuracy:', score[1])
+    return ypred
+
 if __name__ == '__main__':
     # filelist = my_list_dir('../data_images/')
     # clean_file_paths('../data_images/')
@@ -179,7 +210,7 @@ if __name__ == '__main__':
     nb_epoch = 20
 
     # input image dimensions
-    img_rows, img_cols = 120, 90
+    input_shape = (120, 90
     # number of convolutional filters to use
     nb_filters = 32
     # size of pooling area for max pooling

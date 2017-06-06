@@ -23,9 +23,10 @@ I also have several hundred additional photos representing ‘challenging cases�
 2. Resize and normalize images
 3. Apply convolutional neural network for image classification
     * Current CNN model using images resized to 120 x 90 correctly classifies approximately 9/10 of the images.
-        * Next steps: crop images to square; randomly generate dataset with flipped, rotated images to feed into training model
+        * Next steps: crop images to square; randomly generate dataset with flipped, rotate/mirror images to feed into training model
     * Experiment with training models using both high and low resolution images. Existing research suggests that high resolution images may be helpful for identifying some challenging features in networks, although training on lower resolution images is likely to produce a model that is better at classifying other less­ than ­perfect images (e.g., Dodge & Karam, 2016). Also include images from cameras other than my iPhone 6.
-    * Experiment with existing deep learning models (e.g., run my model on top of VGG16 16­layer network model for Keras (Simoyan & Zisserman, 2015).
+    * Experiment with existing deep learning models (e.g., run my model on top of VGG16 16­layer network model for Keras (Simoyan & Zisserman, 2015) - or better, try ResNet models).
+    * Try bagging of multiple deep networks.
     * Experiment with adding spatial transformer to first layer of network (e.g., Jaderberg et al., 2016)
     * Possibly experiment with using video or multiple photos of a single flower to produce 3D images and train a neural net on those.
 4. Utilize AWS (EC2) to complete analyses, store images on AWS (S3)

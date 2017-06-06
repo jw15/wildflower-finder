@@ -14,11 +14,15 @@ def my_image_rename(img_root):
     for path in pathiter:
         newname = path.replace(" ", "")
         newname = path.replace("-", "_")
+        newname = path.replace(" ", "")
         # newname = path.replace("arnica_jpg", "sand_lily")
         if newname != path:
             os.rename(path, newname)
 
 def my_image_resize(basewidth, img_root, target_root):
+    '''
+    Input: desired basewidth for resized images, path for folder containing original images, name for new path for images
+    '''
     files = [f for f in listdir(img_root) if isfile(join(img_root, f))]
     os.mkdir('{}'.format(target_root))
     resized_files = [f for f in listdir(target_root) if isfile(join(target_root, f))]

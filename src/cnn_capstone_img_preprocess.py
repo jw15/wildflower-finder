@@ -19,6 +19,7 @@ from skimage import io
 from skimage.transform import resize
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+from keras.utils import np_utils
 
 from img_resize import my_image_resize
 from img_resize import my_image_rename
@@ -57,7 +58,6 @@ def _center_image(img, new_size=[256, 256]):
     col_buffer = (new_size[1] - img.shape[1]) // 2
     centered = np.zeros(new_size + [img.shape[2]], dtype=np.uint8)
     centered[row_buffer:(row_buffer + img.shape[0]), col_buffer:(col_buffer + img.shape[1])] = img
-    print(centered)
     return centered
 
 def resize_image_to_square(img, new_size=((256, 256))):
@@ -70,7 +70,7 @@ def resize_image_to_square(img, new_size=((256, 256))):
         tile_size = (int(img.shape[1]*new_size[1]/img.shape[0]),new_size[1])
     else:
         tile_size = (new_size[1], int(img.shape[0]*new_size[1]/img.shape[1]))
-    print(cv2.resize(img, dsize=tile_size))
+    # print(cv2.resize(img, dsize=tile_size))
     return _center_image(cv2.resize(img, dsize=tile_size), new_size)
 
 def crop_image(img, crop_size):
@@ -94,25 +94,26 @@ def process_images(file_paths_list, resize_new_size=[256,256], crop_size=[224, 2
         img = cv2.imread(file_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = resize_image_to_square(img, new_size=resize_new_size)
-        print(img)
-
         img = crop_image(img, crop_size=crop_size)
         x.append(img)
     x = np.array(x)
     return x
 
-def train_validation_split(saved_arr):
+def train_validation_split(saved_arr='flower_subset_224.npz'):
     '''
     Splits train and validation data and images. (Will also load test images, names from saved array).
     Input: saved numpy array, files/columns in that array
     Output: Train/validation data (e.g., X_train, X_test, y_train, y_test), test images, test image names (file names minus '.png')
     '''
-    data = np.load('flower_subset_224.npz')
+    data = np.load(saved_arr)
 
     x = data.files[0]
     x = data[x]
     y = data.files[1]
     y = data[y]
+    yp = np.array(y)
+    number = LabelEncoder()
+    y = number.fit_transform(y.astype('str'))
     X_train, X_test, y_train, y_test = train_test_split(x, y)
 
     print('X_train: {} \ny_train: {} \nX_test: {} \ny_test: {}'.format(X_train.shape, y_train.shape, X_test.shape, y_test.shape))
@@ -158,9 +159,6 @@ if __name__ == '__main__':
     image_array = process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224])
 
     np.savez('flower_subset_224.npz', image_array, y)
-
-
-
     X_train, X_test, y_train, y_test = train_validation_split('flower_subset_224.npz')
     nb_classes = 13
     Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)

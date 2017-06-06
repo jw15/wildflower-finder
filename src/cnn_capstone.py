@@ -14,7 +14,6 @@ from PIL import Image
 from skimage import io
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-np.random.seed(1337)  # for reproducibility
 
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
@@ -22,6 +21,8 @@ from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
 from keras.applications import ResNet50
 from keras import backend as K
+
+np.random.seed(1337)  # for reproducibility
 
 # def load_data(directory_path):
     # for filename in os.listdir(directory_path):

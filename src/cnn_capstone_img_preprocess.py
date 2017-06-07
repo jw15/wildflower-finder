@@ -43,8 +43,8 @@ def image_categories(img_root):
         #     if name != 'cnn_capstone.py':
             img_path = '{}{}'.format(img_root, name)
             # img_path = os.path.join(path, name)
-            img_cat = re.sub("\d+", "", name).rstrip('_resized.png')
-            img_cat = img_cat[:-3]
+            img_cat = re.sub("\d+", "", name).rstrip('_.jpg')
+            # img_cat = img_cat[:-3]
             flower_dict[img_path] = img_cat
     return flower_dict
 
@@ -99,7 +99,7 @@ def process_images(file_paths_list, resize_new_size=[256,256], crop_size=[224, 2
     x = np.array(x)
     return x
 
-def train_validation_split(saved_arr='flower_subset_224.npz'):
+def train_validation_split(saved_arr='flowers_224.npz'):
     '''
     Splits train and validation data and images. (Will also load test images, names from saved array).
     Input: saved numpy array, files/columns in that array
@@ -147,7 +147,7 @@ def convert_to_binary_class_matrices(y_train, y_test, nb_classes):
     return Y_train, Y_test
 
 if __name__ == '__main__':
-    img_root = '../adata_images_sub3/'
+    img_root = '../imgs_jpgs/'
     # Rename files exported from Mac Photo app (in place)
     my_image_rename(img_root)
     # Create y (labels) and file list (x) from image names
@@ -158,8 +158,8 @@ if __name__ == '__main__':
     #     p.map(process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224]), file_list)
     image_array = process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224])
 
-    np.savez('flower_subset_224.npz', image_array, y)
-    X_train, X_test, y_train, y_test = train_validation_split('flower_subset_224.npz')
+    np.savez('flowers_224.npz', image_array, y)
+    X_train, X_test, y_train, y_test = train_validation_split('flowers_224.npz')
     nb_classes = 13
     Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
-    np.savez('validation_set_224.npz', X_train, X_test, Y_train, Y_test)
+    np.savez('validation_224.npz', X_train, X_test, Y_train, Y_test)

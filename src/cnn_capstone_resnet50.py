@@ -9,8 +9,11 @@ import os
 from os import listdir
 from os.path import isfile, join
 import re
-import PIL
-from PIL import Image
+from skimage import io
+from skimage.transform import resize
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from keras.utils import np_utils
 from skimage import io
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -33,7 +36,7 @@ np.random.seed(1337)  # for reproducibility
 # Runs code on GPU
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
-def train_validation_split(saved_arr='flowers_stratified_224.npz'):
+def train_validation_split(saved_arr='flowers_224.npz', nb_classes):
     '''
     Splits train and validation data and images. (Will also load test images, names from saved array).
     Input: saved numpy array, files/columns in that array
@@ -45,34 +48,39 @@ def train_validation_split(saved_arr='flowers_stratified_224.npz'):
     x = data[x]
     y = data.files[1]
     y = data[y]
-    yp = np.array(y)
+    # yp = np.array(y)
+
+    # Encode flower categories as numerical
     number = LabelEncoder()
     y = number.fit_transform(y.astype('str'))
-    X_train, X_test, y_train, y_test = train_test_split(x, y, stratify=y)
+
+    # Split train and test subsets
+    X_train, X_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=1337)
     print('X_train: {} \ny_train: {} \nX_test: {} \ny_test: {}'.format(X_train.shape, y_train.shape, X_test.shape, y_test.shape))
+
+    # Standardize pixel values (between 0 and 1)
     X_train = X_train.astype('float32')
     X_test = X_test.astype('float32')
     X_train = X_train/255
     X_test = X_test/255
-    return X_train, X_test, y_train, y_test
 
-def convert_to_binary_class_matrices(y_train, y_test, nb_classes):
     # convert class vectors to binary class matrices
     Y_train = np_utils.to_categorical(y_train, nb_classes)
     Y_test = np_utils.to_categorical(y_test, nb_classes)
-    return Y_train, Y_test
 
-def load_data_from_saved_array():
-    data = np.load('validation_224.npz')
-    x_train = data.files[0]
-    x_train = data[x_train]
-    x_test = data.files[1]
-    x_test = data[x_test]
-    y_train = data.files[2]
-    y_train = data[y_train]
-    y_test = data.files[3]
-    y_test = data[y_test]
-    return x_train, x_test, y_train, y_test
+    return X_train, X_test, Y_train, Y_test
+
+# def load_data_from_saved_array():
+#     data = np.load('validation_224.npz')
+#     x_train = data.files[0]
+#     x_train = data[x_train]
+#     x_test = data.files[1]
+#     x_test = data[x_test]
+#     y_train = data.files[2]
+#     y_train = data[y_train]
+#     y_test = data.files[3]
+#     y_test = data[y_test]
+#     return x_train, x_test, y_train, y_test
 
 def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1, input_shape=(224,224,3)):
     '''
@@ -83,10 +91,8 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1
     add_model = Sequential()
     add_model.add(Flatten(input_shape=base_model.output_shape[1:]))
     add_model.add(Dense(512, activation='relu'))
-    # model.add(Activation('relu'))
     # add_model.add(Dropout(0.5))
     add_model.add(Dense(nb_classes, activation='softmax'))
-    # model.add(Activation('softmax'))
 
     sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 
@@ -121,7 +127,7 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1
     print('Test accuracy:', score[1])
     return ypred, model, history
 
-def mode_summary_plots(history):
+def model_summary_plots(history):
     print(history.history.keys())
     # summarize history for accuracy
     plt.plot(history.history['acc'])
@@ -142,16 +148,14 @@ def mode_summary_plots(history):
     plt.savefig('model_loss.png')
 
 if __name__ == '__main__':
-    X_train, X_test, y_train, y_test = train_validation_split('flowers_224.npz')
     nb_classes = 13
-    Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
-    np.savez('val_stratified_224.npz', X_train, X_test, Y_train, Y_test)
+    X_train, X_test, Y_train, Y_test = train_validation_split('flowers_224.npz', nb_classes)
 
-    nb_classes = 13
-    x_train, x_test, y_train, y_test = load_data_from_saved_array()
+    # Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
+    # np.savez('val_stratified_224.npz', X_train, X_test, Y_train, Y_test)
 
-    ypred, model, history = cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
-    mode_summary_plots(history)
+    ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
+    model_summary_plots(history)
 '''
 save_to_dir='../augmented_images/', save_prefix='aug_', save_format='jpeg',
 '''

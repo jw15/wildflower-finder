@@ -33,7 +33,7 @@ np.random.seed(1337)  # for reproducibility
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
 def load_data_from_saved_array():
-    data = np.load('validation_set_224.npz')
+    data = np.load('validation_subset_224.npz')
     x_train = data.files[0]
     x_train = data[x_train]
     x_test = data.files[1]
@@ -58,10 +58,12 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1
     add_model.add(Dense(nb_classes, activation='softmax'))
     # model.add(Activation('softmax'))
 
+    sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+
     model = Model(inputs=base_model.input, outputs=add_model(base_model.output))
 
     model.compile(loss='categorical_crossentropy',
-                  optimizer='adadelta',
+                  optimizer=sgd,
                   metrics=['accuracy'])
     model.summary()
 

@@ -162,3 +162,4 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_validation_split('flower_subset_224.npz')
     nb_classes = 13
     Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
+    np.savez('validation_set_224.npz', X_train, X_test, Y_train, Y_test)

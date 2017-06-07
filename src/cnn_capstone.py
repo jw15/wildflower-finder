@@ -41,20 +41,20 @@ np.random.seed(1337)  # for reproducibility
 #         new_name = name2.replace('-', '_')
 #         os.replace(filename, new_name)
 
-# def my_image_resize(basewidth, root, resized_root):
-#     files = [f for f in listdir(root) if isfile(join(root, f))]
-#     resized_files = [f for f in listdir(resized_root) if isfile(join(resized_root, f))]
-#     # os.mkdir('../resized_images')
-#     # for path, subdirs, files in os.walk(root):
-#     for name in files:
-#         if not (name.startswith('.')):
-#             if not ('{}_resized.png'.format(name[:-4])) in resized_files:
-#             # if name != 'cnn_capstone.py':
-#                 img = Image.open('{}{}'.format(root, name))
-#                 wpercent = (basewidth / float(img.size[0]))
-#                 hsize = int((float(img.size[1]) * float(wpercent)))
-#                 img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-#                 img.save('../resized_images/{}_resized.png'.format(name[:-4]))
+def my_image_resize(basewidth, root, resized_root):
+    files = [f for f in listdir(root) if isfile(join(root, f))]
+    resized_files = [f for f in listdir(resized_root) if isfile(join(resized_root, f))]
+    # os.mkdir('../resized_images')
+    # for path, subdirs, files in os.walk(root):
+    for name in files:
+        if not (name.startswith('.')):
+            if not ('{}_resized.png'.format(name[:-4])) in resized_files:
+            # if name != 'cnn_capstone.py':
+                img = Image.open('{}{}'.format(root, name))
+                wpercent = (basewidth / float(img.size[0]))
+                hsize = int((float(img.size[1]) * float(wpercent)))
+                img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+                img.save('../resized_images/{}_resized.png'.format(name[:-4]))
 
 def image_categories(resized_root):
     ''' A dictionary that stores the image path name and flower species for each image

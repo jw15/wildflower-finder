@@ -14,7 +14,8 @@ def my_image_rename(img_root):
     for path in pathiter:
         newname = path.replace(" ", "")
         newname = path.replace("-", "_")
-        newname = path.replace(" ", "")
+        # newname = path.replace(" ", "")
+        # newname = path.replace("-", "_")
         # newname = path.replace("arnica_jpg", "sand_lily")
         if newname != path:
             os.rename(path, newname)

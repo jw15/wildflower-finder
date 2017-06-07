@@ -99,52 +99,6 @@ def process_images(file_paths_list, resize_new_size=[256,256], crop_size=[224, 2
     x = np.array(x)
     return x
 
-def train_validation_split(saved_arr='flowers_224.npz'):
-    '''
-    Splits train and validation data and images. (Will also load test images, names from saved array).
-    Input: saved numpy array, files/columns in that array
-    Output: Train/validation data (e.g., X_train, X_test, y_train, y_test), test images, test image names (file names minus '.png')
-    '''
-    data = np.load(saved_arr)
-
-    x = data.files[0]
-    x = data[x]
-    y = data.files[1]
-    y = data[y]
-    yp = np.array(y)
-    number = LabelEncoder()
-    y = number.fit_transform(y.astype('str'))
-    X_train, X_test, y_train, y_test = train_test_split(x, y)
-
-    print('X_train: {} \ny_train: {} \nX_test: {} \ny_test: {}'.format(X_train.shape, y_train.shape, X_test.shape, y_test.shape))
-    # X_train, X_test = image_asfloat(X_train, X_test)
-    # X_train, X_test = image_rgb_unit_scale(X_train, X_test)
-    X_train = X_train.astype('float32')
-    X_test = X_test.astype('float32')
-    X_train = X_train/255
-    X_test = X_test/255
-    return X_train, X_test, y_train, y_test
-
-# def image_asfloat(X_train, X_test):
-#     X_train = X_train.astype('float32')
-#     X_test = X_test.astype('float32')
-#     return X_train, X_test
-#
-# def image_rgb_unit_scale(X_train, X_test):
-#     X_train /= 255
-#     X_test /= 255
-#     return X_train, X_test
-#
-# def print_X_shapes(X_train, X_test):
-#     print('X_train shape:', X_train.shape)
-#     print(X_train.shape[0], 'train samples')
-#     print(X_test.shape[0], 'test samples')
-
-def convert_to_binary_class_matrices(y_train, y_test, nb_classes):
-    # convert class vectors to binary class matrices
-    Y_train = np_utils.to_categorical(y_train, nb_classes)
-    Y_test = np_utils.to_categorical(y_test, nb_classes)
-    return Y_train, Y_test
 
 if __name__ == '__main__':
     img_root = '../imgs_jpgs/'
@@ -157,9 +111,5 @@ if __name__ == '__main__':
     # with Pool(4) as p:
     #     p.map(process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224]), file_list)
     image_array = process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224])
-
     np.savez('flowers_224.npz', image_array, y)
-    X_train, X_test, y_train, y_test = train_validation_split('flowers_224.npz')
-    nb_classes = 13
-    Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
-    np.savez('validation_224.npz', X_train, X_test, Y_train, Y_test)
+    

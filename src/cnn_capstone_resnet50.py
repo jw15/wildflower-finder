@@ -25,6 +25,7 @@ from keras.utils import np_utils
 from keras.applications import ResNet50
 from keras import backend as K
 import sys
+import matplotlib.pyplot as plt
 sys.setrecursionlimit(10000)
 
 np.random.seed(1337)  # for reproducibility
@@ -32,8 +33,37 @@ np.random.seed(1337)  # for reproducibility
 # Runs code on GPU
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
+def train_validation_split(saved_arr='flowers_stratified_224.npz'):
+    '''
+    Splits train and validation data and images. (Will also load test images, names from saved array).
+    Input: saved numpy array, files/columns in that array
+    Output: Train/validation data (e.g., X_train, X_test, y_train, y_test), test images, test image names (file names minus '.png')
+    '''
+    data = np.load(saved_arr)
+
+    x = data.files[0]
+    x = data[x]
+    y = data.files[1]
+    y = data[y]
+    yp = np.array(y)
+    number = LabelEncoder()
+    y = number.fit_transform(y.astype('str'))
+    X_train, X_test, y_train, y_test = train_test_split(x, y, stratify=y)
+    print('X_train: {} \ny_train: {} \nX_test: {} \ny_test: {}'.format(X_train.shape, y_train.shape, X_test.shape, y_test.shape))
+    X_train = X_train.astype('float32')
+    X_test = X_test.astype('float32')
+    X_train = X_train/255
+    X_test = X_test/255
+    return X_train, X_test, y_train, y_test
+
+def convert_to_binary_class_matrices(y_train, y_test, nb_classes):
+    # convert class vectors to binary class matrices
+    Y_train = np_utils.to_categorical(y_train, nb_classes)
+    Y_test = np_utils.to_categorical(y_test, nb_classes)
+    return Y_train, Y_test
+
 def load_data_from_saved_array():
-    data = np.load('validation_subset_224.npz')
+    data = np.load('validation_224.npz')
     x_train = data.files[0]
     x_train = data[x_train]
     x_test = data.files[1]
@@ -71,26 +101,57 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1
             rotation_range=30,
             width_shift_range=0.1,
             height_shift_range=0.1,
-            horizontal_flip=True)
-    train_datagen.fit(x_train)
+            horizontal_flip=True,
+            vertical_flip=True)
+    seed = 1337
+    train_datagen.fit(x_train, seed=seed)
 
     history = model.fit_generator(
         train_datagen.flow(x_train, y_train, batch_size=batch_size),
-        steps_per_epoch=x_train.shape[0] // batch_size,
+        steps_per_epoch=(x_train.shape[0] // batch_size),
         epochs=epochs,
         validation_data=(x_test, y_test),
         callbacks=[ModelCheckpoint('ResNet50.model', monitor='val_acc', save_best_only=False)]
     )
-    # model.fit(X_train, Y_train, batch_size=batch_size, epochs=nb_epoch,
-    #           verbose=1, validation_data=(X_test, Y_test))
+    # model.fit(x_train, y_train, batch_size=26, epochs=1,
+    #           verbose=1, validation_data=(x_test, y_test))
     score = model.evaluate(x_test, y_test, verbose=0)
     ypred = model.predict(x_test)
     print('Test score:', score[0])
     print('Test accuracy:', score[1])
-    return ypred
+    return ypred, model, history
+
+def mode_summary_plots(history):
+    print(history.history.keys())
+    # summarize history for accuracy
+    plt.plot(history.history['acc'])
+    plt.plot(history.history['val_acc'])
+    plt.title('model accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.savefig('model_accuracy.png')
+    # summarize history for loss
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+    plt.savefig('model_loss.png')
 
 if __name__ == '__main__':
+    X_train, X_test, y_train, y_test = train_validation_split('flowers_224.npz')
+    nb_classes = 13
+    Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
+    np.savez('val_stratified_224.npz', X_train, X_test, Y_train, Y_test)
+
     nb_classes = 13
     x_train, x_test, y_train, y_test = load_data_from_saved_array()
 
-    ypred = cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=1, epochs=1, input_shape=(224,224,3))
+    ypred, model, history = cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
+    mode_summary_plots(history)
+'''
+save_to_dir='../augmented_images/', save_prefix='aug_', save_format='jpeg',
+'''

@@ -88,7 +88,7 @@ def convert_to_binary_class_matrices(y_train, y_test, nb_classes):
 #     y_test = data[y_test]
 #     return x_train, x_test, y_train, y_test
 
-def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1, input_shape=(224,224,3)):
+def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=100, input_shape=(224,224,3)):
     '''
     Builds and runs keras cnn on top of pre-trained ResNet50. Data are generated from X_train.
     '''

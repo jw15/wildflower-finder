@@ -113,8 +113,8 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=6
             rotation_range=30,
             width_shift_range=0.1,
             height_shift_range=0.1,
-            horizontal_flip=True,
-            vertical_flip=False)
+            horizontal_flip=True
+            )
     seed = 1337
     train_datagen.fit(x_train, seed=seed)
 
@@ -130,7 +130,7 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=6
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=0, save_best_only=True, mode='max')
 
     # put all callback functions in a list
-    callbacks_list = [checkpoint, reduce_lr, early_stop]
+    callbacks_list = [checkpoint]
 
     # generate the model, capture model history
     history = model.fit_generator(

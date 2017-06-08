@@ -22,22 +22,21 @@ from keras import applications
 from keras import optimizers
 from keras.layers import Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.models import Sequential
 from keras.utils import np_utils
 from keras.applications import ResNet50
 from keras import backend as K
 import sys
 import matplotlib.pyplot as plt
-sys.setrecursionlimit(10000)
+import pickle
+sys.setrecursionlimit(1000000)
 
 np.random.seed(1337)  # for reproducibility
 seed = 1337
 
 # Runs code on GPU
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
-
-
 
 def train_validation_split(saved_arr ='flowers_224.npz'):
     '''
@@ -119,12 +118,15 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1
     seed = 1337
     train_datagen.fit(x_train, seed=seed)
 
+    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
+              patience=5, min_lr=0.001)
+
     history = model.fit_generator(
         train_datagen.flow(x_train, y_train, batch_size=batch_size),
         steps_per_epoch=(x_train.shape[0] // batch_size),
         epochs=epochs,
         validation_data=(x_test, y_test),
-        callbacks=[ModelCheckpoint('ResNet50.model', monitor='val_acc', save_best_only=False)]
+        callbacks=[ModelCheckpoint('ResNet50.model', monitor='val_acc', save_best_only=False), reduce_lr]
     )
     # model.fit(x_train, y_train, batch_size=26, epochs=1,
     #           verbose=1, validation_data=(x_test, y_test))
@@ -161,15 +163,15 @@ if __name__ == '__main__':
     Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
     # np.savez('val_stratified_224.npz', X_train, X_test, Y_train, Y_test)
 
-    ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
+    ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=100, input_shape=(224,224,3))
     model_summary_plots(history)
-    model.save('../model_ouputs/resnet50_224x20e_{}'.format(seed))
+    model.save('resnet50_224x20e_1337.h5')
 
-    f = file('../model_outputs/history_resnet50_224x20e_{}.pkl'.format(seed), 'wb')
+    f = open('../model_outputs/history_resnet50_224x20e_{}.pkl'.format(seed), 'wb')
     for obj in [history]:
-        cPickle.dump(obj, f, protocol=cPickle.HIGHEST_PROTOCOL)
+        pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
     f.close()
-    
+
     np.savez('../model_outputs/ypred_rn50_224x20e_{}.npz'.format(seed))
 '''
 save_to_dir='../augmented_images/', save_prefix='aug_', save_format='jpeg',

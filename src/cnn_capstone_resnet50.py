@@ -127,7 +127,7 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=6
 
     # checkpoint
     filepath="weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
-    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=0, save_best_only=True, mode='max')
 
     # put all callback functions in a list
     callbacks_list = [checkpoint, reduce_lr, early_stop]

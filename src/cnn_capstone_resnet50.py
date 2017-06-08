@@ -32,17 +32,20 @@ import matplotlib.pyplot as plt
 sys.setrecursionlimit(10000)
 
 np.random.seed(1337)  # for reproducibility
+seed = 1337
 
 # Runs code on GPU
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
-def train_validation_split(saved_arr='flowers_224.npz', nb_classes):
+
+
+def train_validation_split(saved_arr ='flowers_224.npz'):
     '''
     Splits train and validation data and images. (Will also load test images, names from saved array).
     Input: saved numpy array, files/columns in that array
     Output: Train/validation data (e.g., X_train, X_test, y_train, y_test), test images, test image names (file names minus '.png')
     '''
-    data = np.load(saved_arr)
+    data = np.load('flowers_224.npz')
 
     x = data.files[0]
     x = data[x]
@@ -64,11 +67,15 @@ def train_validation_split(saved_arr='flowers_224.npz', nb_classes):
     X_train = X_train/255
     X_test = X_test/255
 
+    return X_train, X_test, y_train, y_test
+
+def convert_to_binary_class_matrices(y_train, y_test, nb_classes):
     # convert class vectors to binary class matrices
     Y_train = np_utils.to_categorical(y_train, nb_classes)
     Y_test = np_utils.to_categorical(y_test, nb_classes)
+    return Y_train, Y_test
 
-    return X_train, X_test, Y_train, Y_test
+
 
 # def load_data_from_saved_array():
 #     data = np.load('validation_224.npz')
@@ -136,7 +143,7 @@ def model_summary_plots(history):
     plt.ylabel('accuracy')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig('model_accuracy.png')
+    plt.savefig('../model_plots/model_accuracy_rn50_224x20e_{}.png'.format(seed))
     # summarize history for loss
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
@@ -145,17 +152,21 @@ def model_summary_plots(history):
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.show()
-    plt.savefig('model_loss.png')
+    plt.savefig('../model_plots/model_loss_rn50_224x20e_{}.png'.format(seed))
 
 if __name__ == '__main__':
     nb_classes = 13
-    X_train, X_test, Y_train, Y_test = train_validation_split('flowers_224.npz', nb_classes)
+    X_train, X_test, y_train, y_test = train_validation_split('flowers_224.npz')
 
-    # Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
+    Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
     # np.savez('val_stratified_224.npz', X_train, X_test, Y_train, Y_test)
 
     ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
     model_summary_plots(history)
+    f = file('../pickles/model_pickle_resnet50_224x20e_{}.pkl'.format(seed), 'wb')
+    for obj in [ypred, model, history]:
+        cPickle.dump(obj, f, protocol=cPickle.HIGHEST_PROTOCOL)
+    f.close()
 '''
 save_to_dir='../augmented_images/', save_prefix='aug_', save_format='jpeg',
 '''

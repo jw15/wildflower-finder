@@ -20,18 +20,30 @@ I also have several hundred additional photos representing ‘challenging cases�
 ### Data Project
 
 1. Collect photographs of Colorado wildflowers with my iPhone, point and shoot camera, and others’ iPhones. Possibly supplement them with images scraped from websites, such as Bing, [easterncoloradowildflowers.com](www.easterncoloradowildflowers.com), etc.
-2. Resize and normalize images
+
+2. Resize (to 256x256), center/crop (to 224x224), and normalize images
+
+    ![](https://user-images.githubusercontent.com/17363251/26950899-86a595f2-4c5c-11e7-9de0-a60f0d66200c.png)
+
+2. Image generation: To decrease the chance of overfitting, the image generator in Keras provided augmented images for each epoch; thus, the model never saw same image twice. Random augmentations included horizontal flip, rotation (up to 30 degrees), horizontal and vertical shift.
+
+    ![](https://user-images.githubusercontent.com/17363251/26950488-04433fc0-4c5b-11e7-8746-2f0fe0c5f13a.jpg)
+
 3. Apply convolutional neural network for image classification
-    * Current CNN model using images resized to 120 x 90 correctly classifies approximately 9/10 of the images.
-        * Next steps: crop images to square; randomly generate dataset with flipped, rotate/mirror images to feed into training model
-    * Experiment with training models using both high and low resolution images. Existing research suggests that high resolution images may be helpful for identifying some challenging features in networks, although training on lower resolution images is likely to produce a model that is better at classifying other less­ than ­perfect images (e.g., Dodge & Karam, 2016). Also include images from cameras other than my iPhone 6.
-    * Experiment with existing deep learning models (e.g., run my model on top of VGG16 16­layer network model for Keras (Simoyan & Zisserman, 2015) - or better, try ResNet models).
+    * Built model on pre-trained ResNet50.
+
+4. Build a web app to serve as precursor to a mobile app. Web app will accept images of wildflowers and provide classification outcome and predicted probability, information about matched flower species, image of matched species.
+
+5. Future Directions:
+
+    * Experiment with training models using both high and low resolution images. Existing research suggests that high resolution images may be helpful for identifying some challenging features in networks, although training on lower resolution images is likely to produce a model that is better at classifying other less­ than ­perfect images (e.g., Dodge & Karam, 2016).
+    * Include images from cameras other than my iPhone 6.
+    * Experiment with other pre-trained deep learning models
     * Try bagging of multiple deep networks.
     * Experiment with adding spatial transformer to first layer of network (e.g., Jaderberg et al., 2016)
     * Possibly experiment with using video or multiple photos of a single flower to produce 3D images and train a neural net on those.
-4. Utilize AWS (EC2) to complete analyses, store images on AWS (S3)
-5. Build a web app to serve as precursor to a mobile app. Web app will accept images of wildflowers and provide classification outcome and predicted probability, information about matched flower species, image of matched species.
-6. Tools: Python (Numpy, Pandas, Keras, Theano, OpenCV, Scikit­-Learn, SciKit-­Image, Flask, possibly BeautifulSoup), AWS (EC2, S3), probably Spark, ImageMagick
+
+6. Tools: Python (Numpy, Pandas, Keras, Theano, Scikit­-Learn, OpenCV, PIL, SciKit-­Image, Flask, possibly BeautifulSoup), AWS (EC2, S3), ImageMagick
 
 ### Geotagged Images
 

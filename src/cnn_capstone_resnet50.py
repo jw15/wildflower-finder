@@ -22,7 +22,7 @@ from keras import applications
 from keras import optimizers
 from keras.layers import Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
-from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
+from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
 from keras.models import Sequential
 from keras.utils import np_utils
 from keras.applications import ResNet50
@@ -32,8 +32,8 @@ import matplotlib.pyplot as plt
 import pickle
 sys.setrecursionlimit(1000000)
 
-np.random.seed(1337)  # for reproducibility
 seed = 1337
+np.random.seed(seed)  # for reproducibility
 
 # Runs code on GPU
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
@@ -57,7 +57,7 @@ def train_validation_split(saved_arr ='flowers_224.npz'):
     y = number.fit_transform(y.astype('str'))
 
     # Split train and test subsets
-    X_train, X_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=1337)
+    X_train, X_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=seed)
     print('X_train: {} \ny_train: {} \nX_test: {} \ny_test: {}'.format(X_train.shape, y_train.shape, X_test.shape, y_test.shape))
 
     # Standardize pixel values (between 0 and 1)
@@ -88,7 +88,7 @@ def convert_to_binary_class_matrices(y_train, y_test, nb_classes):
 #     y_test = data[y_test]
 #     return x_train, x_test, y_train, y_test
 
-def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=100, input_shape=(224,224,3)):
+def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=60, input_shape=(224,224,3)):
     '''
     Builds and runs keras cnn on top of pre-trained ResNet50. Data are generated from X_train.
     '''
@@ -114,19 +114,32 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=1
             width_shift_range=0.1,
             height_shift_range=0.1,
             horizontal_flip=True,
-            vertical_flip=True)
+            vertical_flip=False)
     seed = 1337
     train_datagen.fit(x_train, seed=seed)
 
+    # Reduce learning rate when model fit plateaus
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
               patience=5, min_lr=0.001)
 
+    # Stop model once it stops improving to prevent overfitting
+    early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=8, verbose=0, mode='auto')
+
+    # checkpoint
+    filepath="weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+
+    # put all callback functions in a list
+    callbacks_list = [checkpoint, reduce_lr, early_stop]
+
+    # generate the model, capture model history
     history = model.fit_generator(
         train_datagen.flow(x_train, y_train, batch_size=batch_size),
         steps_per_epoch=(x_train.shape[0] // batch_size),
         epochs=epochs,
         validation_data=(x_test, y_test),
-        callbacks=[ModelCheckpoint('ResNet50.model', monitor='val_acc', save_best_only=False), reduce_lr]
+        callbacks=callbacks_list
+        # callbacks=[ModelCheckpoint('ResNet50.model', monitor='val_acc', save_best_only=True), reduce_lr]
     )
     # model.fit(x_train, y_train, batch_size=26, epochs=1,
     #           verbose=1, validation_data=(x_test, y_test))
@@ -163,7 +176,7 @@ if __name__ == '__main__':
     Y_train, Y_test = convert_to_binary_class_matrices(y_train, y_test, nb_classes)
     # np.savez('val_stratified_224.npz', X_train, X_test, Y_train, Y_test)
 
-    ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=100, input_shape=(224,224,3))
+    ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=60, input_shape=(224,224,3))
     model_summary_plots(history)
     model.save('resnet50_224x20e_1337.h5')
 

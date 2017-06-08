@@ -163,10 +163,14 @@ if __name__ == '__main__':
 
     ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
     model_summary_plots(history)
-    f = file('../pickles/model_pickle_resnet50_224x20e_{}.pkl'.format(seed), 'wb')
-    for obj in [ypred, model, history]:
+    model.save('../model_ouputs/resnet50_224x20e_{}'.format(seed))
+
+    f = file('../model_outputs/history_resnet50_224x20e_{}.pkl'.format(seed), 'wb')
+    for obj in [history]:
         cPickle.dump(obj, f, protocol=cPickle.HIGHEST_PROTOCOL)
     f.close()
+    
+    np.savez('../model_outputs/ypred_rn50_224x20e_{}.npz'.format(seed))
 '''
 save_to_dir='../augmented_images/', save_prefix='aug_', save_format='jpeg',
 '''

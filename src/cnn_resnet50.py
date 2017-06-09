@@ -106,11 +106,13 @@ def build_cnn_resnet_50(input_shape=(224,224,3)):
 
 def _image_generator(X_train, Y_train):
     seed = 1337
-    return ImageDataGenerator(
+    train_datagen = ImageDataGenerator(
             rotation_range=30,
             width_shift_range=0.1,
             height_shift_range=0.1,
             horizontal_flip=True)
+    train_datagen.fit(x_train, seed=seed)
+    return train_datagen
 
     # for batch in ig.flow(X_train, Y_train, seed=seed, batch_size=batch_size):
     #     for i in range(len(batch[0])):

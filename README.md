@@ -11,39 +11,35 @@ Accurate identification of wildflowers is a task with relevance to both recreati
 ### Data
 Initially, I planned to collect images via web scraping. However, my preliminary efforts suggested that web scraping would be very time intensive as most websites with images of wildflowers have only a few images of each species. Additionally, when considering ways to improve upon existing flower identification apps, it seemed to me that having photographs tagged with date/time and GPS location could be potentially useful. In the long term, historical GPS and date/time information could be used to improve prediction of flower species; each species is more common in particular areas/elevations and at particular times of the year. More immediately, GPS information will permit clustering of photos by location, which will allow me to cluster images within observations (i.e., one plant = one observation), a strategy employed in the 2015 LifeCLEF challenge (for a summary, see [http://ceur-ws.org/Vol-1391/157-CR.pdf](http://ceur-ws.org/Vol-1391/157-CR.pdf)). For all these reasons, I chose to collect photographs of local wildflowers using my iPhone and a point and shoot camera. I also gathered mobile phone photos from friends and family.
 
-To date, I have successfully trained a very basic convolutional neural net using Keras on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
+### Image Preprocessing
+* Resize (to 256x256), center/crop (to 224x224), and normalize images
 
-![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
+![](https://user-images.githubusercontent.com/17363251/26950899-86a595f2-4c5c-11e7-9de0-a60f0d66200c.png)
 
-I also have several hundred additional photos representing ‘challenging cases’ (i.e., photos that are less well focused, are side views, or that feature a less clear image of the flower) and flower classes (10 species) that currently have insufficient numbers of images to include in the model. I plan to collect many more images over the next few weeks. There is  some class imbalance in the data that I hope to correct by collecting more images; I also plan to include more of those underrepresented species in the model.
+### Neural Nets
 
-### Data Project
-
-1. Collect photographs of Colorado wildflowers with my iPhone, point and shoot camera, and others’ iPhones. Possibly supplement them with images scraped from websites, such as Bing, [easterncoloradowildflowers.com](www.easterncoloradowildflowers.com), etc.
-
-2. Resize (to 256x256), center/crop (to 224x224), and normalize images
-
-    ![](https://user-images.githubusercontent.com/17363251/26950899-86a595f2-4c5c-11e7-9de0-a60f0d66200c.png)
-
-2. Image generation: To decrease the chance of overfitting, the image generator in Keras provided augmented images for each epoch; thus, the model never saw same image twice. Random augmentations included horizontal flip, rotation (up to 30 degrees), horizontal and vertical shift.
+* Image generation: To decrease the chance of overfitting, the image generator in Keras provided augmented images for each epoch; thus, the model never saw same image twice. Random augmentations included horizontal flip, rotation (up to 30 degrees), horizontal and vertical shift.
 
     ![](https://user-images.githubusercontent.com/17363251/26950488-04433fc0-4c5b-11e7-8746-2f0fe0c5f13a.jpg)
 
-3. Apply convolutional neural network for image classification
-    * Built model on pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py))
+#### Baseline Model
 
-4. Build a web app to serve as precursor to a mobile app. Web app will accept images of wildflowers and provide classification outcome and predicted probability, information about matched flower species, image of matched species.
+* Basic CNN using Keras, trained on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. Training accuracy was .88. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
 
-5. Future Directions:
+    ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
 
-    * Experiment with training models using both high and low resolution images. Existing research suggests that high resolution images may be helpful for identifying some challenging features in networks, although training on lower resolution images is likely to produce a model that is better at classifying other less­ than ­perfect images (e.g., Dodge & Karam, 2016).
-    * Include images from cameras other than my iPhone 6.
-    * Experiment with other pre-trained deep learning models.
-    * Try bagging of multiple deep networks.
-    * Experiment with adding spatial transformer to first layer of network (e.g., Jaderberg et al., 2016)
-    * Possibly experiment with using video or multiple photos of a single flower to produce 3D images and train a neural net on those.
+#### ResNet50
 
-6. Tools: Python (Numpy, Pandas, Keras, Theano, Scikit­-Learn, OpenCV, PIL, SciKit-­Image, Flask, possibly BeautifulSoup), AWS (EC2, S3), ImageMagick
+* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species. Validation accuracy ranged from .95 to .997, depending on sampling. The deep net was much more accurate in classifying images than my basic CNN.  
+
+### Future Directions:
+
+* Include images from cameras other than my iPhone 6.
+* Experiment with other pre-trained deep learning models.
+* Try bagging of multiple deep networks.
+* Object recognition
+* Cluster images by geotags?
+* Build a web app to serve as precursor to a mobile app. Web app will accept images of wildflowers and provide classification outcome and predicted probability, information about matched flower species, image of matched species.
 
 ### Geotagged Images
 
@@ -51,6 +47,9 @@ I hoped to be able to use gps location to improve model accuracy by allowing 'vo
 
 This is a plot showing GPS locations for two plant species (achillea lanulosa, sand lily): [(plot)](http://ec2-34-226-23-205.compute-1.amazonaws.com:8105/#)
 
+### Tools
+
+Python (Numpy, Pandas, Keras, Theano, Scikit­-Learn, OpenCV, PIL, SciKit-­Image, Flask, possibly BeautifulSoup), AWS (EC2, S3), ImageMagick
 
 ### References
 

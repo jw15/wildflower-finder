@@ -258,7 +258,7 @@ if __name__ == '__main__':
 
     final_model, model_summary = build_cnn_resnet_50(input_shape=(224,224,3))
 
-    ypred, model, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=50, input_shape=(224,224,3))
+    ypred, model, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
     # ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=60, input_shape=(224,224,3))
 
     # serialize model to JSON

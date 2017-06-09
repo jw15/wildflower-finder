@@ -17,8 +17,12 @@ adata_images_sub3
 adata_images_sub
 resnet-101.t7
 imgs_jpgs.zip
+imgs_jpgs
 ellen_images
 lilies_locations
+model_outputs
+model_plots
+src/preview
 
 # Old code not using
 src_notusing

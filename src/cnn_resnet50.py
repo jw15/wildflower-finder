@@ -128,7 +128,7 @@ def _image_generator(X_train, Y_train):
     #     validation_data=(x_test, y_test),
     #     callbacks=callbacks_list
 
-def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1, input_shape=(224,224,3)):
+def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=45, input_shape=(224,224,3)):
     generator = _image_generator(X_train, Y_train)
 
     # checkpoint
@@ -143,7 +143,7 @@ def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1
     early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=5, verbose=0, mode='auto')
 
     # put all callback functions in a list
-    callbacks_list = [checkpoint, reduce_lr, early_stop]
+    callbacks_list = [checkpoint, reduce_lr]
 
     history = final_model.fit_generator(
         generator.flow(X_train, Y_train, batch_size=batch_size),
@@ -258,7 +258,7 @@ if __name__ == '__main__':
 
     final_model, model_summary = build_cnn_resnet_50(input_shape=(224,224,3))
 
-    ypred, model, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1, input_shape=(224,224,3))
+    ypred, model, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=45, input_shape=(224,224,3))
     # ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=60, input_shape=(224,224,3))
 
     # serialize model to JSON

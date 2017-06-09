@@ -137,10 +137,13 @@ def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=1
 
     # Change learning rate when learning plateaus
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
-              patience=5, min_lr=0.001)
+              patience=2, min_lr=0.000001)
+
+    # Stop model once it stops improving to prevent overfitting
+    early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=5, verbose=0, mode='auto')
 
     # put all callback functions in a list
-    callbacks_list = [checkpoint]
+    callbacks_list = [checkpoint, reduce_lr, early_stop]
 
     history = final_model.fit_generator(
         generator.flow(X_train, Y_train, batch_size=batch_size),
@@ -255,7 +258,7 @@ if __name__ == '__main__':
 
     final_model, model_summary = build_cnn_resnet_50(input_shape=(224,224,3))
 
-    ypred_test, model_test, history_test = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=50, input_shape=(224,224,3))
+    ypred, model, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=50, input_shape=(224,224,3))
     # ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=60, input_shape=(224,224,3))
 
     # serialize model to JSON

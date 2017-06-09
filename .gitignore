@@ -23,6 +23,7 @@ lilies_locations
 model_outputs
 model_plots
 src/preview
+maps
 
 # Old code not using
 src_notusing

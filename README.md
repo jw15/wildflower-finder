@@ -30,7 +30,7 @@ I also have several hundred additional photos representing ‘challenging cases�
     ![](https://user-images.githubusercontent.com/17363251/26950488-04433fc0-4c5b-11e7-8746-2f0fe0c5f13a.jpg)
 
 3. Apply convolutional neural network for image classification
-    * Built model on pre-trained ResNet50.
+    * Built model on pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py))
 
 4. Build a web app to serve as precursor to a mobile app. Web app will accept images of wildflowers and provide classification outcome and predicted probability, information about matched flower species, image of matched species.
 
@@ -38,7 +38,7 @@ I also have several hundred additional photos representing ‘challenging cases�
 
     * Experiment with training models using both high and low resolution images. Existing research suggests that high resolution images may be helpful for identifying some challenging features in networks, although training on lower resolution images is likely to produce a model that is better at classifying other less­ than ­perfect images (e.g., Dodge & Karam, 2016).
     * Include images from cameras other than my iPhone 6.
-    * Experiment with other pre-trained deep learning models
+    * Experiment with other pre-trained deep learning models.
     * Try bagging of multiple deep networks.
     * Experiment with adding spatial transformer to first layer of network (e.g., Jaderberg et al., 2016)
     * Possibly experiment with using video or multiple photos of a single flower to produce 3D images and train a neural net on those.

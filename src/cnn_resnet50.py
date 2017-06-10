@@ -33,7 +33,7 @@ import pickle
 
 sys.setrecursionlimit(1000000)
 
-seed = 1337
+seed = 142
 np.random.seed(seed)  # for reproducibility
 
 # Runs code on GPU
@@ -55,6 +55,10 @@ def train_validation_split(saved_arr ='flowers_224.npz'):
 
     # Encode flower categories as numerical
     number = LabelEncoder()
+    y_labels = np.unique(y)
+    flower_cats = {}
+    for i, name in enumerate(y_labels):
+        flower_cats[i] = name
     y = number.fit_transform(y.astype('str'))
 
     # Split train and test subsets to get final text data (don't change this)
@@ -73,7 +77,7 @@ def train_validation_split(saved_arr ='flowers_224.npz'):
     X_test = X_test/255
     X_test_holdout = X_test_holdout/255
 
-    return X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout
+    return X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout, flower_cats
 
 def convert_to_binary_class_matrices(y_train, y_test, y_test_holdout, nb_classes):
     # convert class vectors to binary class matrices
@@ -111,7 +115,7 @@ def _image_generator(X_train, Y_train):
             width_shift_range=0.1,
             height_shift_range=0.1,
             horizontal_flip=True)
-    train_datagen.fit(x_train, seed=seed)
+    train_datagen.fit(X_train, seed=seed)
     return train_datagen
 
     # for batch in ig.flow(X_train, Y_train, seed=seed, batch_size=batch_size):
@@ -134,12 +138,12 @@ def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=4
     generator = _image_generator(X_train, Y_train)
 
     # checkpoint
-    filepath="weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+    filepath="weights-improvement142-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=0, save_best_only=True, mode='max')
 
     # Change learning rate when learning plateaus
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
-              patience=2, min_lr=0.000001)
+              patience=4, min_lr=0.00001)
 
     # Stop model once it stops improving to prevent overfitting
     early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=5, verbose=0, mode='auto')
@@ -162,8 +166,9 @@ def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=4
     # callbacks=callbacks_list
     # )
 
-    score = final_model.evaluate(X_test, Y_test, verbose=0)
+    score = final_model.evaluate(X_test, Y_test, verbose=0, batch_size=batch_size)
     ypred = final_model.predict(X_test)
+    # ypred_classes = final_model.predict_classes(X_test)
     print('Test score:', score[0])
     print('Test accuracy:', score[1])
     return ypred, final_model, history
@@ -235,6 +240,7 @@ def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=5
 '''
 def model_summary_plots(history):
     print(history.history.keys())
+    plt.close('all')
     # summarize history for accuracy
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
@@ -243,6 +249,7 @@ def model_summary_plots(history):
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.savefig('../model_plots/model_accuracy_rn50_224x20e_{}.png'.format(seed))
+    plt.close('all')
     # summarize history for loss
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
@@ -251,30 +258,35 @@ def model_summary_plots(history):
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.show()
-    plt.savefig('../model_plots/model_loss_rn50_224x20e_{}.png'.format(seed))
+    plt.savefig('../model_plots/model_loss_rn50_224_{}.png'.format(seed))
+
+def run_on_test_data(model):
+    test_predictions = model.predict(X_test_holdout)
+    return test_predictions
 
 if __name__ == '__main__':
-    nb_classes = 13
-    X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout = train_validation_split('flowers_224.npz')
+    X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout, flower_cats = train_validation_split('flowers_224.npz')
+    nb_classes = len(flower_cats)
+
     Y_train, Y_test, Y_test_holdout = convert_to_binary_class_matrices(y_train, y_test, y_test_holdout, nb_classes)
 
     final_model, model_summary = build_cnn_resnet_50(input_shape=(224,224,3))
 
-    ypred, model, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=45, input_shape=(224,224,3))
+    ypred, model124, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=40, input_shape=(224,224,3))
     # ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=60, input_shape=(224,224,3))
 
     # serialize model to JSON
     model_summary_plots(history)
-    model_json = model.to_json()
+    model_json = model124.to_json()
     with open("model.json", "w") as json_file:
         json_file.write(model_json)
 
     # serialize weights to HDF5
-    final_model.save('resnet50_224x20e_1337.h5')
+    final_model.save('resnet50_224_124.h5')
 
-    f = open('../model_outputs/history_resnet50_224x20e_{}.pkl'.format(seed), 'wb')
+    f = open('../model_outputs/history_resnet50_224_{}.pkl'.format(seed), 'wb')
     for obj in [history]:
         pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
     f.close()
 
-    np.save('../model_outputs/ypred_rn50_224x20e_{}'.format(seed), ypred, allow_pickle=True)
+    np.save('../model_outputs/ypred_rn50_224_{}'.format(seed), ypred, allow_pickle=True)

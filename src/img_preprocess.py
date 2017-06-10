@@ -112,4 +112,3 @@ if __name__ == '__main__':
     #     p.map(process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224]), file_list)
     image_array = process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224])
     np.savez('flowers_224.npz', image_array, y)
-    

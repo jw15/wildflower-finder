@@ -30,7 +30,7 @@ from keras import backend as K
 import sys
 import matplotlib.pyplot as plt
 import pickle
-
+import get_s3_files
 sys.setrecursionlimit(1000000)
 
 seed = 142

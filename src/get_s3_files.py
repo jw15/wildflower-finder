@@ -38,5 +38,5 @@ def write_folder_to_bucket(root):
 if __name__ == '__main__':
     # retrieve_from_bucket('imgs_jpgs.zip')
     # write_to_bucket('capstonedatajen', '../imgs_for_readme_rsz.zip', 'imgs_for_readme_rsz.zip')
-    # write_to_bucket('capstonedatajen', '../imagemagick-identify-parser.zip', 'imagemagick-identify-parser')
-    write_folder_to_bucket('../misclass_imgs/')
+    write_to_bucket('capstonedatajen', 'resnet-101.t7', 'resnet-101.t7')
+    # write_folder_to_bucket('../misclass_imgs/')

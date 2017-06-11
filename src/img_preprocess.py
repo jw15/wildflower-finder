@@ -8,12 +8,9 @@ Images are resized to specified shape, cropped to square, then image generation 
 from __future__ import print_function
 import numpy as np
 import pandas as pd
-import os
+import os, cv2, re, PIL
 from os import listdir
 from os.path import isfile, join
-import cv2
-import re
-import PIL
 from PIL import Image
 from skimage import io
 from skimage.transform import resize
@@ -111,4 +108,4 @@ if __name__ == '__main__':
     # with Pool(4) as p:
     #     p.map(process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224]), file_list)
     image_array = process_images(file_list, resize_new_size=[256,256], crop_size=[224, 224])
-    np.savez('flowers_224.npz', image_array, y)
+    np.savez('flowers_224_2.npz', image_array, y)

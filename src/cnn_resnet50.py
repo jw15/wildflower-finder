@@ -5,10 +5,11 @@ from https://github.com/fchollet/keras/blob/master/examples/mnist_cnn.py
 
 from __future__ import print_function
 import numpy as np
-import os
+import pandas as pd
+import sys, os, re, pickle, datetime, time
 from os import listdir
 from os.path import isfile, join
-import re
+from collections import Counter
 from skimage import io
 from skimage.transform import resize
 from sklearn.model_selection import train_test_split
@@ -17,57 +18,80 @@ from keras.utils import np_utils
 from skimage import io
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from keras.models import Sequential, Model, load_model
-from keras import applications
-from keras import optimizers
+from sklearn.metrics import classification_report
+from keras import applications, optimizers, backend as K
+from keras.models import Sequential, Model, load_model, model_from_json
 from keras.layers import Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
-from keras.models import Sequential, model_from_json
 from keras.utils import np_utils
 from keras.applications import ResNet50
-from keras import backend as K
-import sys
 import matplotlib.pyplot as plt
-import pickle
-import get_s3_files
+
 sys.setrecursionlimit(1000000)
 
-seed = 142
+seed = 1337
 np.random.seed(seed)  # for reproducibility
+
 
 # Runs code on GPU
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
-def train_validation_split(saved_arr ='flowers_224.npz'):
+def read_data(data):
+    ''' Reads in data loaded from saved numpy array.'''
+    x = data.files[0]
+    x = data[x]
+    y = data.files[1]
+    y = data[y]
+    return x, y
+
+def class_counts_specifications(y):
+    '''
+    Makes pandas df for connecting numerical indices to flower categories, counts number of images within each category. Also returns list of class names.
+    '''
+    class_labels = np.unique(y)
+    # flower_cats = {}
+    # for i, name in enumerate(class_labels):
+    #     flower_cats[i] = name
+
+    flower_cat_counter = Counter(y)
+
+    flower_count_df = pd.DataFrame.from_dict(flower_cat_counter, orient='index')
+    flower_count_df = flower_count_df.rename(columns={0: 'species'})
+    flower_count_df['count'] = list(flower_cat_counter.values())
+
+    return flower_count_df, class_labels
+
+def train_validation_split(x, y):
     '''
     Splits train and validation data and images. (Will also load test images, names from saved array).
     Input: saved numpy array, files/columns in that array
     Output: Train/validation data (e.g., X_train, X_test, y_train, y_test), test images, test image names (file names minus '.png')
     '''
-    data = np.load('flowers_224.npz')
-
-    x = data.files[0]
-    x = data[x]
-    y = data.files[1]
-    y = data[y]
-    # yp = np.array(y)
-
-    # Encode flower categories as numerical
+    # Encode flower categories as numerical values
     number = LabelEncoder()
-    y_labels = np.unique(y)
-    flower_cats = {}
-    for i, name in enumerate(y_labels):
-        flower_cats[i] = name
     y = number.fit_transform(y.astype('str'))
 
     # Split train and test subsets to get final text data (don't change this)
     X_training, X_test_holdout, y_training, y_test_holdout = train_test_split(x, y, stratify=y, random_state=42, test_size=.2)
-    print('Initial split for test data:\n X_training: {} \ny_training: {} \nX_test_holdout: {} \ny_test_holdout: {}'.format(X_training.shape, y_training.shape, X_test_holdout.shape, y_test_holdout.shape))
+    print('Initial split for (holdout) test data:\n \
+    X_training: {} \n \
+    y_training: {} \n \
+    X_test_holdout: {} \n \
+    y_test_holdout: {} \n'.format(X_training.shape, y_training.shape, X_test_holdout.shape, y_test_holdout.shape))
 
     # Split train into train and validation data (different for each model):
-    X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, random_state=seed, test_size=.2)
-    print('Train/validation split for this model:\n X_train: {} \ny_train: {} \nX_test: {} \ny_test: {}'.format(X_train.shape, y_train.shape, X_test.shape, y_test.shape))
+    X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, stratify=y_training, random_state=seed, test_size=.2)
+    train_classes = len(np.unique(y_train))
+    test_classes = len(np.unique(y_test))
+
+    print('Train/validation split for this model:\n \
+    X_train: {} \n \
+    y_train: {} \n \
+    X_test: {} \n \
+    y_test: {} \n \
+    n_train_classes: {} \n \
+    n_test_classes: {}'.format(X_train.shape, y_train.shape, X_test.shape, y_test.shape, train_classes, test_classes))
 
     # Standardize pixel values (between 0 and 1)
     X_train = X_train.astype('float32')
@@ -77,16 +101,20 @@ def train_validation_split(saved_arr ='flowers_224.npz'):
     X_test = X_test/255
     X_test_holdout = X_test_holdout/255
 
-    return X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout, flower_cats
+    return X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout
 
 def convert_to_binary_class_matrices(y_train, y_test, y_test_holdout, nb_classes):
-    # convert class vectors to binary class matrices
+    ''' Converts class vectors to binary class matrices'''
     Y_train = np_utils.to_categorical(y_train, nb_classes)
     Y_test = np_utils.to_categorical(y_test, nb_classes)
     Y_test_holdout = np_utils.to_categorical(y_test_holdout, nb_classes)
     return Y_train, Y_test, Y_test_holdout
 
 def build_cnn_resnet_50(input_shape=(224,224,3)):
+    ''' Builds and compiles CNN with ResNet50 pre-trained model.
+    Input: Shape of images to feed into top layers of model
+    Output: Compiled model (final_model), summary of compiled model
+    '''
     base_model = applications.ResNet50(weights='imagenet', include_top=False, input_shape=input_shape)
 
     add_model = Sequential()
@@ -109,62 +137,42 @@ def build_cnn_resnet_50(input_shape=(224,224,3)):
     return final_model, final_model.summary()
 
 def _image_generator(X_train, Y_train):
-    seed = 1337
+    # seed = 135
     train_datagen = ImageDataGenerator(
             rotation_range=30,
             width_shift_range=0.1,
             height_shift_range=0.1,
-            horizontal_flip=True)
-    train_datagen.fit(X_train, seed=seed)
+            horizontal_flip=True,
+            vertical_flip=True)
+    train_datagen.fit(X_train, seed)
     return train_datagen
 
-    # for batch in ig.flow(X_train, Y_train, seed=seed, batch_size=batch_size):
-    #     for i in range(len(batch[0])):
-    #         x = batch[0][i].reshape(1,224, 224, 3)
-    #         y = batch[i].reshape(1,2)
-    #         yield (x, y)
-
-    # train_datagen.fit(x_train, seed=seed)
-
-    # history = model.
-    # (
-    #     train_datagen.flow(x_train, y_train, batch_size=batch_size),
-    #     steps_per_epoch=(x_train.shape[0] // batch_size),
-    #     epochs=epochs,
-    #     validation_data=(x_test, y_test),
-    #     callbacks=callbacks_list
-
-def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=45, input_shape=(224,224,3)):
+def fit_model_resnet50(X_train, X_test, Y_train, Y_test, save_output_root, model_type, name_time, batch_size, epochs, input_shape):
+    print('\nBatch size: {} \nCompiling model...'.format(batch_size))
     generator = _image_generator(X_train, Y_train)
 
     # checkpoint
-    filepath="weights-improvement142-{epoch:02d}-{val_acc:.2f}.hdf5"
+    filepath='weights/weights-improvement142-{epoch:02d}-{val_acc:.2f}.hdf5'
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=0, save_best_only=True, mode='max')
 
     # Change learning rate when learning plateaus
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
-              patience=4, min_lr=0.00001)
+              patience=2, min_lr=0.00001)
 
     # Stop model once it stops improving to prevent overfitting
-    early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=5, verbose=0, mode='auto')
+    early_stop = EarlyStopping(monitor='val_acc', min_delta=0, patience=3, verbose=0, mode='auto')
 
     # put all callback functions in a list
     callbacks_list = [checkpoint, reduce_lr]
 
     history = final_model.fit_generator(
         generator.flow(X_train, Y_train, batch_size=batch_size),
-        steps_per_epoch=(X_train.shape[0] // batch_size),
+        # steps_per_epoch=(X_train.shape[0] // batch_size),
+        steps_per_epoch = X_train.shape[0],
         epochs=epochs,
         validation_data=(X_test, Y_test),
         callbacks=callbacks_list
         )
-
-    # history = final_model.fit_generator(generator,
-    # steps_per_epoch=(X_train.shape[0] // batch_size),
-    # epochs=epochs,
-    # validation_data = (X_test, Y_test),
-    # callbacks=callbacks_list
-    # )
 
     score = final_model.evaluate(X_test, Y_test, verbose=0, batch_size=batch_size)
     ypred = final_model.predict(X_test)
@@ -176,117 +184,137 @@ def fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=4
 # def visualize_layers(model):
 #     layer_dict = dict([(layer.name, layer) for layer in model.layers])
 
-
-'''
-def cnn_model_resnet50(x_train, x_test, y_train, y_test, batch_size=22, epochs=50, input_shape=(224,224,3)):
-    '''
-    #Builds and runs keras cnn on top of pre-trained ResNet50. Data are generated from X_train.
-'''
-    base_model = applications.ResNet50(weights='imagenet', include_top=False, input_shape=input_shape)
-
-    add_model = Sequential()
-    add_model.add(Flatten(input_shape=base_model.output_shape[1:]))
-    add_model.add(Dense(512, activation='relu'))
-    # add_model.add(Dropout(0.5))
-    add_model.add(Dense(nb_classes, activation='softmax'))
-
-    sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-
-    model = Model(inputs=base_model.input, outputs=add_model(base_model.output))
-
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=sgd,
-                  metrics=['accuracy'])
-    model.summary()
-    seed = 1337
-    train_datagen = ImageDataGenerator(
-            rotation_range=30,
-            width_shift_range=0.1,
-            height_shift_range=0.1,
-            horizontal_flip=True
-            )
-    # train_datagen.fit(x_train, seed=seed)
-
-    # Reduce learning rate when model fit plateaus
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
-              patience=5, min_lr=0.001)
-
-    # Stop model once it stops improving to prevent overfitting
-    early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=8, verbose=0, mode='auto')
-
-    # checkpoint
-    filepath="weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
-    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=0, save_best_only=True, mode='max')
-
-    # put all callback functions in a list
-    callbacks_list = [checkpoint]
-
-    # generate the model, capture model history
-    history = model.fit_generator(
-        train_datagen.flow(x_train, y_train, batch_size=batch_size),
-        steps_per_epoch=(x_train.shape[0] // batch_size),
-        epochs=epochs,
-        validation_data=(x_test, y_test),
-        callbacks=callbacks_list
-        # callbacks=[ModelCheckpoint('ResNet50.model', monitor='val_acc', save_best_only=True), reduce_lr]
-    )
-    # model.fit(x_train, y_train, batch_size=26, epochs=1,
-    #           verbose=1, validation_data=(x_test, y_test))
-    score = model.evaluate(x_test, y_test, verbose=0)
-    ypred = model.predict(x_test)
-    print('Test score:', score[0])
-    print('Test accuracy:', score[1])
-    return ypred, model, history
-'''
-def model_summary_plots(history):
+def model_summary_plots(history, save_output_root, model_type, name_time):
     print(history.history.keys())
     plt.close('all')
     # summarize history for accuracy
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
-    plt.title('model accuracy')
-    plt.ylabel('accuracy')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig('../model_plots/model_accuracy_rn50_224x20e_{}.png'.format(seed))
+    plt.title('Model Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper left')
+    plt.savefig('{}{}_{}/accuracy_plot'.format(save_output_root, model_type, name_time))
     plt.close('all')
     # summarize history for loss
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper left')
     plt.show()
-    plt.savefig('../model_plots/model_loss_rn50_224_{}.png'.format(seed))
+    plt.savefig('{}{}_{}/loss_plot'.format(save_output_root, model_type, name_time))
 
-def run_on_test_data(model):
-    test_predictions = model.predict(X_test_holdout)
-    return test_predictions
+def sklearn_stats(Y_true, y_predicted, target_names):
+    predicted_classes = np.argmax(y_predicted, axis=1)
+    true_classes = y_test
+    report = classification_report(true_classes, predicted_classes, target_names=class_labels)
+    return report
 
-if __name__ == '__main__':
-    X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout, flower_cats = train_validation_split('flowers_224.npz')
-    nb_classes = len(flower_cats)
+def predictions_from_holdout_data(model_fitted, X_test_holdout, Y_test_holdout):
+    test_predictions = model_fitted.predict(X_test_holdout)
 
-    Y_train, Y_test, Y_test_holdout = convert_to_binary_class_matrices(y_train, y_test, y_test_holdout, nb_classes)
+    score = model_fitted.evaluate(X_test_holdout, Y_test_holdout, verbose=0, batch_size=batch_size)
+    return test_predictions, score
 
-    final_model, model_summary = build_cnn_resnet_50(input_shape=(224,224,3))
+def make_model_summary_file(name_time, save_output_root, model_type, start_time, finish_time, seed, input_shape, epochs, batch_size, nb_classes, X_train, X_test, X_test_holdout, score, flower_count_df, notes):
+    with open('{}{}_{}/model_summary.txt'.format(save_output_root, model_type, name_time), 'a') as f:
+        f.write('Model Summary \n \
+        Start time: {} \n \
+        Finish time: {} \n \
+        Model: {} \n \
+        Seed: {} \n \
+        Input shape: {} \n \
+        Epochs: {} \n \
+        Batch size: {} \n \
+        N classes: {} \n \
+        X/Y_train size: {} \n \
+        X/Y_test size: {} \n \
+        X/Y_test_holdout: {} \n \n \
+        Test score on X_test: {} \n \
+        Accuracy score on X_test: {} \n \
+        Flower categories: {} \n \n \
+        Notes: {}'.format(start_time, finish_time, model_type, seed, input_shape, epochs, batch_size, nb_classes, len(X_train), len(X_test), len(X_test_holdout), score[0], score[1], flower_count_df, notes))
+        # F1 score: {} \n \
+        # Precision: {} \n \
+        # Recall: {} \n \
+        # '
 
-    ypred, model124, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=40, input_shape=(224,224,3))
-    # ypred, model, history = cnn_model_resnet50(X_train, X_test, Y_train, Y_test, batch_size=26, epochs=60, input_shape=(224,224,3))
+def save_model(name_time, history, model_fitted, flower_count_df, save_output_root, start_time, finish_time, model_type, seed, input_shape, epochs, batch_size, nb_classes, X_train, Y_train, X_test, Y_test, X_test_holdout, Y_test_holdout, score):
+
+    os.mkdir('{}{}_{}'.format(save_output_root, model_type, name_time))
+    new_root = '{}{}_{}'.format(save_output_root, model_type, name_time)
+
+    make_model_summary_file(name_time, save_output_root, model_type, start_time, finish_time, seed, input_shape, epochs, batch_size, nb_classes, X_train, X_test, X_test_holdout, score, flower_count_df, notes)
+
+    model_summary_plots(history, save_output_root, model_type, name_time)
 
     # serialize model to JSON
-    model_summary_plots(history)
-    model_json = model124.to_json()
-    with open("model.json", "w") as json_file:
+    model_json = model_fitted.to_json()
+    with open('{}{}_{}/model.json'.format(save_output_root, model_type, name_time), "w") as json_file:
         json_file.write(model_json)
 
     # serialize weights to HDF5
-    final_model.save('resnet50_224_124.h5')
+    model_fitted.save('{}{}_{}/{}_{}.h5'.format(save_output_root, model_type, name_time, model_type, name_time))
 
-    f = open('../model_outputs/history_resnet50_224_{}.pkl'.format(seed), 'wb')
+    # Save model history to pickle
+    f = open('{}{}_{}/history.pkl'.format(save_output_root, model_type, name_time), 'wb')
     for obj in [history]:
         pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
     f.close()
 
-    np.save('../model_outputs/ypred_rn50_224_{}'.format(seed), ypred, allow_pickle=True)
+    # Save df of species indices, image counts per species
+    flower_count_df.to_pickle('{}{}_{}/flower_count_df.pkl'.format(save_output_root, model_type, name_time))
+
+    # Save predicted probabilities
+    np.save('{}{}_{}/predicted_probas'.format(save_output_root, model_type, name_time), ypred, allow_pickle=True)
+
+    # write_folder_to_bucket(new_root)
+
+
+
+if __name__ == '__main__':
+    start_time = datetime.datetime.now()
+    name_time = time.time()
+
+    # Model descriptors, parameters
+    save_output_root = '../model_outputs/'
+    model_type = "ResNet50"
+    input_shape = (224,224,3)
+    epochs = 45
+    batch_size = 26
+    notes = "SGD; learning rate: .001. Changed steps per epoch from len(x_train)/ batch size to just len(x_train)"
+
+    # Load data from saved numpy array
+    data = np.load('flowers_224.npz')
+    x, y = read_data(data)
+
+    # Describe data, make pandas df for counts of images and numerical label for species categories
+    flower_count_df, class_labels = class_counts_specifications(y)
+    nb_classes = len(flower_count_df)
+
+    # Train test validation split
+    X_train, X_test, X_test_holdout, y_train, y_test, y_test_holdout = train_validation_split(x, y)
+    print('{} classes of flowers'.format(len(flower_count_df)))
+
+    # Convert numerical y to one-hot encoded y
+    Y_train, Y_test, Y_test_holdout = convert_to_binary_class_matrices(y_train, y_test, y_test_holdout, nb_classes)
+
+    # Build CNN model
+    final_model, model_summary = build_cnn_resnet_50(input_shape)
+
+    # Fit CNN model
+    ypred, model_fitted, history = fit_model_resnet50(X_train, X_test, Y_train, Y_test, save_output_root, model_type, name_time, batch_size, epochs, input_shape)
+
+    finish_time = datetime.datetime.now()
+
+    # Get predicted probabilities and evaulate model fit when fitted model run on validation hold out data set
+    # test_predictions, score = predictions_from_holdout_data(model_fitted, X_test_holdout, Y_test_holdout)
+
+    # ytest_report = sklearn_stats(y_test, ypred, class_labels)
+
+    test_predictions, score = predictions_from_holdout_data(model_fitted, X_test_holdout, Y_test_holdout)
+    # y_holdout_report = sklearn_stats(y_test_holdout, test_predictions, class_labels)
+
+    save_model(name_time, history, model_fitted, flower_count_df, save_output_root, start_time, finish_time, model_type, seed, input_shape, epochs, batch_size, nb_classes, X_train, Y_train, X_test, Y_test, X_test_holdout, Y_test_holdout, score)

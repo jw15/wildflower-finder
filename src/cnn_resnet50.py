@@ -167,8 +167,7 @@ def fit_model_resnet50(X_train, X_test, Y_train, Y_test, save_output_root, model
 
     history = final_model.fit_generator(
         generator.flow(X_train, Y_train, batch_size=batch_size),
-        # steps_per_epoch=(X_train.shape[0] // batch_size),
-        steps_per_epoch = X_train.shape[0],
+        steps_per_epoch=(X_train.shape[0] // batch_size),
         epochs=epochs,
         validation_data=(X_test, Y_test),
         callbacks=callbacks_list

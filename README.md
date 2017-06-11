@@ -15,7 +15,7 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 #### Baseline Model
 
-* Basic CNN using Keras, trained on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. Images resized to 120 x 90. Training accuracy was .88. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
+* Basic CNN using Keras, trained on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. Included only in-focus images. Removed images that were very similar. Images resized to 120 x 90. Training accuracy was .88. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
 
     ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
 
@@ -31,7 +31,13 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 ![](https://user-images.githubusercontent.com/17363251/26950488-04433fc0-4c5b-11e7-8746-2f0fe0c5f13a.jpg)
 
-* Validation accuracy ranged from .95 to .997, depending on sampling. The deep net was much more accurate in classifying images than my basic CNN.  
+Using all data (not only 'nice' shots)(n = 1,526 images from 13 classes):
+* Set aside 20% of data (n = 306) for validation data set
+* Trained model with train/test split (80% train) of remaining images (n = 1,220)
+    * Model accuracy on validation data: .98
+
+<!-- Concerned that using all data leaves in some images that are very similar (e.g., when I tried repeatedly to take a nice shot and thus have 2 or 3 very similar images), so removed images that were very similar.  -->
+
 
 ### Future Directions:
 

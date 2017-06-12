@@ -28,12 +28,12 @@ def write_to_bucket(bucket_name, filepath, filename):
     s3.upload_file(filepath, bucket_name, filename)
     print('  {} uploaded - yay!'.format(filename))
 
-def write_folder_to_bucket(root, bucket_name):
+def write_folder_to_bucket(root, bucket_name, bucket_folder):
     s3 = boto3.client('s3')
     files = [f for f in listdir(root) if isfile(join(root, f))]
     for thing in files:
         print('Uploading {}...'.format(thing))
-        write_to_bucket(bucket_name, '{}{}'.format(root, thing), '{}'.format(thing))
+        write_to_bucket(bucket_name, '{}{}'.format(root, thing), '{}/{}'.format(bucket_folder, thing))
     print('  {} uploaded - HUZZAH!'.format(root))
 
 

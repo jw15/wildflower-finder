@@ -14,9 +14,6 @@ from os.path import isfile, join
 from PIL import Image
 from skimage import io
 from skimage.transform import resize
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
-from keras.utils import np_utils
 
 from img_resize import my_image_resize
 from img_resize import my_image_rename

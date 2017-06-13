@@ -170,7 +170,7 @@ def fit_model_resnet50(X_train, X_test, Y_train, Y_test, save_output_root, model
         steps_per_epoch=(X_train.shape[0] // batch_size),
         epochs=epochs,
         validation_data=(X_test, Y_test),
-        callbacks=callbacks_list
+        callbacks=callbacks_list, shuffle=True
         )
 
     score = final_model.evaluate(X_test, Y_test, verbose=0, batch_size=batch_size)
@@ -281,7 +281,7 @@ if __name__ == '__main__':
     save_output_root = '../model_outputs/'
     model_type = "ResNet50"
     input_shape = (224,224,3)
-    epochs = 45
+    epochs = 45-
     batch_size = 26
     notes = "SGD; learning rate: .001. Changed steps per epoch from len(x_train)/ batch size to just len(x_train)"
 

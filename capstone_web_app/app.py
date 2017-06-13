@@ -91,16 +91,16 @@ def score():
 
 if __name__ == '__main__':
     print('Loading model...')
-    # model = load_model('../model_outputs/ResNet50_1497216607.2807329.h5')
-    # load json and create model
-    json_file = open('../model_outputs/model.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    # load weights into new model
-    loaded_model.load_weights("../model_outputs/ResNet50_1497216607_2807329.h5")
+    loaded_model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
+    # # load json and create model
+    # json_file = open('../model_outputs/model.json', 'r')
+    # loaded_model_json = json_file.read()
+    # json_file.close()
+    # loaded_model = model_from_json(loaded_model_json)
+    # # load weights into new model
+    # loaded_model.load_weights("../model_outputs/ResNet50_1497216607_2807329.h5")
     print("Loaded model from disk")
-    flower_cats = np.load('../model_outputs/flower_count_df.pkl', allow_pickle=True)
+    flower_cats = np.load('../model_outputs/ResNet50_1497216607_2807329/flower_count_df.pkl', allow_pickle=True)
     cats = list(flower_cats.index)
     print('Running app')
     app.run(host='0.0.0.0', port=8105, threaded=True, debug=True)

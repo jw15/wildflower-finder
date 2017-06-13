@@ -1,0 +1,58 @@
+h1 {
+    color: black;
+    font-size: 30px;
+}
+
+.navbar-brand {
+    margin-left: 0px;
+    font-size: 22px;
+}
+
+.nav-link {
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+#index-background {
+    background-size: cover;
+    background-position: 0% 100%;
+    min-height: 100%;
+    background-image: url(../images/bluebells_landscape.jpg);
+}
+
+#index-jumbo {
+    text-align: center;
+    color: #5e124d !important;
+    width: 50%;
+    height: 40%;
+    color: blue;
+    padding-top: 30px;
+    margin-top: 100px;
+    background-color: #f7f7f9; !important;
+    opacity: 0.7;
+    background-size: 10%;
+    z-index: 1;
+}
+
+
+
+.opac1-text {
+    opacity: 2;
+    z-index: 10;
+}
+
+#jumbotron-button {
+    text-align: center;
+    color: #f7f7f9;
+    background-color: #771076;
+}
+
+
+.bottom-img {
+    /*z-index: 1;*/
+    opacity: 2;
+}
+
+#results-text {
+    color: #7528c1;
+}

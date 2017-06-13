@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+{% endblock %}
+{% block content %}
+
+    <br>
+    <br>
+
+        <center><h1 id="results-text">{{ data[0] }}, {{ data[1] }}</h1></center>
+        <!-- <center><h1 id="results-text">{{ data[-2]}}</h1></center>
+        <center><h1 id="results-text">{{ data[-3]}}</h1></center> -->
+
+    <br>
+    <!-- <img src="{{ url_for('static', filename='img/players/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg') }}"> -->
+
+
+
+
+
+
+
+{% endblock %}

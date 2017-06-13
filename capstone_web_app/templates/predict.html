@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+
+{% endblock %}
+{% block content %}
+
+    <h1>Upload your wildflower image</h1>
+    <br>
+
+
+
+
+    <br>
+    <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form">
+        <input type="file" name="file"><br /><br />
+        <input id="submit-button" type="submit" value="Upload">
+    </form>
+
+    <div id="loadingDiv">
+        <center><h2>Predicting...</h2></center>
+    </div>
+
+
+
+
+
+<script type="text/javascript">
+var $loading = $('#loadingDiv').hide();
+$("#submit-button").click(function(){
+    $('#submit-form').hide();
+    $('#loadingDiv').show();
+});
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}

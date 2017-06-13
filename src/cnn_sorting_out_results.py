@@ -15,7 +15,7 @@ for img in misclassified_idxs[0]:
     plt.close('all')
     plt.imshow(X_test[img])
     classification = ypred_indices[img]
-    plt.savefig('mis_idx_{}_classifiedas_{}'.format(img, classification))
+    plt.savefig('mis_idx_{}_classifiedas_{}.jpg'.format(img, classification))
 
 
 # Using test (validation) data that was set aside before training

@@ -24,6 +24,16 @@ model_outputs
 model_plots
 src/preview
 maps
+capstone_web_app/predicted_images_web
+capstone_Web_app/uploads
+data
+flas_fastai_CNN
+img_landscape
+new_imgs_to_add
+new_test
+notes
+references
+
 
 # Old code not using
 src_notusing

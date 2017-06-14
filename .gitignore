@@ -34,7 +34,6 @@ notes
 references
 capstone_web_app/parker_app.py
 capstone_web_app/test.py
-capstone_web_app/classes.npy
 capstone_web_app/flower_cats.npy
 capstone_web_app/app copy.py
 flask_fastai_CNN

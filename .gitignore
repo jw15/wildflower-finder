@@ -41,6 +41,12 @@ capstone_web_app/flower_cats.npy
 capstone_web_app/README.md
 capstone_web_app/app copy.py
 flask_fastai_CNN
+src/__pycache__
+src/.DS_Store
+src/cnn_capstone_resnet50.py
+src/cnn_capstone_img_preprocess.py
+src/capstone_early_notes
+
 
 
 # Old code not using

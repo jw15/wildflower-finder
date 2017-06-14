@@ -23,7 +23,6 @@ lilies_locations
 model_outputs
 model_plots
 src/preview
-maps
 capstone_web_app/predicted_images_web
 capstone_Web_app/uploads
 data

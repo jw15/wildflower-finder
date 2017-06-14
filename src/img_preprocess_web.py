@@ -63,13 +63,15 @@ def process_image(image_path, resize_new_size=[256,256], crop_size=[224, 224]):
     '''
     x = []
     # capstone_web_app/predicted_images_web/cinquefoil_extra.jpg
-    img_full_path = 'predicted_images_web/{}'.format(image_path)
+    img_full_path = '../capstone_web_app/uploads/{}'.format(image_path)
     # print(img_full_path)
     img = cv2.imread(img_full_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = resize_image_to_square(img, resize_new_size)
     img = crop_image(img, crop_size)
     x = np.array(img)
+    x = x.astype('float32')
+    x = x/255
     x = x.reshape((1,) + x.shape)
     return x
 

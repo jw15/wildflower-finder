@@ -255,7 +255,7 @@ def save_model(name_time, history, model_fitted, flower_count_df, save_output_ro
         json_file.write(model_json)
 
     # serialize weights to HDF5
-    model_fitted.save('{}{}_{}/{}_{}.h5'.format(save_output_root, model_type, name_time, model_type, name_time))
+    with h5py.File('{}{}_{}/{}_{}.h5'.format(save_output_root, model_type, name_time, model_type, name_time), 'w') as f: model_fitted.save('{}{}_{}/{}_{}.h5'.format(save_output_root, model_type, name_time, model_type, name_time))
 
     # Save model history to pickle
     f = open('{}{}_{}/history.pkl'.format(save_output_root, model_type, name_time), 'wb')
@@ -281,7 +281,7 @@ if __name__ == '__main__':
     save_output_root = '../model_outputs/'
     model_type = "ResNet50"
     input_shape = (224,224,3)
-    epochs = 45-
+    epochs = 45
     batch_size = 26
     notes = "SGD; learning rate: .001. Changed steps per epoch from len(x_train)/ batch size to just len(x_train)"
 

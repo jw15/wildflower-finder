@@ -79,23 +79,35 @@ def score():
             # add something here to check if file is an image array/ check if RGB
             prediction = model.predict(prepared_image)
             top_prediction = np.argmax(prediction)
+            top_proba = prediction[0][top_prediction]
+            top_proba = round(top_proba, 2)*100
+            top_proba_str = '{}%'.format(top_proba)
             top_species = cats[top_prediction]
             # if top_species == 'delphinium nuttalianum':
             #     top_species = 'mertensia lanceolata'
-            order = np.argsort(prediction)
+            order = np.argsort(prediction)[0]
+            second_prediction = order[-2]
+            second_proba = prediction[0][second_prediction]
+            # second_proba = '{}\%'.format(round(prediction[0][second_prediction], 0)*100)
+            second_species = cats[second_prediction]
+
+            third_prediction = order[-3]
+            # third_proba = '{}\%'.format(round(prediction[0][third_prediction], 0)*100)
+            third_proba = prediction[0][third_prediction]
+            third_species = cats[third_prediction]
             # top_three = order[-3:]
             # top_three = top_three.tolist()
-            top_five = order[-5:]
-            top_five = top_five.tolist()
+            # top_five = order[-5:]
+            # top_five = top_five.tolist()
             # top_five_list = []
-            for result in top_five:
-                result = int(result)
-                species = cats[result]
-                top_five_list.append(species)
-            top_five_list = top_five_list[::-1]
+            # for result in top_five:
+            #     result = int(result)
+            #     species = cats[result]
+            #     top_five_list.append(species)
+            # top_five_list = top_five_list[::-1]
             # print(top_species)
             # print(top_five_list)
-    return render_template('score.html', data=[top_species, top_prediction, top_five_list])
+    return render_template('score.html', data=[top_species, top_proba_str, second_species, second_proba, third_species, third_proba])
 
 
 

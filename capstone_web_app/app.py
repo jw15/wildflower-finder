@@ -80,20 +80,22 @@ def score():
             prediction = model.predict(prepared_image)
             top_prediction = np.argmax(prediction)
             top_proba = prediction[0][top_prediction]
-            top_proba = round(top_proba, 2)*100
+            top_proba = round((top_proba*100), 2)
             top_proba_str = '{}%'.format(top_proba)
             top_species = cats[top_prediction]
             # if top_species == 'delphinium nuttalianum':
             #     top_species = 'mertensia lanceolata'
             order = np.argsort(prediction)[0]
             second_prediction = order[-2]
-            second_proba = prediction[0][second_prediction]
+            second_proba = round((prediction[0][second_prediction]*100), 2)
+            second_proba_str = '{}%'.format(second_proba)
             # second_proba = '{}\%'.format(round(prediction[0][second_prediction], 0)*100)
             second_species = cats[second_prediction]
 
             third_prediction = order[-3]
             # third_proba = '{}\%'.format(round(prediction[0][third_prediction], 0)*100)
-            third_proba = prediction[0][third_prediction]
+            third_proba = round((prediction[0][third_prediction]*100), 2)
+            third_proba_str = '{}%'.format(third_proba)
             third_species = cats[third_prediction]
             # top_three = order[-3:]
             # top_three = top_three.tolist()
@@ -107,7 +109,7 @@ def score():
             # top_five_list = top_five_list[::-1]
             # print(top_species)
             # print(top_five_list)
-    return render_template('score.html', data=[top_species, top_proba_str, second_species, second_proba, third_species, third_proba])
+    return render_template('score.html', data=[top_species, top_proba_str, second_species, second_proba_str, third_species, third_proba_str])
 
 
 

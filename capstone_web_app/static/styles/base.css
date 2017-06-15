@@ -34,8 +34,6 @@ h1 {
     z-index: 1;
 }
 
-
-
 .opac1-text {
     opacity: 2;
     z-index: 10;
@@ -55,4 +53,43 @@ h1 {
 
 #results-text {
     color: #7528c1;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+/*
+.container {
+  margin-top: 40px;
+  padding-top: 20px;
+  /*background-color: #beb*/
+/*}*/
+.vertical {
+  /*display: inline-block;*/
+  width: 20%;
+  height: 40px;
+  -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+  transform: rotate(-90deg);
+}
+/*.vertical {*/
+  /*box-shadow: inset 0px 4px 6px #ccc;
+}*/
+.progress-bar {
+  box-shadow: inset 0px 4px 6px rgba(100,100,100,0.6);
 }

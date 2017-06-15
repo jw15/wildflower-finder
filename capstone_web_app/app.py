@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, send_from_directory, make_response
 from functools import wraps, update_wrapper
 from datetime import datetime
-import os, sys
+import os, sys, re
 from os import listdir
 from os.path import isfile, join
 from werkzeug import secure_filename
@@ -16,15 +16,14 @@ import os
 
 sys.path.insert(0, '../src')
 from img_preprocess_web import process_image
+from utils import image_categories_reverse
 
 sys.setrecursionlimit(1000000)
 
 # os.environ["THEANO_FLAGS"] = "cxx=''"
-
-
 # os.environ["THEANO_FLAGS"] = "device=cuda0"
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path= '/static')
 
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -34,8 +33,6 @@ app.config['MAX_CONTENT_PATH'] = 4000000
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 3
 
-
-# home page
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -54,13 +51,8 @@ def allowed_file(filename):
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/score', methods=['GET', 'POST'])
-# def load_model():
-#     model =  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
-#     model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
-#     model.compile(optimizer='sgd', loss='categorical_crossentropy')
-#     return model
-
 def score():
+    flower_dict = image_categories_reverse()
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -83,8 +75,6 @@ def score():
             top_proba = round((top_proba*100), 2)
             top_proba_str = '{}%'.format(top_proba)
             top_species = cats[top_prediction]
-            # if top_species == 'delphinium nuttalianum':
-            #     top_species = 'mertensia lanceolata'
             order = np.argsort(prediction)[0]
             second_prediction = order[-2]
             second_proba = round((prediction[0][second_prediction]*100), 2)
@@ -97,6 +87,13 @@ def score():
             third_proba = round((prediction[0][third_prediction]*100), 2)
             third_proba_str = '{}%'.format(third_proba)
             third_species = cats[third_prediction]
+            img1 = str(flower_dict[top_species])
+
+            # img1 = url(img1)
+            img2 = str(flower_dict[second_species])
+            # img2 = url(img2)
+            img3 = str(flower_dict[third_species])
+            # img3 = url(img3)
             # top_three = order[-3:]
             # top_three = top_three.tolist()
             # top_five = order[-5:]
@@ -109,7 +106,7 @@ def score():
             # top_five_list = top_five_list[::-1]
             # print(top_species)
             # print(top_five_list)
-    return render_template('score.html', data=[top_species, top_proba_str, second_species, second_proba_str, third_species, third_proba_str])
+    return render_template('score.html', data=[top_species, top_proba_str, second_species, second_proba_str, third_species, third_proba_str, img1, img2, img3])
 
 
 
@@ -136,5 +133,5 @@ if __name__ == '__main__':
     # print(type(flower_cats))
     cats = flower_cats.tolist()
     print('Running app')
-    app.run(host='0.0.0.0', port=8105, threaded=True, debug=True)
+    app.run(host='0.0.0.0', port=8105, threaded=True, debug=False)
     # flowermap = download_file('flowermap.html')

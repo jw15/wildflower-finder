@@ -9,9 +9,9 @@ This project uses convolutional neural nets to classify images of wildflowers fo
 ### Motivation
 Accurate identification of wildflowers is a task with relevance to both recreation and environmental management. Currently, there are several mobile apps designed to identify flowers using images; the best of these (e.g., [https://identify.plantnet-project.org/](https://identify.plantnet-project.org/)) is connected with an annual international competition for advancing techniques for plant classification from images. However, none of the extant plant identification apps are particularly accurate for identification of flowers in North America.
 
-Example: Pl@ntNet attempt to identify Penstemon virens:
+Example: Pl@ntNet attempt to identify Delphinium:
 
-![](https://user-images.githubusercontent.com/17363251/27238145-0c3c0d5e-5289-11e7-9b8e-fc5d1523de40.jpg)
+![](https://user-images.githubusercontent.com/17363251/27239801-a2692752-528f-11e7-9625-ba15fa810135.jpg)
 
 As of 6/15/17, iNaturalist announced plans to release image classification as part of their nature reporting app ([https://www.inaturalist.org/](https://www.inaturalist.org/))
 

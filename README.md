@@ -39,18 +39,18 @@ Using all data (not only 'nice' shots):
 | Flower Species | Images |
 | ---------------------------------- | ------- |
 | Achillea lanulosa| 117 |
-    * Adenolinum lewissi        184
-    * Alyssum parviflorum       145
-    * Arnica cordifolia         80
-    * Cerastium arvense         172
-    * Delphinium nuttallianum   65
-    * Harbouria trachypleura    73
-    * Lonicera tatarica         132
-    * Mertensia lanceolata      156
-    * Padus virginiana          156
-    * Penstemon virens          127
-    * Phlox longifolia          71
-    * Senecio integerrimus      48
+| Adenolinum lewissi | 184 |
+| Alyssum parviflorum | 145 |
+| Arnica cordifolia | 80 |
+| Cerastium arvense | 172 |
+| Delphinium nuttallianum | 65 |
+| Harbouria trachypleura | 73 |
+| Lonicera tatarica | 132 |
+| Mertensia lanceolata | 156 |
+| Padus virginiana | 156 |
+| Penstemon virens | 127 |
+| Phlox longifolia | 71 |
+| Senecio integerrimus | 48 |
 
 * Set aside 20% of data (n = 306) for validation data set
 * Trained model with train/test split (80% train) of remaining images (n = 1,220)

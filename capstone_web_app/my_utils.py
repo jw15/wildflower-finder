@@ -8,6 +8,7 @@ from keras import optimizers
 from keras.models import load_model, model_from_json
 from collections import defaultdict
 from pymongo import MongoClient
+import cv2
 
 
 def image_categories_reverse():
@@ -31,6 +32,18 @@ def beautify_name(name):
     name = name.replace("_", " ")
     name = name[0][0].upper() + name[1:]
     return name
+
+def crop_thumbnail(file_path, crop_size):
+    '''
+    Crops image to new_dims, centering image in frame.
+    Input: Image, desired cropped size (crop_size=[height, width])
+    Output: Cropped image
+    '''
+    img = cv2.imread(file_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    row_buffer = (img.shape[0] - crop_size[0]) // 2
+    col_buffer = (img.shape[1] - crop_size[1]) // 2
+    return img[row_buffer:(img.shape[0] - row_buffer), col_buffer:(img.shape[1] - col_buffer)]
 
 # def common_names(flower_dict):
 #     flower_commons = {}

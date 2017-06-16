@@ -8,8 +8,10 @@ from os import listdir
 from os.path import isfile, join
 from werkzeug import secure_filename
 import pickle, theano, pandas as pd, numpy as np
+import matplotlib as pyplot
 from keras import optimizers
 from keras.models import load_model, model_from_json
+import matplotlib.pyplot as plt
 import os
 
 # print os.environ['DISPLAY']
@@ -17,7 +19,7 @@ import os
 
 sys.path.insert(0, '../src')
 from img_preprocess_web import process_image
-from my_utils import image_categories_reverse, beautify_name, make_db
+from my_utils import image_categories_reverse, beautify_name, make_db, crop_thumbnail
 
 sys.setrecursionlimit(1000000)
 
@@ -102,11 +104,28 @@ def score():
             common3 = common3.values[0]
 
             img1 = str(flower_dict[idx1][0])
+            # img1 = crop_thumbnail(img1, (3024, 3024))
+            # img1 = plt.imshow(img1.astype(float))
+
             img2 = str(flower_dict[idx2][0])
+            # img2 = crop_thumbnail(img2, (3024, 3024))
+            # img2 = plt.imshow(img2.astype(float))
+
             img3 = str(flower_dict[idx3][0])
+            # img3 = crop_thumbnail(img3, (3024, 3024))
+            # img3 = plt.imshow(img3.astype(float))
+
+            family1 = flower_df[flower_df[0]==idx1]['family']
+            family1 = family1.values[0]
+
+            family2 = flower_df[flower_df[0]==idx2]['family']
+            family2 = family2.values[0]
+
+            family3 = flower_df[flower_df[0]==idx3]['family']
+            family3 = family3.values[0]
 
     return render_template('score.html',
-    img1 = img1, species1=species1, common1=common1, top_proba_str=top_proba_str, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str)
+    img1 = img1, species1=species1, common1=common1, top_proba_str=top_proba_str, family1=family1, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, family2=family2, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str, family3=family3)
 
 
 

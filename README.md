@@ -1,4 +1,5 @@
-# Colorado Wildflower Classification from Mobile Phone Images
+# Wildflower Finder
+### Image Classification from Mobile Phone Images
 
 ![](https://cloud.githubusercontent.com/assets/17363251/26757751/d79740ea-4884-11e7-8c55-51cadfe08fb4.jpg)
 <sup>Images &copy; Jennifer Waller 2017</sup>
@@ -15,7 +16,7 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 #### Baseline Model
 
-* Basic CNN using Keras, trained on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. Included only in-focus images. Removed images that were very similar. Images resized to 120 x 90. Training accuracy was .88. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
+* Basic CNN using Keras, trained on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. Included only in-focus images. Removed images that were very similar. Images resized to 120 x 90. Accuracy was .88. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
 
     ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
 
@@ -31,7 +32,23 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 ![](https://user-images.githubusercontent.com/17363251/26950488-04433fc0-4c5b-11e7-8746-2f0fe0c5f13a.jpg)
 
-Using all data (not only 'nice' shots)(n = 1,526 images from 13 classes):
+Using all data (not only 'nice' shots):
+
+* 1,526 images / 13 types of flowers:
+    * Achillea lanulosa:        117
+    * Adenolinum lewissi        184
+    * Alyssum parviflorum       145
+    * Arnica cordifolia         80
+    * Cerastium arvense         172
+    * Delphinium nuttallianum   65
+    * Harbouria trachypleura    73
+    * Lonicera tatarica         132
+    * Mertensia lanceolata      156
+    * Padus virginiana          156
+    * Penstemon virens          127
+    * Phlox longifolia          71
+    * Senecio integerrimus      48
+
 * Set aside 20% of data (n = 306) for validation data set
 * Trained model with train/test split (80% train) of remaining images (n = 1,220)
     * Model accuracy on validation data: .98

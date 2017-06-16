@@ -32,6 +32,8 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 * Current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., Imagenet). One of the newest advances in deep networks is residual neural networks (i.e., ResNet). These differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. This prevents oversaturation of the model (and overfitting on training data with resulting accuracy loss on validation data) that results from having a lot of layers in a more traditional CNN.
 
+<img src="https://user-images.githubusercontent.com/17363251/27237890-048256dc-5288-11e7-9bf7-22187d02f122.png" alt="" width="300" height="500">
+
 ![](https://user-images.githubusercontent.com/17363251/27237890-048256dc-5288-11e7-9bf7-22187d02f122.png){:class="img-responsive"}
 ![](https://user-images.githubusercontent.com/17363251/27237890-048256dc-5288-11e7-9bf7-22187d02f122.png){:height="50%" width="50%"}
 ![](https://user-images.githubusercontent.com/17363251/27237890-048256dc-5288-11e7-9bf7-22187d02f122.png){:height="700px" width="400px"}

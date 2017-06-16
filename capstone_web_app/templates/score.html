@@ -16,30 +16,16 @@
     <div class="row">
         <div class="col-md-1 "></div>
         <div class="col-md-2">
-            <img src='{{ data[0] }}' width="200" height="267"/>
+            <img src='{{ img1 }}' width="200" height="267"/>
         </div>
-        <!-- <div class="col-md-1">
-            <div class="container">
-            <div class="progress vertical">
-              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: {{ data[1] }}%;">
-              </div>
-            </div>
-        </div> -->
         <div class="col-md-1 "></div>
         <div class="col-md-4 .col-xs-6">
-            <h3>{{ data[1] }}</h3>
-            <h4>{{ data[2] }}</h4>
-            <!-- <dl class="dl-horizontal">
-              <dt>Latin Name</dt>
-              <dd>{{ data[0] }}</dd>
-              <dt>Common Name</dt>
-              <dd>(common name)</dd>
-              <dt>Description</dt>
-              <dd>(description)</dd>
-            </dl> -->
+            <h3>{{ species1 }}</h3>
+            <h4>{{ common1 }}</h4>
+
         </div>
         <div class="col-md-2">
-            <h2>{{ data[3] }}</h2>
+            <h2>{{ top_proba_str }}</h2>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -47,21 +33,15 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <img src='{{ data[4] }}' width="200" height="267"/>
+            <img src='{{ img2 }}' width="200" height="267"/>
         </div>
         <div class="col-md-1 "></div>
-        <div class="col-md-4">
-            <dl class="dl-horizontal">
-              <dt>Latin Name</dt>
-              <dd>{{ data[5] }}</dd>
-              <dt>Common Name</dt>
-              <dd>{{ data[6]}}</dd>
-              <!-- <dt>Description</dt>
-              <dd>(description)</dd> -->
-            </dl>
+        <div class="col-md-4 .col-xs-6">
+            <h3>{{ species2 }}</h3>
+            <h4>{{ common2 }}</h4>
         </div>
         <div class="col-md-2">
-            <h3>{{ data[7] }}</h3>
+            <h2>{{ second_proba_str }}</h2>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -73,24 +53,18 @@
         </div>
         <div class="col-md-1 "></div>
         <div class="col-md-4">
-            <dl class="dl-horizontal">
-              <dt>Latin Name</dt>
-              <dd>{{ species3 }}</dd>
-              <dt>Common Name</dt>
-              <dd>{{ common3 }}</dd>
-              <!-- <dt>Description</dt>
-              <dd>(description)</dd> -->
-            </dl>
+            <h3>{{ species3 }}</h3>
+            <h4>{{ common3 }}</h4>
         </div>
         <div class="col-md-2">
-            <h3>{{ third_proba_str }}</h3>
+            <h2>{{ third_proba_str }}</h2>
         </div>
         <div class="col-md-2"></div>
     </div>
 
-        <left><h1 id="results-text">1. {{ data[0] }}, {{ data[1] }}</h1></center>
-        <left><h1 id="results-text">2. {{ data[2]}}, {{ data[3] }}</h1></center>
-        <left><h1 id="results-text">3. {{ data[4] }}, {{ data[5] }}</h1></center>
+        <left><h1 id="results-text">1. {{ species1 }}, {{ top_proba_str }}</h1></center>
+        <left><h1 id="results-text">2. {{ species2 }}, {{ second_proba_str }}</h1></center>
+        <left><h1 id="results-text">3. {{ species3 }}, {{ third_proba_str }}</h1></center>
 
     <br>
     <!-- <img src="{{ url_for('static', filename='img/players/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg') }}"> -->

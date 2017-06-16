@@ -79,6 +79,7 @@ def score():
             idx1 = cats[top_prediction]
             species1 = beautify_name(idx1)
             common1 = flower_df[flower_df[0]==idx1]['common_names']
+            common1 = common1.values[0]
 
             order = np.argsort(prediction)[0]
 
@@ -89,6 +90,7 @@ def score():
             idx2 = cats[second_prediction]
             species2 = beautify_name(idx2)
             common2 = flower_df[flower_df[0]==idx2]['common_names']
+            common2 = common2.values[0]
 
             third_prediction = order[-3]
             # third_proba = '{}\%'.format(round(prediction[0][third_prediction], 0)*100)
@@ -97,12 +99,14 @@ def score():
             idx3 = cats[third_prediction]
             species3 = beautify_name(idx3)
             common3 = flower_df[flower_df[0]==idx3]['common_names']
+            common3 = common3.values[0]
 
-            img1 = str(flower_dict[species1])
-            img2 = str(flower_dict[species2])
-            img3 = str(flower_dict[species3])
+            img1 = str(flower_dict[idx1][0])
+            img2 = str(flower_dict[idx2][0])
+            img3 = str(flower_dict[idx3][0])
 
-    return render_template('score.html', img3, species3, common3, third_proba_str, data=[img1, species1, common1, top_proba_str, img2, species2, common2, second_proba_str])
+    return render_template('score.html',
+    img1 = img1, species1=species1, common1=common1, top_proba_str=top_proba_str, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str)
 
 
 

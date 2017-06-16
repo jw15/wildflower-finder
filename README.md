@@ -22,7 +22,7 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 #### ResNet50
 
-* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species.
+* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species. ResNet50 was trained on the Imagenet data, containing millions of images of objects.
 
 * Image Preprocessing: Resize (to 256x256), center/crop (to 224x224), and normalize images
 
@@ -51,7 +51,10 @@ Using all data (not only 'nice' shots):
 
 * Set aside 20% of data (n = 306) for validation data set
 * Trained model with train/test split (80% train) of remaining images (n = 1,220)
-    * Model accuracy on validation data: .98
+    * Model accuracy on validation data: .97
+    * Misclassified 4/306 flowers
+
+![](https://user-images.githubusercontent.com/17363251/27237307-dfb1768c-5285-11e7-8986-8b2455a2a988.png)
 
 <!-- Concerned that using all data leaves in some images that are very similar (e.g., when I tried repeatedly to take a nice shot and thus have 2 or 3 very similar images), so removed images that were very similar.  -->
 

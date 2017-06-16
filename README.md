@@ -35,7 +35,10 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 Using all data (not only 'nice' shots):
 
 * 1,526 images / 13 types of flowers:
-    * Achillea lanulosa:        117
+
+| Flower Species | Images |
+| ---------------------------------- | ------- |
+| Achillea lanulosa| 117 |
     * Adenolinum lewissi        184
     * Alyssum parviflorum       145
     * Arnica cordifolia         80

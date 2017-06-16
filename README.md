@@ -33,8 +33,18 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 * Current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., Imagenet). One of the newest advances in deep networks is residual neural networks (i.e., ResNet). These differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. This prevents oversaturation of the model (and overfitting on training data with resulting accuracy loss on validation data) that results from having a lot of layers in a more traditional CNN.
 
 ![](https://user-images.githubusercontent.com/17363251/27237890-048256dc-5288-11e7-9bf7-22187d02f122.png)
+Image from [http://felixlaumon.github.io/2015/01/08/kaggle-right-whale.html](http://felixlaumon.github.io/2015/01/08/kaggle-right-whale.html)
 
 * Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species. ResNet50 was trained on the Imagenet data, containing millions of images of objects.
+
+    * Base model = ResNet50 trained on Imagenet dataset
+    * Fully connnected layers are specific to this project;
+        1. Flatten
+        2. Dense (activation = relu)
+        3. Dense (matches shape of 13 flower classes, activation=softmax)
+        4. Compiling model:
+            * Optimizer = SGD
+            * Loss = categorical crossentropy
 
 * Image Preprocessing: Resize (to 256x256), center/crop (to 224x224), and normalize images
 
@@ -68,6 +78,7 @@ Using all data (not only 'nice' shots):
 * Trained model with train/test split (80% train) of remaining images (n = 1,220)
     * Model accuracy on validation data: .97
     * Misclassified 4/306 flowers
+    * Accuracy with random guessing, given the class imbalance, would be .09.
 
 ![](https://user-images.githubusercontent.com/17363251/27237307-dfb1768c-5285-11e7-8986-8b2455a2a988.png)
 

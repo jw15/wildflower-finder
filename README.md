@@ -61,6 +61,7 @@ Using all data (not only 'nice' shots):
 
 ### Future Directions:
 
+* Web App!
 * Include images from cameras other than my iPhone 6.
 * Experiment with other pre-trained deep learning models.
 * Try bagging of multiple deep networks.

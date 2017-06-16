@@ -11,12 +11,13 @@ import pickle, theano, pandas as pd, numpy as np
 from keras import optimizers
 from keras.models import load_model, model_from_json
 import os
+
 # print os.environ['DISPLAY']
 
 
 sys.path.insert(0, '../src')
 from img_preprocess_web import process_image
-from utils import image_categories_reverse
+from my_utils import image_categories_reverse, beautify_name, make_db
 
 sys.setrecursionlimit(1000000)
 
@@ -70,43 +71,38 @@ def score():
             prepared_image = process_image('../{}'.format(file_path))
             # add something here to check if file is an image array/ check if RGB
             prediction = model.predict(prepared_image)
+
             top_prediction = np.argmax(prediction)
             top_proba = prediction[0][top_prediction]
             top_proba = round((top_proba*100), 2)
             top_proba_str = '{}%'.format(top_proba)
-            top_species = cats[top_prediction]
+            idx1 = cats[top_prediction]
+            species1 = beautify_name(idx1)
+            common1 = flower_df[flower_df[0]==idx1]['common_names']
+
             order = np.argsort(prediction)[0]
+
             second_prediction = order[-2]
             second_proba = round((prediction[0][second_prediction]*100), 2)
             second_proba_str = '{}%'.format(second_proba)
             # second_proba = '{}\%'.format(round(prediction[0][second_prediction], 0)*100)
-            second_species = cats[second_prediction]
+            idx2 = cats[second_prediction]
+            species2 = beautify_name(idx2)
+            common2 = flower_df[flower_df[0]==idx2]['common_names']
 
             third_prediction = order[-3]
             # third_proba = '{}\%'.format(round(prediction[0][third_prediction], 0)*100)
             third_proba = round((prediction[0][third_prediction]*100), 2)
             third_proba_str = '{}%'.format(third_proba)
-            third_species = cats[third_prediction]
-            img1 = str(flower_dict[top_species])
+            idx3 = cats[third_prediction]
+            species3 = beautify_name(idx3)
+            common3 = flower_df[flower_df[0]==idx3]['common_names']
 
-            # img1 = url(img1)
-            img2 = str(flower_dict[second_species])
-            # img2 = url(img2)
-            img3 = str(flower_dict[third_species])
-            # img3 = url(img3)
-            # top_three = order[-3:]
-            # top_three = top_three.tolist()
-            # top_five = order[-5:]
-            # top_five = top_five.tolist()
-            # top_five_list = []
-            # for result in top_five:
-            #     result = int(result)
-            #     species = cats[result]
-            #     top_five_list.append(species)
-            # top_five_list = top_five_list[::-1]
-            # print(top_species)
-            # print(top_five_list)
-    return render_template('score.html', data=[top_species, top_proba_str, second_species, second_proba_str, third_species, third_proba_str, img1, img2, img3])
+            img1 = str(flower_dict[species1])
+            img2 = str(flower_dict[species2])
+            img3 = str(flower_dict[species3])
+
+    return render_template('score.html', img3, species3, common3, third_proba_str, data=[img1, species1, common1, top_proba_str, img2, species2, common2, second_proba_str])
 
 
 
@@ -114,6 +110,7 @@ if __name__ == '__main__':
     print('Loading model...')
     # sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
     model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
+    flower_df = make_db()
 
     #  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
     # model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')

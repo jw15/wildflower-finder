@@ -70,10 +70,15 @@ def score():
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename )
             file.save(file_path)
-            preview_img = file_path
+
             prepared_image = process_image('../{}'.format(file_path))
             # add something here to check if file is an image array/ check if RGB
             prediction = model.predict(prepared_image)
+
+            # move file to static folder for preview
+            upload_view_path = 'static/images/uploaded/{}'.format(filename)
+            os.rename(file_path, upload_view_path)
+
 
             top_prediction = np.argmax(prediction)
             top_proba = prediction[0][top_prediction]
@@ -126,7 +131,7 @@ def score():
             family3 = family3.values[0]
 
     return render_template('score.html',
-    img1 = img1, preview_img=preview_img, species1=species1, common1=common1, top_proba_str=top_proba_str, family1=family1, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, family2=family2, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str, family3=family3)
+    img1 = img1, preview_img=upload_view_path, species1=species1, common1=common1, top_proba_str=top_proba_str, family1=family1, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, family2=family2, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str, family3=family3)
 
 
 

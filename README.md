@@ -64,11 +64,19 @@ Using all data (not only 'nice' shots):
 ![](https://user-images.githubusercontent.com/17363251/27403825-1685cdd2-5689-11e7-9e4f-0eacba2e0c9c.jpg)
 * Set aside 20% of data (n = 306) for validation data set
 * Trained model with train/test split (80% train) of remaining images (n = 1,220)
-    * Model accuracy on validation data: .97
-    * Misclassified 4/306 flowers
-    * Accuracy with random guessing, given the class imbalance, would be .09.
 
 ![](https://user-images.githubusercontent.com/17363251/27237307-dfb1768c-5285-11e7-8986-8b2455a2a988.png)
+
+### Results
+
+* Accuracy with random guessing, given the class imbalance, would be .09.
+* Model accuracy on validation data: .97
+    * 97% accuracy is pretty good!
+    * Only misclassified 4/306 flowers
+
+![](https://user-images.githubusercontent.com/17363251/27405111-8bbdf6d4-568d-11e7-9066-4d97988cb0be.png)
+
+* The misclassified images look like they were challenging cases (i.e., side views (rare), blurred images, unusual bloom appearance for a given class).
 
 ### See WildflowerFinder in Action!
 

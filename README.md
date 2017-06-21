@@ -59,22 +59,7 @@ Using all data (not only 'nice' shots):
 
 * 1,526 images / 13 types of flowers:
 
-| Flower Species | Images |
-| ---------------------------------- | ------- |
-| Achillea lanulosa| 117 |
-| Adenolinum lewissi | 184 |
-| Alyssum parviflorum | 145 |
-| Arnica cordifolia | 80 |
-| Cerastium arvense | 172 |
-| Delphinium nuttallianum | 65 |
-| Harbouria trachypleura | 73 |
-| Lonicera tatarica | 132 |
-| Mertensia lanceolata | 156 |
-| Padus virginiana | 156 |
-| Penstemon virens | 127 |
-| Phlox longifolia | 71 |
-| Senecio integerrimus | 48 |
-
+![](https://user-images.githubusercontent.com/17363251/27403825-1685cdd2-5689-11e7-9e4f-0eacba2e0c9c.jpg)
 * Set aside 20% of data (n = 306) for validation data set
 * Trained model with train/test split (80% train) of remaining images (n = 1,220)
     * Model accuracy on validation data: .97

@@ -105,10 +105,14 @@ I hoped to be able to use gps location to improve model accuracy by allowing 'vo
 Python (Numpy, Pandas, Keras, Theano, Scikit­-Learn, OpenCV, PIL, SciKit-­Image, Flask), AWS (EC2, S3), ImageMagick
 
 ### References
+<!--
+Dodge, S., & Karam, L. (2016). Understanding how image quality affects deep neural networks. [(https://arxiv.org/pdf/1604.04004.pdf)](https://arxiv.org/pdf/1604.04004.pdf) -->
+<!--
+Jaderberg, M., Simonyan, K., Zisserman, A., & Kavukcuoglu, K. (2016). Spatial transformer networks. [(https://arxiv.org/pdf/1506.02025.pdf)](https://arxiv.org/pdf/1506.02025.pdf) -->
 
-Dodge, S., & Karam, L. (2016). Understanding how image quality affects deep neural networks. [(https://arxiv.org/pdf/1604.04004.pdf)](https://arxiv.org/pdf/1604.04004.pdf)
-
-Jaderberg, M., Simonyan, K., Zisserman, A., & Kavukcuoglu, K. (2016). Spatial transformer networks. [(https://arxiv.org/pdf/1506.02025.pdf)](https://arxiv.org/pdf/1506.02025.pdf)
+He, K., Zhang, X., Ren, S., & Sun, J. (2015). Deep residual learning for image recognition. arXiv.org. [(https://arxiv.org/abs/1512.03385)](https://arxiv.org/abs/1512.03385)
 
 Simonyan, K., & Zisserman, A. (2015). Very deep convolutional networks for large­scale image recognition. Published as conference paper at ICLR. [(https://arxiv.org/pdf/1409.1556.pdf)](https://arxiv.org/pdf/1409.1556.pdf)
 Package: [(https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
+
+ Sulc, M., Mishkin, D., & Matas, J. (2016). Very deep residual networks with MaxOut for plant identification in the wild. [(http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)

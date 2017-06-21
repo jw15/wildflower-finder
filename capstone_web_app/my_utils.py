@@ -7,7 +7,6 @@ import pickle, theano, pandas as pd, numpy as np
 from keras import optimizers
 from keras.models import load_model, model_from_json
 from collections import defaultdict
-from pymongo import MongoClient
 import cv2
 
 

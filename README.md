@@ -13,7 +13,7 @@ Example: Pl@ntNet attempt to identify Delphinium:
 
 ![](https://user-images.githubusercontent.com/17363251/27239801-a2692752-528f-11e7-9625-ba15fa810135.jpg)
 
-As of 6/15/17, iNaturalist announced plans to release image classification as part of their nature reporting app ([https://www.inaturalist.org/](https://www.inaturalist.org/))
+<!-- As of 6/15/17, iNaturalist announced plans to release image classification as part of their nature reporting app ([https://www.inaturalist.org/](https://www.inaturalist.org/)) -->
 
 It seems reasonable that a model trained primarily on images of flora prevalent in the Front Range of Colorado would be more likely to correctly identify images of local wildflowers than global apps trained on flora located primarily in other regions of the world. The primary aim of this project is to develop a model for classification of wildflowers native to the Front Range in Colorado. A secondary aim is to develop a model that, in future, could take advantage of metadata provided by users of a mobile app while photographing wildflowers in order to provide more accurate classifications.
 
@@ -68,17 +68,20 @@ Using all data (not only 'nice' shots):
 
 ![](https://user-images.githubusercontent.com/17363251/27237307-dfb1768c-5285-11e7-8986-8b2455a2a988.png)
 
+### See WildflowerFinder in Action!
+
+[wildflowerfinder.com](http://wildflowerfinder.com)
+
 <!-- Concerned that using all data leaves in some images that are very similar (e.g., when I tried repeatedly to take a nice shot and thus have 2 or 3 very similar images), so removed images that were very similar.  -->
 
 
-### Future Directions:
+### Future Directions
 
-* Web App!
-* Include images from cameras other than my iPhone 6.
-* Experiment with other pre-trained deep learning models.
-* Try bagging of multiple deep networks.
-* Object recognition
-* Cluster images by geotags?
+* Add more classes/more images
+* Include images from cameras other than my iPhone 6
+* Bagging of multiple deep networks to improve accuracy with more classes
+* Object recognition: automated cropping
+* Cluster images by geotags
 
 
 <!-- ### Geotagged Images
@@ -89,7 +92,7 @@ I hoped to be able to use gps location to improve model accuracy by allowing 'vo
 
 ### Tools
 
-Python (Numpy, Pandas, Keras, Theano, Scikit­-Learn, OpenCV, PIL, SciKit-­Image, Flask, possibly BeautifulSoup), AWS (EC2, S3), ImageMagick
+Python (Numpy, Pandas, Keras, Theano, Scikit­-Learn, OpenCV, PIL, SciKit-­Image, Flask), AWS (EC2, S3), ImageMagick
 
 ### References
 

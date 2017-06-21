@@ -30,13 +30,13 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 #### ResNet50
 
-* Current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., Imagenet). One of the newest advances in deep networks is residual neural networks (i.e., ResNet). These differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. This prevents oversaturation of the model (and underfitting on training data) that results from having a lot of layers in a more traditional CNN.
+* Current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., ImageNet ([http://www.image-net.org/](http://www.image-net.org/))). One of the newest advances in deep networks is residual neural networks (i.e., ResNet). These differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. This prevents oversaturation of the model (and underfitting on training data) that results from having a lot of layers in a more traditional CNN.
 
 ![](https://user-images.githubusercontent.com/17363251/27404074-fd52f01e-5689-11e7-9a5b-52705745c26f.png)
 
 Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://arxiv.org/abs/1512.03385)
 
-* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species. ResNet50 was trained on the Imagenet data, containing millions of images of objects.
+* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species. ResNet50 was trained on millions of images of objects, so it is already trained to detect basic features in objects (e.g., edges, colors). By adding fully connected layers specific to the wildflower data, we essentially fine tune ResNet50 to apply its understanding of basic objects to identify features that distinguish our 13 classes of flowers.
 
     * Base model = ResNet50 trained on Imagenet dataset
     * Fully connnected layers are specific to this project;

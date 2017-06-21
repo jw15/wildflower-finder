@@ -8,9 +8,14 @@ h1 {
     font-size: 22px;
 }
 
-.nav-link {
+.nav-link-header {
     font-size: 22px;
     margin-left: 20px;
+}
+
+.nav-link {
+    font-size: 22px;
+    margin-left: 0px;
 }
 
 #index-background {
@@ -25,6 +30,27 @@ h1 {
     color: #5e124d !important;
     width: 50%;
     height: 40%;
+    color: blue;
+    padding-top: 30px;
+    margin-top: 100px;
+    background-color: #f7f7f9; !important;
+    opacity: 0.7;
+    background-size: 10%;
+    z-index: 1;
+}
+
+#index-background-contact {
+    background-size: cover;
+    background-position: 0% 100%;
+    min-height: 100%;
+    background-image: url(../images/IMG_5147.png);
+}
+
+#index-jumbo-contact {
+    text-align: left;
+    color: #5e124d !important;
+    width: 50%;
+    height: 50%;
     color: blue;
     padding-top: 30px;
     margin-top: 100px;

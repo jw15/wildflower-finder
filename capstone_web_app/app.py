@@ -159,5 +159,5 @@ if __name__ == '__main__':
     # print(type(flower_cats))
     cats = flower_cats.tolist()
     print('Running app')
-    app.run(host='0.0.0.0', port=8105, threaded=True, debug=False)
+    app.run(host='0.0.0.0', port=80, threaded=True, debug=False)
     # flowermap = download_file('flowermap.html')

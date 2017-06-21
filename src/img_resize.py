@@ -12,8 +12,9 @@ def my_image_rename(img_root):
     '''Renames files without spaces in the name"'''
     pathiter = (os.path.join(img_root, name) for root, subdirs, files in os.walk(img_root) for name in files)
     for path in pathiter:
-        newname = path.replace(" ", "")
-        newname = path.replace("-", "_")
+        # newname = path.replace(" ", "")
+        # newname = path.replace("-", "_")
+        newname = path.replace("_200", "")
         # newname = path.replace(" ", "")
         # newname = path.replace("-", "_")
         # newname = path.replace("arnica_jpg", "sand_lily")
@@ -35,7 +36,7 @@ def my_image_resize(basewidth, img_root, target_root):
                 wpercent = (basewidth / float(img.size[0]))
                 hsize = int((float(img.size[1]) * float(wpercent)))
                 img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-                img.save('{}/{}_{}.png'.format(target_root, name[:-4], basewidth))
+                img.save('{}/{}.jpg'.format(target_root, name[:-4]))
 
 
 if __name__ == '__main__':

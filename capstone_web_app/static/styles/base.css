@@ -71,6 +71,9 @@ h1 {
     background-color: #771076;
 }
 
+#icon_link {
+    font="Helvetica";
+}
 
 .bottom-img {
     /*z-index: 1;*/

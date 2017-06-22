@@ -102,6 +102,8 @@ I hoped to be able to use gps location to improve model accuracy by allowing 'vo
 
 ### Tools
 
+![](https://user-images.githubusercontent.com/17363251/27443877-b73a3378-5731-11e7-87b8-643925a8c7b2.png)
+
 Python (Numpy, Pandas, Keras, Theano, Scikit­-Learn, OpenCV, PIL, SciKit-­Image, Flask), AWS (EC2, S3), ImageMagick
 
 ### References

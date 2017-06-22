@@ -133,13 +133,16 @@ def score():
     return render_template('score.html',
     img1 = img1, preview_img=upload_view_path, species1=species1, common1=common1, top_proba_str=top_proba_str, family1=family1, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, family2=family2, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str, family3=family3)
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 
 if __name__ == '__main__':
     print('Loading model...')
     # sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-    model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
-    flower_df = make_db()
+    '''model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
+    flower_df = make_db()'''
 
     #  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
     # model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
@@ -154,10 +157,10 @@ if __name__ == '__main__':
     # # load weights into new model
     # loaded_model.load_weights("../model_outputs/ResNet50_1497216607_2807329.h5")
     print("Loaded model from disk")
-    flower_cats = np.load('classes.npy')
+    '''flower_cats = np.load('classes.npy')'''
     # flower_cats = np.loadtxt('../model_outputs/ResNet50_1497216607_2807329/flower_count_df.pkl', delimiter=',')
     # print(type(flower_cats))
-    cats = flower_cats.tolist()
+    '''cats = flower_cats.tolist()'''
     print('Running app')
     app.run(host='0.0.0.0', port=80, threaded=True, debug=False)
     # flowermap = download_file('flowermap.html')

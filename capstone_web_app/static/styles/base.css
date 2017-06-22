@@ -22,7 +22,7 @@ h1 {
     background-size: cover;
     background-position: 0% 100%;
     min-height: 100%;
-    background-image: url(../images/bluebells_landscape.jpg);
+    background-image: url(../images/bluebells_landscape_smaller.jpg);
 }
 
 #index-jumbo {
@@ -43,7 +43,7 @@ h1 {
     background-size: cover;
     background-position: 0% 100%;
     min-height: 100%;
-    background-image: url(../images/IMG_5147.png);
+    background-image: url(../images/alyssum.jpg);
 }
 
 #index-jumbo-contact {
@@ -54,7 +54,8 @@ h1 {
     color: blue;
     padding-top: 30px;
     margin-top: 100px;
-    background-color: #f7f7f9; !important;
+    /*background-color: #f7f7f9; !important;*/
+    background-color: #fcfcff; !important;
     opacity: 0.7;
     background-size: 10%;
     z-index: 1;
@@ -69,6 +70,11 @@ h1 {
     text-align: center;
     color: #f7f7f9;
     background-color: #771076;
+}
+
+#submit-button {
+    text-align: center;
+    font-size: 22px;
 }
 
 #icon_link {

@@ -30,6 +30,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- ************************************   JQuery **************************************** -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <title>{% block title %}{% endblock %} - WildflowerFinder</title>
     {% endblock %}
@@ -52,10 +53,10 @@
     <br>
 
     <div id="content">{% block content %}{% endblock %}</div>
-    <!-- <div id="footer">
+    <div id="footer">
       {% block footer %}
-      &copy; Copyright 2017 by <a href="http://domain.invalid/">JMW</a>.
+      &copy; Copyright 2017 Jennifer Waller. All rights reserved.
       {% endblock %}
-    </div> -->
+    </div>
   </body>
 </html>

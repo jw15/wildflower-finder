@@ -4,6 +4,7 @@
     <!-- Latest compiled and minified CSS -->
 
     <!-- ************************************ Bootstrap ************************************ -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon2.ico') }}">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -21,6 +22,12 @@
     <!-- ************************************ Bootstrap   ************************************ -->
     <!-- ************************************   CSS   **************************************** -->
 
+    <!-- IE10 viewport hack: -->
+    <link href="{{url_for('static', filename='css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+
+    <!-- Link for navbar  -->
+    <!-- <link href= "{{url_for('static', filename='css/navbar-static-top.css') }}" rel="stylesheet"> -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
 
     <!-- ************************************   CSS   **************************************** -->
@@ -30,23 +37,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- ************************************   JQuery **************************************** -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-    <title>{% block title %}{% endblock %} - WildflowerFinder</title>
+
+    <title>{% block title %}{% endblock %} WildflowerFinder</title>
     {% endblock %}
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-      <div class="container">
+      <!-- <div class="container-fluid">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+    </div> -->
                 <a class="navbar-brand" href="/">
                     Home
                 </a>
             </div>
 
         <ul class="nav navbar-nav navbar-right">
+          <li><a class="nav-link-header" href="/species">Supported Species</a></li>
           <li><a class="nav-link" href="https://github.com/jw15/wildflower-finder" target="_blank">How It Works</a></li>
           <li><a class="nav-link-header" href="/contact">About</a></li>
+
       </div>
     </nav>
     <br>

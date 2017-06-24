@@ -8,7 +8,7 @@ from os import listdir
 from os.path import isfile, join
 from werkzeug import secure_filename
 import pickle, theano, pandas as pd, numpy as np
-import matplotlib as pyplot
+# import matplotlib as pyplot
 from keras import optimizers
 from keras.models import load_model, model_from_json
 import matplotlib.pyplot as plt
@@ -20,6 +20,8 @@ import os
 sys.path.insert(0, '../src')
 from img_preprocess_web import process_image
 from my_utils import image_categories_reverse, beautify_name, make_db, crop_thumbnail
+# from memory_profiler import profile
+
 
 sys.setrecursionlimit(1000000)
 
@@ -35,6 +37,11 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['MAX_CONTENT_PATH'] = 4000000
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 3
+
+# @profile
+# def load_model_mine(path):
+#     model = load_model(path)
+#     return model
 
 @app.route('/')
 def index():
@@ -137,12 +144,28 @@ def score():
 def contact():
     return render_template('contact.html')
 
+@app.route('/species', methods=['GET', 'POST'])
+def species():
+    return render_template('species.html')
+# def species():
+#     species_names = []
+#     common_names = []
+#     species_imgs = []
+#     for idx in cats:
+#         species_name = beautify_name(idx)
+#         common_name = flower_df[flower_df[0]==idx]['common_names']
+#         common_name = common_name.values[0]
+#         species_img = str(flower_dict[idx][0])
+
 
 if __name__ == '__main__':
     print('Loading model...')
     # sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-    '''model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
-    flower_df = make_db()'''
+    # model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
+    flower_df = make_db()
+    flower_dict = image_categories_reverse()
+    '''path = '../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5'
+    model = load_model_mine(path)'''
 
     #  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
     # model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
@@ -157,10 +180,10 @@ if __name__ == '__main__':
     # # load weights into new model
     # loaded_model.load_weights("../model_outputs/ResNet50_1497216607_2807329.h5")
     print("Loaded model from disk")
-    '''flower_cats = np.load('classes.npy')'''
+    flower_cats = np.load('classes.npy')
     # flower_cats = np.loadtxt('../model_outputs/ResNet50_1497216607_2807329/flower_count_df.pkl', delimiter=',')
     # print(type(flower_cats))
-    '''cats = flower_cats.tolist()'''
+    cats = flower_cats.tolist()
     print('Running app')
     app.run(host='0.0.0.0', port=80, threaded=True, debug=False)
     # flowermap = download_file('flowermap.html')

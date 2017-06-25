@@ -1,0 +1,58 @@
+.square {
+    float:left;
+    position: relative;
+    width: 30%;
+    padding-bottom : 30%; /* = width for a 1:1 aspect ratio */
+    margin:1%;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+}
+
+#bottom {
+    clear:both;
+    margin:0 1.66%;
+    width:89.68%;
+    padding: 3.5%;
+    background-color:#1E1E1E;
+    color: #fff;
+}
+#bottom p{
+    text-align:center;
+    line-height:2em;
+}
+#bottom a{
+    color: #000;
+    text-decoration:none;
+    border:1px solid #000;
+    padding:10px 20px;
+    line-height:70px;
+    background:#ccc;
+
+    /*-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;*/
+}
+
+#bottom a:hover{
+    background:#ECECEC;
+    border:1px solid #fff;
+}
+
+.img_1-1{background-image:url('../images/img_dict_fullsize/achillea_lanulosa_23.jpg');}
+.img_1-2{background-image:url('../images/img_dict_fullsize/adenolinum_lewisii_148.jpg');}
+.img_1-3{background-image:url('../images/img_dict_fullsize/alyssum_parviflorum_30.jpg');}
+
+.img_2-1{background-image:url('../images/img_dict_fullsize/arnica_cordifolia_70.jpg');}
+.img_2-2{background-image:url('../images/img_dict_fullsize/cerastium_arvense_156.jpg');}
+.img_2-3{background-image:url('../images/img_dict_fullsize/delphinium_nuttallianum_25.jpg');}
+
+.img_3-1{background-image:url('../images/img_dict_fullsize/harbouria_trachypleura_33.jpg');}
+.img_3-2{background-image:url('../images/img_dict_fullsize/lonicera_tatarica_35.jpg');}
+.img_3-3{background-image:url('../images/img_dict_fullsize/mertensia_lanceolata_73.jpg');}
+
+.img_4-1{background-image:url('../images/img_dict_fullsize/padus_virginiana_24.jpg');}
+.img_4-2{background-image:url('../images/img_dict_fullsize/penstemon_virens_thumb.jpg');}
+.img_4-3{background-image:url('../images/img_dict_fullsize/phlox_longifolia_49.jpg');}
+
+.img_5-1{background-image:url('../images/img_dict_fullsize/senecio_integerrimus_39.jpg');}

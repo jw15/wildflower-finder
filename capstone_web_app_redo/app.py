@@ -1,22 +1,21 @@
 ''' Code adapted from Vitality templates from WrapBootstrap'''
 
-from flask import Flask, render_template, request, send_from_directory, make_response
+from flask import Flask, render_template, request, jsonify, send_from_directory, make_response
 from functools import wraps, update_wrapper
 from datetime import datetime
 import os, sys, re
-# from os import listdir
-# from os.path import isfile, join
-# from werkzeug import secure_filename
-# import pickle, theano, pandas as pd, numpy as np
-# import matplotlib as pyplot
-'''from keras import optimizers
+from os import listdir
+from os.path import isfile, join
+from werkzeug import secure_filename
+import pickle, theano, pandas as pd, numpy as np
+from keras import optimizers
 from keras.models import load_model, model_from_json
-import matplotlib.pyplot as plt'''
+import matplotlib.pyplot as plt
 
 
 sys.path.insert(0, '../src')
-# from img_preprocess_web import process_image
-# from my_utils import image_categories_reverse, beautify_name, make_db, crop_thumbnail
+from img_preprocess_web import process_image
+from my_utils import image_categories_reverse, beautify_name, make_db, crop_thumbnail
 
 sys.setrecursionlimit(1000000)
 
@@ -50,7 +49,7 @@ def download_file(filename):
 '''
 @app.route('/predict')
 def predict():
-    return render_template('predict.html')
+    return render_template('predict.html')'''
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -136,22 +135,22 @@ def score():
     return render_template('score.html',
     img1 = img1, preview_img=upload_view_path, species1=species1, common1=common1, top_proba_str=top_proba_str, family1=family1, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, family2=family2, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str, family3=family3)
 
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-@app.route('/species', methods=['GET', 'POST'])
-def species():
-    return render_template('species.html')'''
+# @app.route('/contact')
+# def contact():
+#     return render_template('contact.html')
+#
+# @app.route('/species', methods=['GET', 'POST'])
+# def species():
+#     return render_template('species.html')
 
 
 
 if __name__ == '__main__':
-    '''print('Loading model...')'''
+    print('Loading model...')
     # sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
     # model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
-    '''flower_df = make_db()
-    flower_dict = image_categories_reverse()'''
+    # flower_df = make_db()
+    # flower_dict = image_categories_reverse()
     '''path = '../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5'
     model = load_model_mine(path)'''
 
@@ -167,11 +166,11 @@ if __name__ == '__main__':
     # loaded_model = model_from_json(loaded_model_json)
     # # load weights into new model
     # loaded_model.load_weights("../model_outputs/ResNet50_1497216607_2807329.h5")
-    '''print("Loaded model from disk")'''
-    '''flower_cats = np.load('classes.npy')'''
+    print("Loaded model from disk")
+    flower_cats = np.load('classes.npy')
     # flower_cats = np.loadtxt('../model_outputs/ResNet50_1497216607_2807329/flower_count_df.pkl', delimiter=',')
     # print(type(flower_cats))
-    '''cats = flower_cats.tolist()'''
-    '''print('Running app')'''
+    cats = flower_cats.tolist()
+    print('Running app')
     app.run(host='0.0.0.0', port=8080, threaded=True, debug=False)
     # flowermap = download_file('flowermap.html')

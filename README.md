@@ -132,4 +132,5 @@ Package: [(https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)](https:/
 
  Šulc, M., Mishkin, D., & Matas, J. (2016). Very deep residual networks with MaxOut for plant identification in the wild. [(http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)
 
+
  &copy; Jennifer Waller 2017. All rights reserved.

@@ -31,9 +31,9 @@ Basic hand-written CNN using Keras with Theano backend, trained on photos taken 
     * 651 images representing 11 wildflower species/classes
     * Images resized to 120 x 90
 
-* <b>Results</b>: Accuracy was .88. Misclassified images were most commonly images confused as penstemon virens (suggesting that I needed more photos of penstemon virens) or images with a lot of foliage. This seemed to be due to the relative infrequency of zoomed-out images containing a lot of foliage within the data set, generally. To resolve this issue, I considered adding more zoomed-out images or simply using higher resolution images or cropping the images. The foliage-related misclassification issue is demonstrated by the images in Figure 1:
+* <b>Results</b>: Accuracy was .88. Misclassified images were most commonly images confused as penstemon virens (suggesting that I needed more photos of penstemon virens) or images with a lot of foliage. This seemed to be due to the relative infrequency of zoomed-out images containing a lot of foliage within the data set, generally. To resolve this issue, I considered adding more zoomed-out images or simply using higher resolution images or cropping the images. The foliage-related misclassification issue is demonstrated by the images below:
 
-    ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
+    ![](https://user-images.githubusercontent.com/17363251/27846464-bc9be920-60f4-11e7-9f1e-d6066ffebade.png)
 
 * <b>Next Steps</b>: A brief perusal of the literature related to image classification for flowers brought me to publications from recent successful teams in the PlantCLEF ([http://www.imageclef.org/lifeclef/2016/plant](http://www.imageclef.org/lifeclef/2016/plant)) annual competition. I was particularly interested in the possibility of using a deep residual network based on work from Sulc and colleagues ([http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)).  
 
@@ -45,7 +45,7 @@ The current standard for plant identification is fine tuning very deep networks 
 
 Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://arxiv.org/abs/1512.03385)
 
-* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)). ResNet50 was trained on millions of images of objects, so it is already trained to detect basic features in objects (e.g., edges, colors). By adding fully connected layers specific to the wildflower data, we essentially fine tune ResNet50 to apply its understanding of basic objects to identify features that distinguish our flower species/classes.
+* <b>Fine-tuning of pre-trained ResNet50</b> (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)). ResNet50 was trained on millions of images of objects, so it is already trained to detect basic features in objects (e.g., edges, colors). By adding fully connected layers specific to the wildflower data, we essentially fine tune ResNet50 to apply its understanding of basic objects to identify features that distinguish our flower species/classes.
 
     * <b>Base Model</b> = ResNet50 trained on Imagenet dataset
     * <b>Fully connected layers</b> are specific to this project:
@@ -64,13 +64,15 @@ Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://ar
 
 ![](https://user-images.githubusercontent.com/17363251/26950488-04433fc0-4c5b-11e7-8746-2f0fe0c5f13a.jpg)
 
-Using all data (not only 'nice' shots):
+* <b>Data</b>: Using all available data (including out of focus photos):
+    * 1,526 images / 13 species of flowers
 
-* 1,526 images / 13 species of flowers:
 
 ![](https://user-images.githubusercontent.com/17363251/27403825-1685cdd2-5689-11e7-9e4f-0eacba2e0c9c.jpg)
-* Set aside 20% of data (<i>n</i> = 306) for validation data set
-* Trained model with train/test split (80% train) of remaining images (<i>n</i> = 1,220)
+
+* <b>Training the Model</b>
+    * Set aside 20% of data (<i>n</i> = 306) for validation data set
+    * Trained model with train/test split (80% train) of remaining images (<i>n</i> = 1,220) on NVIDIA GPU using Amazon AWS EC2 instance.
 
 ![](https://user-images.githubusercontent.com/17363251/27237307-dfb1768c-5285-11e7-8986-8b2455a2a988.png)
 

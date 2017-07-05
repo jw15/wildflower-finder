@@ -1,14 +1,14 @@
 # Wildflower Finder
 [wildflowerfinder.com](http://wildflowerfinder.com)
 
-### Image Classification from Mobile Phone Images with Deep Learning
+## Image Classification from Mobile Phone Images with Deep Learning
 
 ![](https://cloud.githubusercontent.com/assets/17363251/26757751/d79740ea-4884-11e7-8c55-51cadfe08fb4.jpg)
 <sup>Images &copy; Jennifer Waller 2017</sup>
 
 This project uses convolutional neural nets to classify images of wildflowers found in Colorado's Front Range.
 
-### Motivation
+## Motivation
 Accurate identification of wildflowers is a task with relevance to both recreation and environmental management. Currently, there are several mobile apps designed to identify flowers using images; the best of these (e.g., [https://identify.plantnet-project.org/](https://identify.plantnet-project.org/)) is connected with an annual international competition for advancing techniques for plant classification from images. However, none of the extant plant identification apps are particularly accurate for identification of flowers in North America.
 
 Example: Pl@ntNet attempt to identify Delphinium nuttalianum, a plant commonly seen blooming in Colorado in early spring:
@@ -19,12 +19,12 @@ Example: Pl@ntNet attempt to identify Delphinium nuttalianum, a plant commonly s
 
 It seems reasonable that a model trained primarily on images of flora prevalent in the Front Range of Colorado would be more likely to correctly identify images of local wildflowers than global apps trained on flora located primarily in other regions of the world. The primary aim of this project is to develop a model for classification of wildflowers native to the Front Range in Colorado. A secondary aim is to develop a model that, in future, could take advantage of metadata provided by users of a mobile app while photographing wildflowers in order to provide more accurate classifications.
 
-### Data
+## Data
 Initially, I planned to collect images via web scraping. However, my preliminary efforts suggested that web scraping would be very time intensive as most websites with images of wildflowers have only a few images of each species. Additionally, when considering ways to improve upon existing flower identification apps, it seemed to me that having photographs tagged with date/time and GPS location could be potentially useful. In the long term, historical GPS and date/time information could be used to improve prediction of flower species; each species is more common in particular areas/elevations and at particular times of the year. More immediately, GPS information will permit clustering of photos by location, which will allow me to cluster images within observations (i.e., one plant = one observation), a strategy employed in the 2015 LifeCLEF challenge (for a summary, see [http://ceur-ws.org/Vol-1391/157-CR.pdf](http://ceur-ws.org/Vol-1391/157-CR.pdf)). For all these reasons, I chose to collect photographs of local wildflowers using my iPhone and a point and shoot camera. I also gathered mobile phone photos from friends and family.
 
-### Neural Nets
+## Neural Nets
 
-#### Baseline Model
+### Baseline Model
 
 Basic hand-written CNN using Keras with Theano backend, trained on photos taken with my iPhone 6s.
 * <b>Data</b>: For this model, I was pickier with images than in later attempts (see below); I only included images that were in focus and I removed images that were very similar.
@@ -37,7 +37,7 @@ Basic hand-written CNN using Keras with Theano backend, trained on photos taken 
 
 * <b>Next Steps</b>: A brief perusal of the literature related to image classification for flowers brought me to publications from recent successful teams in the PlantCLEF ([http://www.imageclef.org/lifeclef/2016/plant](http://www.imageclef.org/lifeclef/2016/plant)) annual competition. I was particularly interested in the possibility of using a deep residual network based on work from Sulc and colleagues ([http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)).  
 
-#### ResNet50
+### ResNet50
 
 The current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., ImageNet ([http://www.image-net.org/](http://www.image-net.org/))). One of the newer advances in deep networks is He and colleagues' residual neural network, ResNet ([https://arxiv.org/abs/1512.03385](https://arxiv.org/abs/1512.03385))). Deep networks have been of great interest to computer vision researchers because neural networks with more layers are able to recognize more features than those with fewer layers. Being able to recognize more features is very useful for differentiating objects with a lot of visual complexity, like flowers. However, traditional neural networks suffer from oversaturation when they have a lot of layers; they actually <i>underfit</i> on the training data. Residual networks differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. ResNet also passes the identity mapping past convolutional layers in parts of the model; this also reduces the chance of oversaturation.
 
@@ -76,7 +76,7 @@ Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://ar
 
 ![](https://user-images.githubusercontent.com/17363251/27237307-dfb1768c-5285-11e7-8986-8b2455a2a988.png)
 
-### Results
+## Results
 
 * Accuracy with random guessing, given the class imbalance, would be .09.
 * Model accuracy on validation data: .97
@@ -87,14 +87,14 @@ Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://ar
 
 * The misclassified images look like they were challenging cases (i.e., side views (rare), blurred images, unusual bloom appearance for a given class).
 
-### See WildflowerFinder in Action!
+## See WildflowerFinder in Action!
 
 [wildflowerfinder.com](http://wildflowerfinder.com)
 
 <!-- Concerned that using all data leaves in some images that are very similar (e.g., when I tried repeatedly to take a nice shot and thus have 2 or 3 very similar images), so removed images that were very similar.  -->
 
 
-### Future Directions
+## Future Directions
 
 * Add more classes/more images
 * Include images from cameras other than my iPhone 6
@@ -109,7 +109,7 @@ I hoped to be able to use gps location to improve model accuracy by allowing 'vo
 
 <!-- This is a plot showing GPS locations for two plant species (achillea lanulosa, sand lily): [(plot)](http://ec2-34-226-23-205.compute-1.amazonaws.com:8105/#) -->
 
-### Tools
+## Tools
 
 
 
@@ -118,7 +118,7 @@ I hoped to be able to use gps location to improve model accuracy by allowing 'vo
 
 
 
-### References
+## References
 <!--
 Dodge, S., & Karam, L. (2016). Understanding how image quality affects deep neural networks. [(https://arxiv.org/pdf/1604.04004.pdf)](https://arxiv.org/pdf/1604.04004.pdf) -->
 <!--

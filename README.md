@@ -56,7 +56,7 @@ Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://ar
             * Optimizer = SGD
             * Loss = categorical crossentropy
 
-* <b>Image Preprocessing</b>: Resize (to 256x256), center/crop (to 224x224), and normalize images
+* <b>Image Preprocessing</b>: This time, I wanted to try using image generation to reduce overfitting (see below). To do this, I first needed to resize (to 256x256) and center/crop (to 224x224) the images.
 
     ![](https://user-images.githubusercontent.com/17363251/26950899-86a595f2-4c5c-11e7-9de0-a60f0d66200c.png)
 

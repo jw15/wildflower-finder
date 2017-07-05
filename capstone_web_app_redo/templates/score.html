@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Code for Ajax image preview and upload adapted from www.lazybirder.club. -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>WildflowerFinder</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Tab icon -->
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon2.ico') }}">
+
+    <!-- Custom fonts for this theme -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,600,500,700,800,900' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename= 'vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet" type="text/css">
+
+    <link href="{{url_for('static', filename= 'vendor/owl-carousel/owl.theme.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename= 'vendor/owl-carousel/owl.transitions.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename= 'vendor/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename= 'vendor/animate.css/animate.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename= 'device-mockups/device-mockups.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Dropzone styling -->
+    <link href="{{url_for('static', filename= 'vendor/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css">
+    <!-- <link href="{{url_for('static', filename= 'vendor/dropzone/css/basic.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename= 'vendor/dropzone/css/basic.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename= 'vendor/dropzone/css/dropzone.min.css') }}" rel="stylesheet" type="text/css"> -->
+
+    <link href="{{url_for('static', filename= 'css/square.css') }}" rel="stylesheet" type="text/css">
+
+
+    <!-- Custom styles for this theme -->
+    <!-- Uncomment the color scheme you want to use! Red is chosen by default! -->
+
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-red.css') }}" rel="stylesheet" type="text/css"> -->
+
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-aqua.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-blue.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-green.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-orange.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-pink.css') }}" rel="stylesheet" type="text/css"> -->
+    <link href="{{url_for('static', filename= 'css/vitality-pink_dark.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-purple.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-tan.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-turquoise.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url_for('static', filename= 'css/vitality-yellow.css') }}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../css/vitality-green.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../css/vitality-orange.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../css/vitality-pink.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../css/vitality-purple.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../css/vitality-tan.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../css/vitality-turquoise.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="../css/vitality-yellow.css" rel="stylesheet" type="text/css"> -->
+
+    <!-- Temporary navbar container fix -->
+    <style>
+    .navbar-toggler {
+        z-index: 1;
+    }
+
+    @media (max-width: 576px) {
+        nav > .container {
+            width: 100%;
+        }
+    }
+    </style>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse navbar-expanded" id="mainNav">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">
+                <img class="img-fluid" src="../static/img/agency/Flowers.svg" alt="">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#upload">Try it!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#supported_species">Supported Species</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#about">About</a>
+                    </li>
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#team">Team</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#services">How It Works</a>
+                    </li>
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#pricing">Pricing</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="row">
+        <div class="col-md-5 "></div>
+        <div class="col-md-2">
+            <img src='{{ preview_img }}' width="200" height="200"/>
+        </div>
+        <div class="col-md-5 "></div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-1 "></div>
+        <div class="col-md-2">
+            <img src='{{ img1 }}' width="200" height="267"/>
+        </div>
+        <div class="col-md-1 "></div>
+        <div class="col-md-4 .col-xs-6">
+            <h3><i>{{ species1 }}</i></h3>
+            <h4><b>{{ common1 }}</b></h4>
+            <h4>Family: {{ family1 }}</h4>
+
+        </div>
+        <div class="col-md-2">
+            <h2>{{ top_proba_str }}</h2>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <img src='{{ img2 }}' width="200" height="267"/>
+        </div>
+        <div class="col-md-1 "></div>
+        <div class="col-md-4 .col-xs-6">
+            <h3><i>{{ species2 }}</i></h3>
+            <h4><b>{{ common2 }}</b></h4>
+            <h4>Family: {{ family2 }}</h4>
+        </div>
+        <div class="col-md-2">
+            <h2>{{ second_proba_str }}</h2>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <img src='{{ img3 }}' width="200" height="267"/>
+        </div>
+        <div class="col-md-1 "></div>
+        <div class="col-md-4">
+            <h3><i>{{ species3 }}</i></h3>
+            <h4><b>{{ common3 }}</b></h4>
+            <h4>Family: {{ family3 }}</h4>
+        </div>
+        <div class="col-md-2">
+            <h2>{{ third_proba_str }}</h2>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+        <!-- <left><h1 id="results-text">1. {{ species1 }}, {{ top_proba_str }}</h1></center>
+        <left><h1 id="results-text">2. {{ species2 }}, {{ second_proba_str }}</h1></center>
+        <left><h1 id="results-text">3. {{ species3 }}, {{ third_proba_str }}</h1></center> -->
+
+    <br>
+    <!-- <img src="{{ url_for('static', filename='img/players/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg') }}"> -->
+
+
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" style="background-image: url('../static/images/rainbow.jpg')">
+        <div class="container text-center">
+            <div class="footer-contact-details">
+                <h2>Jennifer Waller, Ph.D.</h2>
+                <!-- <p>Denver, CO</p> -->
+            </div>
+            <!-- <div class="row"> -->
+                <!-- <div class="col-md-4 footer-contact-details">
+                    <a href="https://github.com/jw15" target="_blank"><i class="fa fa-github fa-fw fa-2x"></i> <h4>Github</h4></a> -->
+                    <!-- <h4><i class="fa fa-github"></i> Github</h4> -->
+                    <!-- <p>github.com/jw15</p> -->
+                <!-- </div> -->
+                <!-- <div class="col-md-4 footer-contact-details">
+                    <h4><i class="fa fa-envelope"></i> Email</h4>
+                    <p><a href="mailto:mail@example.com">mail@example.com</a>
+                    </p>
+                </div> -->
+                <div class="footer-contact-details">
+                    <h4><i class="fa fa-map-marker"></i></h4> <h4>Denver, CO</h4>
+                    <!-- <p>Denver, CO</p> -->
+                </div>
+            <!-- </div> -->
+            <div class="row footer-social">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <!-- <li class="list-inline-item">
+                            <a href="#"><i class="fa fa-facebook fa-fw fa-2x"></i></a>
+                        </li> -->
+                        <li class="list-inline-item">
+                            <h3><a href="https://github.com/jw15" target="_blank"><i class="fa fa-github fa-fw fa-2x"></i></a></h3>
+                        </li>
+                        <li class="list-inline-item">
+                            <h3><a href="https://www.linkedin.com/in/wallerjm" target="_blank"><i class="fa fa-linkedin-square fa-fw fa-2x"></i></a></h3>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="copyright">&copy; 2017 Start Bootstrap Themes (web template) and Jennifer Waller (everything else). All rights reserved.</p>
+        </div>
+    </footer>
+    </body>
+    </html>

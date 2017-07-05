@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 
 sys.path.insert(0, '../src')
-from img_preprocess_web import process_image
+from img_preprocess_web_redo import process_image
 from my_utils import image_categories_reverse, beautify_name, make_db, crop_thumbnail
 
 sys.setrecursionlimit(1000000)
@@ -33,9 +33,9 @@ app.config['MAX_CONTENT_PATH'] = 4000000
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 3
 
 # @profile
-# def load_model_mine(path):
-#     model = load_model(path)
-#     return model
+def load_model_mine(path):
+    model = load_model(path)
+    return model
 
 @app.route('/')
 def index():
@@ -46,10 +46,10 @@ def download_file(filename):
     return send_from_directory('maps', filename)'''
     # '/static/maps/', 'flower_map.html')
 
-'''
+
 @app.route('/predict')
 def predict():
-    return render_template('predict.html')'''
+    return render_template('predict.html')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -149,10 +149,10 @@ if __name__ == '__main__':
     print('Loading model...')
     # sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
     # model = load_model('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
-    # flower_df = make_db()
-    # flower_dict = image_categories_reverse()
-    '''path = '../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5'
-    model = load_model_mine(path)'''
+    flower_df = make_db()
+    flower_dict = image_categories_reverse()
+    path = '../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5'
+    model = load_model_mine(path)
 
     #  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
     # model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')

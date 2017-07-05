@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Code for Ajax image preview and upload adapted from www.lazybirder.club. -->
+
 <head>
 
     <meta charset="utf-8">
@@ -16,9 +18,6 @@
     <!-- Tab icon -->
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon2.ico') }}">
-
-    <!-- Image uploading -->
-    <script src="./path/to/dropzone.js"></script>
 
     <!-- Custom fonts for this theme -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
@@ -148,11 +147,89 @@
     <section class="page-section" id="upload">
         <div class="container-fluid">
             <div class="wow fadeIn text-center">
-                <h1>Upload Your Image</h1>
+                <h1>Try it!</h1>
                 <hr class="colored">
-                <!-- <p class="mb-0">Upload your flower image here.</p> -->
+                <div id="submit-form-header">
+                <p class="mb-0">Upload your flower image here.</p>
+                <i class="fa fa-cloud-upload fa-4x"></i>
+            </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-lg-8 offset-lg-2">
+                    <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form">
+                        <div id="wrapper" style="margin-top: 20px;">
+                            <label class="btn btn-secondary">
+                            Choose Photo<input id="uploadimage" type="file" name="file" style="display: none;">
+                            </label>
+                            <div id="image-holder" class="img-responsive"></div>
+                            <br>
+                            <input id="submit-button" type="submit" class="btn btn-secondary" value="Upload">
+                        </div>
+                    </form>
+                    <div id="loadingDiv">
+                        <center><h3>Finding your wildflower...</h3></center>
+                        <center><img src = 'static/images/bloom.gif'></center>
+                    </div>
+                    <div id="img_result"
+                </div>
             </div>
         </div>
+</section>
+
+            <!-- actually works to make dropzone: -->
+            <!-- <div class="container-fluid"> -->
+            <!-- <form action="/score" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file"> -->
+
+            <!-- <div class="Dropzone"> -->
+                <!-- <form action="upload.php" class="dropzone"></form> -->
+
+                <!-- <div id="dz-preview"><img id="preview_img" />
+                </div> -->
+                <!-- id="dropzonewidget" method="POST" enctype="multipart/form-data"> -->
+                    <!-- <input type="file" name="file"> -->
+
+
+        <!-- </div> -->
+            <!-- <div class="row text-center">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="wow fadeIn px-4 pb-4 pb-lg-0 h-100" data-wow-delay=".2s">
+                         <i class="fa fa-camera fa-4x"></i>
+                        <h3>Identify Flower</h3>
+                        <p class="mb-0">Begin by clicking the button below. <br>For best results crop photo so the bird fills most of the frame.</p> -->
+                        <!-- <br>
+                        <br>
+                       <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form">
+
+                           <div id="wrapper" style="margin-top: 20px;">
+                               <label class="control btn btn-secondary btn-sm mx-2 mb-4">Click to Select File<input id="fileUpload" type="file" name="file" style="display: none;">
+                               </label>
+                               <div id="image-holder" class="img-responsive">
+                               </div>
+                               <br>
+                               <input type="file" name="file"><br /><br />
+                               <input id="submit-button" type="submit" class="btn btn secondary" value="Upload">
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section> -->
+
+
+                              <!-- <button type="button" class="control btn btn-secondary btn-sm mx-2 mb-4">Upload Image</button>
+
+               <input type="file" name="file"><br /><br />
+               <button type="button" class="control btn btn-secondary btn-sm mx-2 mb-4">Submit</button>
+
+               <p id="file-size">Max file size: 2Mb</p>
+           </div>
+       </form>
+       <div id="loadingDiv">
+           <center><h2>Finding your wildflower...</h2></center>
+           <center><img src = 'static/images/bloom.gif'></center>
+       </div> -->
             <!-- <div class="col-md-4">
                 <form action="/file-upload" class="dropzone" id="drop">
                     <div class="dz-message needsclick"
@@ -162,22 +239,16 @@
         </div>
     </div> -->
         <!-- <div id="dropzone" class="fade well">Drop image file here</div> -->
-        <div class="container-fluid">
-            <!-- <div class="col-12 my-auto text-center text-white"> -->
-            <div class="Dropzone">
-                <form action="/file-upload"
-                  class="dropzone"
-                  id="dropzone"></form>
-              </div>
-          </div>
 
-          <!-- </div> -->
-      <!-- </div> -->
+            <!-- <div class="col-12 my-auto text-center text-white"> -->
+
+
+
+          <!-- </div>
+       </div> -->
   <!-- </div> -->
 
-      <!-- <button type="button" class="control btn btn-secondary btn-sm mx-2 mb-4" data-filter="all">All</button> -->
-
-    </section>
+    <!-- </section> -->
 
     <!-- Grid section retry -->
     <!-- 1st row verticaly centered text in the square columns -->
@@ -220,8 +291,6 @@
             <!-- 5th row -->
             <!-- <div class="square img_5-1">
             </div> -->
-
-    <!-- </section> -->
 
     <!-- <div id="bottom">
     <p>If you want to see this grid with different content (text, inline images or lists), you can check this out:</p>
@@ -1277,8 +1346,16 @@
         </div>
     </div>
 
+    <!-- Image uploading -->
+    <!-- <script src="../static/vendor/dropzone/js/dropzone.js"></script> -->
+    <!-- <script src="/js/jquery.min.js" type="text/javascript"></script> -->
+    <!-- <script src="/js/ajaxupload.js" type="text/javascript"></script> -->
+
+    <!-- Image preview JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
     <!-- Bootstrap core JavaScript -->
-    <script src="../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/vendor/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="../static/vendor/tether/tether.min.js"></script>
     <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
 
@@ -1304,7 +1381,115 @@
     <script src="../static/vendor/dropzone/js/dropzone-amd-module.js"></script>
     <script src="../static/vendor/dropzone/js/dropzone-amd-module.min.js"></script>
 
+    <!-- <script>
+        $(document).ready(function (e) {
+        $("#uploadimage").on('submit',(function(e) {
+        e.preventDefault();
+        $("#message").empty();
+        $('#loading').show();
+        $.ajax({
+        url: "ajax_php_file.php", // Url to which the request is send
+        type: "POST",             // Type of request to be send, called as method
+        data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+        contentType: false,       // The content type used when sending data to the server.
+        cache: false,             // To unable request pages to be cached
+        processData:false,        // To send DOMDocument or non processed data file it is set to false
+        success: function(data)   // A function to be called if request succeeds
+        {
+        $('#loading').hide();
+        $("#message").html(data);
+        }
+        });
+        }));
 
+        // Function to preview image after validation
+        $(function() {
+        $("#file").change(function() {
+        $("#message").empty(); // To remove the previous error message
+        var file = this.files[0];
+        var imagefile = file.type;
+        var match= ["image/jpeg","image/png","image/jpg"];
+        if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2])))
+        {
+        $('#previewing').attr('src','noimage.png');
+        $("#message").html("<p id='error'>Please Select A valid Image File</p>"+"<h4>Note</h4>"+"<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
+        return false;
+        }
+        else
+        {
+        var reader = new FileReader();
+        reader.onload = imageIsLoaded;
+        reader.readAsDataURL(this.files[0]);
+        }
+        });
+        });
+        function imageIsLoaded(e) {
+        $("#file").css("color","green");
+        $('#image_preview').css("display", "block");
+        $('#previewing').attr('src', e.target.result);
+        $('#previewing').attr('width', '250px');
+        $('#previewing').attr('height', '230px');
+        };
+        });
+        </script> -->
+
+    <!-- PHP script for image upload  -->
+    <script>
+
+    $(document).ready(function() {
+                   $("#uploadimage").on('change', function() {
+                     //Get count of selected files
+                     var countFiles = $(this)[0].files.length;
+                     var imgPath = $(this)[0].value;
+                     var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+                     var image_holder = $("#image-holder");
+                     image_holder.empty();
+                     if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                       if (typeof(FileReader) != "undefined") {
+                         //loop for each file selected for uploaded.
+                         for (var i = 0; i < countFiles; i++)
+                         {
+                           var reader = new FileReader();
+                           reader.onload = function(e) {
+                             $("<img />", {
+                               "src": e.target.result,
+                               "class": "img-responsive",
+                               "width": "400"
+                             }).appendTo(image_holder);
+                           }
+                           image_holder.show();
+                           reader.readAsDataURL($(this)[0].files[i]);
+                         }
+                       } else {
+                         alert("This browser does not support FileReader.");
+                       }
+                     } else {
+                       alert("Pls select only images");
+                     }
+                   });
+                 });
+                 </script>
+
+     <script type="text/javascript">
+     var $loading = $('#loadingDiv').hide();
+     $("#submit-button").click(function(){
+         $('#submit-form-header').hide();
+         $('#submit-form').hide();
+         $('#loadingDiv').show();
+     });
+     </script>
+
+     <script type="text/javascript">
+     var $load_result = $('#result').hide();
+     $("#result").load(function(){
+         $('#submit-form-header').hide();
+         $('#submit-form').hide();
+         $('#loadingDiv').hide();
+         $('#result').show();
+     });
+     </script>
+
+    <!-- <script src="upload.php"></script> -->
 
 
 

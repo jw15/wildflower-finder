@@ -35,7 +35,7 @@ Basic hand-written CNN using Keras with Theano backend, trained on photos taken 
 
     ![](https://user-images.githubusercontent.com/17363251/27846464-bc9be920-60f4-11e7-9f1e-d6066ffebade.png)
 
-* <b>Next Steps</b>: A brief review of the literature related to image classification for flowers brought me to publications from recent successful teams in the PlantCLEF ([http://www.imageclef.org/lifeclef/2016/plant](http://www.imageclef.org/lifeclef/2016/plant)) annual competition. I was particularly interested in the possibility of using a deep residual network based on work from Sulc and colleagues ([http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)).  
+* <b>Next Steps</b>: A brief review of the literature related to image classification for flowers brought me to publications from recent successful teams in the PlantCLEF ([http://www.imageclef.org/lifeclef/2016/plant](http://www.imageclef.org/lifeclef/2016/plant)) annual competition. I was particularly interested in the possibility of using a deep residual network based on work from Šulc and colleagues ([http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)).  
 
 ### ResNet50
 
@@ -129,6 +129,6 @@ He, K., Zhang, X., Ren, S., & Sun, J. (2015). Deep residual learning for image r
 Simonyan, K., & Zisserman, A. (2015). Very deep convolutional networks for large­scale image recognition. Published as conference paper at ICLR. [(https://arxiv.org/pdf/1409.1556.pdf)](https://arxiv.org/pdf/1409.1556.pdf)
 Package: [(https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
 
- Sulc, M., Mishkin, D., & Matas, J. (2016). Very deep residual networks with MaxOut for plant identification in the wild. [(http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)
+ Šulc, M., Mishkin, D., & Matas, J. (2016). Very deep residual networks with MaxOut for plant identification in the wild. [(http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)
 
  &copy; Jennifer Waller 2017. All rights reserved.

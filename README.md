@@ -11,7 +11,7 @@ This project uses convolutional neural nets to classify images of wildflowers fo
 ### Motivation
 Accurate identification of wildflowers is a task with relevance to both recreation and environmental management. Currently, there are several mobile apps designed to identify flowers using images; the best of these (e.g., [https://identify.plantnet-project.org/](https://identify.plantnet-project.org/)) is connected with an annual international competition for advancing techniques for plant classification from images. However, none of the extant plant identification apps are particularly accurate for identification of flowers in North America.
 
-Example: Pl@ntNet attempt to identify Delphinium:
+Example: Pl@ntNet attempt to identify Delphinium nuttalianum, a plant commonly seen blooming in Colorado in early spring:
 
 ![](https://user-images.githubusercontent.com/17363251/27239801-a2692752-528f-11e7-9625-ba15fa810135.jpg)
 

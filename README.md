@@ -26,13 +26,17 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 #### Baseline Model
 
-* Basic CNN using Keras, trained on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species. Included only in-focus images. Removed images that were very similar. Images resized to 120 x 90. Accuracy was .88. The misclassified images suggest that I need more photos of one frequently misclassified species (i.e., penstemon virens) and may need to run a model using higher resolution images or consider cropping images. The latter issue is demonstrated by the images in Figure 1.
+* Basic CNN using Keras, trained on 651 categorized and in­-focus photos, taken on my iPhone 6s, representing 11 local wildflower species.
+    * Data: For this model, I was pickier with images than in later attempts (see below); I only included images that were in good focus and removed images that were very similar. Images were resized to 120 x 90.
+    * Results: Accuracy was .88. Misclassified images were most commonly images confused as penstemon virens (suggesting that I needed more photos of penstemon virens) or images with a lot of foliage. This seemed to be due to the relative infrequency of zoomed-out images containing a lot of foliage within the data set, generally. To resolve this issue, I considered adding more zoomed-out images or simply using higher resolution images or cropping the images. The foliage-related misclassification issue is demonstrated by the images in Figure 1:
 
     ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
 
+    * Next steps: A brief perusal of the literature related to image classification for flowers brought me to publications from recent successful teams in the PlantCLEF annual competition. I was particularly interested in the possibility of using a deep residual network based on work from Sulc and colleagues ([http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)).  
+
 #### ResNet50
 
-* Current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., ImageNet ([http://www.image-net.org/](http://www.image-net.org/))). One of the newest advances in deep networks is residual neural networks (i.e., ResNet). These differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. This prevents oversaturation of the model (and underfitting on training data) that results from having a lot of layers in a more traditional CNN.
+* The current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., ImageNet ([http://www.image-net.org/](http://www.image-net.org/))). One of the newest advances in deep networks is residual neural networks (i.e., ResNet). These differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. This prevents oversaturation of the model (and underfitting on training data) that results from having a lot of layers in a more traditional CNN.
 
 ![](https://user-images.githubusercontent.com/17363251/27404074-fd52f01e-5689-11e7-9a5b-52705745c26f.png)
 
@@ -41,7 +45,7 @@ Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://ar
 * Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species. ResNet50 was trained on millions of images of objects, so it is already trained to detect basic features in objects (e.g., edges, colors). By adding fully connected layers specific to the wildflower data, we essentially fine tune ResNet50 to apply its understanding of basic objects to identify features that distinguish our 13 classes of flowers.
 
     * Base model = ResNet50 trained on Imagenet dataset
-    * Fully connnected layers are specific to this project;
+    * Fully connnected layers are specific to this project:
         1. Flatten
         2. Dense (activation = relu)
         3. Dense (matches shape of 13 flower classes, activation=softmax)

@@ -26,31 +26,29 @@ Initially, I planned to collect images via web scraping. However, my preliminary
 
 #### Baseline Model
 
-Basic CNN using Keras with Theano backend, trained on photos taken with my iPhone 6s, representing 11 local wildflower species.
-* <b>Data</b>: For this model, I was pickier with images than in later attempts (see below); I only included images (<i>n</i> = 651) that were in focus and I removed images that were very similar. Images were resized to 120 x 90.
-    * n = 651
-    * 11 wildflower species/classes
+Basic hand-written CNN using Keras with Theano backend, trained on photos taken with my iPhone 6s.
+* <b>Data</b>: For this model, I was pickier with images than in later attempts (see below); I only included images that were in focus and I removed images that were very similar.
+    * 651 images representing 11 wildflower species/classes
     * Images resized to 120 x 90
 
 * <b>Results</b>: Accuracy was .88. Misclassified images were most commonly images confused as penstemon virens (suggesting that I needed more photos of penstemon virens) or images with a lot of foliage. This seemed to be due to the relative infrequency of zoomed-out images containing a lot of foliage within the data set, generally. To resolve this issue, I considered adding more zoomed-out images or simply using higher resolution images or cropping the images. The foliage-related misclassification issue is demonstrated by the images in Figure 1:
 
     ![](https://cloud.githubusercontent.com/assets/17363251/26746371/55be1a22-47ac-11e7-97c7-4fb6e1cebfa2.png)
 
-* <b>Next steps</b>: A brief perusal of the literature related to image classification for flowers brought me to publications from recent successful teams in the PlantCLEF ([http://www.imageclef.org/lifeclef/2016/plant](http://www.imageclef.org/lifeclef/2016/plant)) annual competition. I was particularly interested in the possibility of using a deep residual network based on work from Sulc and colleagues ([http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)).  
+* <b>Next Steps</b>: A brief perusal of the literature related to image classification for flowers brought me to publications from recent successful teams in the PlantCLEF ([http://www.imageclef.org/lifeclef/2016/plant](http://www.imageclef.org/lifeclef/2016/plant)) annual competition. I was particularly interested in the possibility of using a deep residual network based on work from Sulc and colleagues ([http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf](http://cmp.felk.cvut.cz/~mishkdmy/papers/CMP-CLEF-2016.pdf)).  
 
 #### ResNet50
 
-* The current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., ImageNet ([http://www.image-net.org/](http://www.image-net.org/))). One of the newest advances in deep networks is residual neural networks (i.e., ResNet). These differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. This prevents oversaturation of the model (and underfitting on training data) that results from having a lot of layers in a more traditional CNN.
+The current standard for plant identification is fine tuning very deep networks trained on large datasets of images (e.g., ImageNet ([http://www.image-net.org/](http://www.image-net.org/))). One of the newer advances in deep networks is He and colleagues' residual neural network, ResNet ([https://arxiv.org/abs/1512.03385](https://arxiv.org/abs/1512.03385))). Deep networks have been of great interest to computer vision researchers because neural networks with more layers are able to recognize more features than those with fewer layers. Being able to recognize more features is very useful for differentiating objects with a lot of visual complexity, like flowers. However, traditional neural networks suffer from oversaturation when they have a lot of layers; they actually <i>underfit</i> on the training data. Residual networks differ from 'traditional' deep networks because the model is trained to learn the residual error instead of the traditional mapping. ResNet also passes the identity mapping past convolutional layers in parts of the model; this also reduces the chance of oversaturation.
 
 ![](https://user-images.githubusercontent.com/17363251/27404074-fd52f01e-5689-11e7-9a5b-52705745c26f.png)
 
 Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://arxiv.org/abs/1512.03385)
 
-* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)), trained on 970 photos representing 13 species. ResNet50 was trained on millions of images of objects, so it is already trained to detect basic features in objects (e.g., edges, colors). By adding fully connected layers specific to the wildflower data, we essentially fine tune ResNet50 to apply its understanding of basic objects to identify features that distinguish our 13 classes of flowers.
+* Fine-tuning of pre-trained ResNet50 (Keras build from [https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py](https://github.com/fchollet/keras/blob/master/keras/applications/resnet50.py)). ResNet50 was trained on millions of images of objects, so it is already trained to detect basic features in objects (e.g., edges, colors). By adding fully connected layers specific to the wildflower data, we essentially fine tune ResNet50 to apply its understanding of basic objects to identify features that distinguish our flower species/classes.
 
-    * Data:
-    * Base model = ResNet50 trained on Imagenet dataset
-    * Fully connnected layers are specific to this project:
+    * <b>Base Model</b> = ResNet50 trained on Imagenet dataset
+    * <b>Fully connected layers</b> are specific to this project:
         1. Flatten
         2. Dense (activation = relu)
         3. Dense (matches shape of 13 flower classes, activation=softmax)
@@ -58,21 +56,21 @@ Image from He et al., 2015 paper:  [https://arxiv.org/abs/1512.03385](https://ar
             * Optimizer = SGD
             * Loss = categorical crossentropy
 
-* Image Preprocessing: Resize (to 256x256), center/crop (to 224x224), and normalize images
+* <b>Image Preprocessing</b>: Resize (to 256x256), center/crop (to 224x224), and normalize images
 
     ![](https://user-images.githubusercontent.com/17363251/26950899-86a595f2-4c5c-11e7-9de0-a60f0d66200c.png)
 
-* Image generation: To decrease the chance of overfitting, the image generator in Keras provided augmented images for each epoch; thus, the model never saw same image twice. Random augmentations included horizontal flip, rotation (up to 30 degrees), horizontal and vertical shift.
+* <b>Image Generation</b>: To decrease the chance of overfitting, the image generator in Keras provided augmented images for each epoch; thus, the model never saw same image twice. Random augmentations included horizontal flip, rotation (up to 30 degrees), horizontal and vertical shift.
 
 ![](https://user-images.githubusercontent.com/17363251/26950488-04433fc0-4c5b-11e7-8746-2f0fe0c5f13a.jpg)
 
 Using all data (not only 'nice' shots):
 
-* 1,526 images / 13 types of flowers:
+* 1,526 images / 13 species of flowers:
 
 ![](https://user-images.githubusercontent.com/17363251/27403825-1685cdd2-5689-11e7-9e4f-0eacba2e0c9c.jpg)
-* Set aside 20% of data (n = 306) for validation data set
-* Trained model with train/test split (80% train) of remaining images (n = 1,220)
+* Set aside 20% of data (<i>n</i> = 306) for validation data set
+* Trained model with train/test split (80% train) of remaining images (<i>n</i> = 1,220)
 
 ![](https://user-images.githubusercontent.com/17363251/27237307-dfb1768c-5285-11e7-8986-8b2455a2a988.png)
 

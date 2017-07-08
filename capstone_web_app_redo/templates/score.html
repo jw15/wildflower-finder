@@ -92,8 +92,8 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="#page-top">
-                <img class="img-fluid" src="../static/img/agency/Flowers.svg" alt="">
+            <a class="navbar-brand page-scroll" href="/">
+                <img class="img-fluid" src="../static/img/agency/Flowers.svg" alt="">Home
             </a>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
@@ -124,16 +124,47 @@
             </div>
         </div>
     </nav>
+    <!-- Masthead -->
+    <header class="masthead" style="background-image: url('../static/images/bluebells_darker_still.jpg');">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 my-auto text-center text-white">
+                    <img class="masthead-img img-fluid mb-3" src="../static/img/agency/Flowers.svg" alt="">
+                    <div class="masthead-title">Results</div>
+                    <!-- <hr class="colored"> -->
+                    <!-- <div class="masthead-subtitle">by Start Bootstrap</div> -->
+                </div>
+            </div>
+        </div>
+        <div class="scroll-down">
+            <a class="btn page-scroll" href="#upload">
+                <i class="fa fa-angle-down fa-fw"></i>
+            </a>
+        </div>
+    </header>
 
+    <!-- Display preview image and result -->
 
+<section class="page-section bg-inverse text-white" id="result" >
     <div class="row">
+        <div class="col-md-1 "></div>
+        <div class="col-md-2">
+            <img src='{{ preview_img }}' width="200" height="267"/>
+        </div>
+        <div class="col-md-1 "></div>
+        <div class="col-md-4 .col-xs-6">
+            <h3>Your Image</h3>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+    </div>
+    <!-- <div class="row">
         <div class="col-md-5 "></div>
         <div class="col-md-2">
             <img src='{{ preview_img }}' width="200" height="200"/>
         </div>
         <div class="col-md-5 "></div>
-    </div>
-    <br>
+    </div> -->
     <br>
     <div class="row">
         <div class="col-md-1 "></div>
@@ -194,7 +225,7 @@
     <br>
     <!-- <img src="{{ url_for('static', filename='img/players/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg') }}"> -->
 
-
+</section>
 
     <!-- Footer -->
     <footer class="footer" id="contact" style="background-image: url('../static/images/rainbow.jpg')">

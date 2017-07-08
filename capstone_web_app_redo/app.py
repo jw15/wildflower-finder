@@ -84,7 +84,7 @@ def score():
 
             top_prediction = np.argmax(prediction)
             top_proba = prediction[0][top_prediction]
-            top_proba = round((top_proba*100), 2)
+            top_proba = round((top_proba*100), 1)
             top_proba_str = '{}%'.format(top_proba)
             idx1 = cats[top_prediction]
             species1 = beautify_name(idx1)
@@ -94,7 +94,7 @@ def score():
             order = np.argsort(prediction)[0]
 
             second_prediction = order[-2]
-            second_proba = round((prediction[0][second_prediction]*100), 2)
+            second_proba = round((prediction[0][second_prediction]*100), 1)
             second_proba_str = '{}%'.format(second_proba)
             # second_proba = '{}\%'.format(round(prediction[0][second_prediction], 0)*100)
             idx2 = cats[second_prediction]
@@ -104,7 +104,7 @@ def score():
 
             third_prediction = order[-3]
             # third_proba = '{}\%'.format(round(prediction[0][third_prediction], 0)*100)
-            third_proba = round((prediction[0][third_prediction]*100), 2)
+            third_proba = round((prediction[0][third_prediction]*100), 1)
             third_proba_str = '{}%'.format(third_proba)
             idx3 = cats[third_prediction]
             species3 = beautify_name(idx3)

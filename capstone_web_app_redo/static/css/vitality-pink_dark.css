@@ -62,7 +62,11 @@ p {
 
 p.lead {
   font-size: 24px;
-  font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-family: 'Poiret One', cursive;
+  /*font-family: 'Amatic SC', cursive;*/
+
+
   font-weight: 900;
   text-transform: uppercase; }
 
@@ -72,7 +76,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-family: 'Poiret One', cursive;
+  /*font-family: 'Amatic SC', cursive;*/
+
+
   font-weight: 700;
   text-transform: uppercase; }
 
@@ -88,9 +96,15 @@ font-weight: 300; }*/
 
 @media (min-width: 768px) {
   h1 {
-    font-size: 52px; }
+    font-size: 130px;
+    padding-top: 15px}
   h2 {
-    font-size: 50px; } }
+    font-size: 65px; }
+h3 {
+    font-size: 45px;}
+h4 {
+    font-size: 25px;
+    }}
 
 #mainNav {
   border: none;
@@ -109,7 +123,7 @@ font-weight: 300; }*/
       color: #222;
       background-color: white; }
   #mainNav .navbar-brand {
-    font-size: 24px;
+    font-size: 28px;
     text-decoration: none;
     opacity: 1;
     color: white;
@@ -117,7 +131,10 @@ font-weight: 300; }*/
     -webkit-transition: all .5s;
     -moz-transition: all .5s;
     transition: all .5s;
-    font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    /*font-family: 'Amatic SC', cursive;*/
+    font-family: 'Poiret One', cursive;
+
     font-weight: 900;
     text-transform: uppercase; }
     #mainNav .navbar-brand img {
@@ -150,7 +167,11 @@ font-weight: 300; }*/
           color: #c10943;
           border-radius: 0;
           background-color: white;
-          border-radius: 5px; } }
+          border-radius: 5px;
+          /*font-family: 'Poiret One', cursive;*/
+          /*font-family: 'Amatic SC', cursive;*/
+
+} }
 
 
 #mainNav  .navbar-buffer {
@@ -177,14 +198,28 @@ header.masthead {
     max-width: 150px;
     max-height: 150px; }
   header.masthead .masthead-title {
+    /*font-size: 90px;*/
     font-size: 4rem;
+    /*line-height: 150px;*/
     line-height: 4rem;
-    font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    padding-top: 30px;
+    /*font-family: 'BioRhyme', serif;*/
+
+
+    font-family: 'Poiret One', cursive;
+    /*font-family: 'Amatic SC', cursive;*/
+
+
+    /*font-family: 'Josefin Sans', sans-serif;*/
+
+    /*font-family: 'Amatic SC';*/
+    /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
     font-weight: 900;
     text-transform: uppercase; }
   header.masthead .masthead-subtitle {
-    font-size: 1.5rem;
+    /*font-size: 90px; }*/
     line-height: 1.5rem; }
+
   header.masthead .scroll-down {
     position: absolute;
     bottom: 20px;
@@ -217,8 +252,8 @@ header.masthead {
         max-width: 250px;
         max-height: 250px; }
       header.masthead .masthead-title {
-        font-size: 5rem;
-        line-height: 5rem; }
+        font-size: 4rem;
+        line-height: 4rem; }
       header.masthead .masthead-subtitle {
         font-size: 2rem;
         line-height: 2rem; } }

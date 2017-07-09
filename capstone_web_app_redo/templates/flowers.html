@@ -22,6 +22,7 @@
     <!-- Custom fonts for this theme -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,600,500,700,800,900' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|BioRhyme|Calligraffitti|Forum|Josefin+Sans|Pacifico|Poiret+One" rel="stylesheet" type='text/css'>
 
     <!-- Plugin CSS -->
     <link href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
@@ -97,20 +98,20 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#upload">Try it!</a>
+                        <a class="nav-link page-scroll" href="#upload">Try It!</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link page-scroll" href="#supported_species">Supported Species</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link page-scroll" href="#about">About</a>
-                    </li>
+                    </li> -->
 
                     <!-- <li class="nav-item">
                         <a class="nav-link page-scroll" href="#team">Team</a>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#services">How It Works</a>
+                        <a class="nav-link page-scroll" href="https://github.com/jw15/wildflower-finder">How It Works</a>
                     </li>
 
                     <!-- <li class="nav-item">
@@ -130,7 +131,8 @@
             <div class="row h-100">
                 <div class="col-12 my-auto text-center text-white">
                     <img class="masthead-img img-fluid mb-3" src="../static/img/agency/Flowers.svg" alt="">
-                    <div class="masthead-title">Wildflower Finder</div>
+                    <!-- <div class="masthead-title">Wildflower Finder</div> -->
+                    <h1>WILDFLOWER FINDER</h1>
                     <!-- <hr class="colored"> -->
                     <!-- <div class="masthead-subtitle">by Start Bootstrap</div> -->
                 </div>
@@ -147,10 +149,10 @@
     <section class="page-section" id="upload">
         <div class="container-fluid">
             <div class="wow fadeIn text-center">
-                <h1>Try it!</h1>
+                <h2>Find your flower</h2>
                 <hr class="colored">
                 <div id="submit-form-header">
-                <p class="mb-0">Upload your flower image here.</p>
+                <p class="mb-0">Upload image here</p>
                 <i class="fa fa-cloud-upload fa-4x"></i>
             </div>
             </div>
@@ -170,7 +172,7 @@
                         <center><h3>Finding your wildflower...</h3></center>
                         <center><img src = 'static/images/bloom.gif'></center>
                     </div>
-                    <div id="img_result"
+                    <div id="img_result">
                 </div>
             </div>
         </div>
@@ -301,7 +303,7 @@
     <!-- Portfolio Grid Section -->
     <section class="page-section" id="supported_species">
         <div class="container text-center wow fadeIn">
-            <h1>Supported Species</h1>
+            <h2>Supported Species</h2>
             <hr class="colored">
             <p>Flower species currently included in the app</p>
             <div class="controls mt-3">
@@ -486,7 +488,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="page-section" id="about">
+    <!-- <section class="page-section" id="about">
         <div class="container-fluid">
             <div class="wow fadeIn text-center">
                 <h1>Deep Learning for Image Classification</h1>
@@ -500,7 +502,10 @@
                         <h3>Accurate</h3>
                         <p class="mb-0">Wildflower Finder is 97% accurate for 13 species of Colorado wildflowers.</p>
                     </div>
-                </div>
+                </div> -->
+
+
+
                 <!-- <div class="col-lg-3 col-md-6">
                     <div class="wow fadeIn px-4 pb-4 pb-lg-0 h-100" data-wow-delay=".4s">
                         <i class="fa fa-camera fa-4x"></i>
@@ -508,23 +513,29 @@
                         <p class="mb-0">Take a picture with your phone or use a photo from the web or your photo album.</p>
                     </div>
                 </div> -->
-                <div class="col-lg-3 col-md-6">
+
+
+                <!-- Part that actually works -->
+                <!-- <div class="col-lg-3 col-md-6">
                     <div class="wow fadeIn px-4 pb-4 pb-lg-0 h-100" data-wow-delay=".6s">
                         <i class="fa fa-cloud-upload fa-4x"></i>
                         <h3>Flexible</h3>
                         <p class="mb-0">Upload an image from your phone or desktop</p>
                     </div>
-                </div>
+                </div> -->
+<!-- end part that works -->
+
+
                 <!-- <div class="col-lg-3 col-md-6">
                     <div class="wow fadeIn px-4 h-100" data-wow-delay=".8s">
                         <i class="fa fa-thumbs-up fa-4x"></i>
                         <h3>Results!</h3>
                         <p class="mb-0">Get the 3 most likely species of flower for your image.</p>
                     </div> -->
-                </div>
+                <!-- </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Team Section -->
     <section class="page-section bg-faded" id="team">
@@ -585,7 +596,7 @@
                     <div class="team-caption">
                         <h3>Jen's Old Truck</h3>
                         <hr class="colored">
-                        <p>Trailhead Transport Service</p>
+                        <p>Trailhead Transport</p>
                         <!-- <ul class="list-inline list-team-social">
                             <li class="list-inline-item">
                                 <a href="#"><i class="fa fa-facebook fa-fw"></i></a>
@@ -658,17 +669,17 @@
  </section>
 
     <!-- Call to Action -->
-    <!-- <section class="call-to-action" style="background-image: url('../static/images/IMG_5228.jpg');">
+    <section class="call-to-action" style="background-image: url('../static/images/IMG_5228.jpg');">
         <div class="container wow fadeIn">
             <div class="row">
                 <div class="col-md-10 offset-md-1">
                     <span class="quote">If the lightning doesn't kill you, sometimes there are rainbows.</span>
                     <hr class="colored"> -->
                     <!-- <a class="btn btn-primary page-scroll" href="#services">How We Flaunt Death on Weekends</a> -->
-                <!-- </div>
+                </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
     <!-- Services Section -->
     <!-- <section class="page-section services" id="services">
@@ -1061,10 +1072,10 @@
     <!-- Footer -->
     <footer class="footer" id="contact" style="background-image: url('../static/images/rainbow.jpg')">
         <div class="container text-center">
-            <div class="footer-contact-details">
-                <h2>Jennifer Waller, Ph.D.</h2>
+            <!-- <div class="footer-contact-details">
+                <h3>Jennifer Waller, Ph.D.</h3> -->
                 <!-- <p>Denver, CO</p> -->
-            </div>
+            <!-- </div> -->
             <!-- <div class="row"> -->
                 <!-- <div class="col-md-4 footer-contact-details">
                     <a href="https://github.com/jw15" target="_blank"><i class="fa fa-github fa-fw fa-2x"></i> <h4>Github</h4></a> -->
@@ -1077,9 +1088,11 @@
                     </p>
                 </div> -->
                 <div class="footer-contact-details">
-                    <h4><i class="fa fa-map-marker"></i></h4> <h4>Denver, CO</h4>
+                    <h3><i class="fa fa-map-marker"></i></h3> <h3>Denver, CO</h3>
                     <!-- <p>Denver, CO</p> -->
                 </div>
+                <br>
+                <br>
             <!-- </div> -->
             <div class="row footer-social">
                 <div class="col-lg-12">
@@ -1096,6 +1109,8 @@
                     </ul>
                 </div>
             </div>
+            <br>
+            <br>
 
             <p class="copyright">&copy; 2017 Start Bootstrap Themes (web template) and Jennifer Waller (everything else). All rights reserved.</p>
         </div>

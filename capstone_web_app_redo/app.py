@@ -152,7 +152,7 @@ if __name__ == '__main__':
     flower_df = make_db()
     flower_dict = image_categories_reverse()
     path = '../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5'
-    model = load_model_mine(path)
+    # model = load_model_mine(path)
 
     #  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
     # model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')

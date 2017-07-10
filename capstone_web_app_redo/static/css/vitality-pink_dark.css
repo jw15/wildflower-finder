@@ -101,10 +101,17 @@ h6 {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #222;
   padding: 10px 0;
-  min-height: 68px; }
+  min-height: 68px;
+  font-family: 'Poiret One', sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important; }
   #mainNav .navbar-toggler {
-    font-size: 14px;
-    padding-top: 15px;
+    font-size: 24px;
+    font-family: 'Poiret One', sans-serif !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    padding-top: 10px;
     padding-bottom: 15px;
     padding-left: 15px;
     padding-right: 15px;
@@ -113,6 +120,7 @@ h6 {
       color: #222;
       background-color: white; }
   #mainNav .navbar-brand {
+    padding-top: 5px;
     font-size: 24px;
     text-decoration: none;
     opacity: 1;
@@ -128,7 +136,7 @@ h6 {
     font-weight: 900;
     text-transform: uppercase; }
     #mainNav .navbar-brand img {
-      height: 36px;
+      height: 40px;
       padding-right: 5px; }
   #mainNav .navbar-collapse .navbar-nav > .nav-item > .nav-link {
     padding: 15px;
@@ -149,7 +157,7 @@ h6 {
         padding: 5px 0;
         background-color: #222; }
       #mainNav .navbar-brand img {
-        height: 30px; }
+        height: 40px; }
       #mainNav .navbar-collapse .navbar-nav > .nav-item {
         margin-right: 5px; }
         #mainNav .navbar-collapse .navbar-nav > .nav-item:last-child {
@@ -159,8 +167,10 @@ h6 {
           border-radius: 0;
           background-color: white;
           border-radius: 5px;
-          /*font-family: 'Poiret One', cursive;*/
+          font-family: 'Poiret One', cursive !important;
           /*font-family: 'Amatic SC', cursive;*/
+          /*font-family: 'Quicksand', sans-serif !important;*/
+
 
 } }
 
@@ -202,7 +212,7 @@ margin-bottom: 30px;
     /*padding-top: .1rem !important;*/
     padding-bottom: .5rem !important;
     /*padding-top: 10px !important;*/
-    font-size: 1.2rem;
+    font-size: 1.6rem;
 }
 
 @media (min-width: 768px) {
@@ -212,7 +222,7 @@ margin-bottom: 30px;
     .result_h4 {
         font-size: 20px !important; }
     .common_name {
-        font-size: 28px !important;}
+        font-size: 30px !important;}
     }
 
 .allcaps {
@@ -221,7 +231,17 @@ margin-bottom: 30px;
 
 .result_your_image {
     position: sticky;
-    top: 150px; }
+    /*left: 50%;
+    margin-left: -50px;*/
+    top: 65px;
+    max-width: 100px;
+    max-height: 100px;
+    text-align: center; }
+
+.result_padding {
+    padding-top: 240px;
+}
+
 
 header.masthead {
   position: relative;
@@ -587,7 +607,8 @@ header.video {
 
 @media (min-width: 768px) {
   .portfolio-grid .mix {
-    width: 31%;
+    width: 18%;
+    height:
     margin: 1%; } }
 
 .testimonials {

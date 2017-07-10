@@ -15,7 +15,7 @@ $(document).ready(function() {
     if (isPhoneDevice) {
         //mobile
     } else {
-        //desktop               
+        //desktop
         // Initialize WOW.js
         wow = new WOW({
             offset: 50
@@ -104,7 +104,7 @@ $(document).ready(function() {
     });
 
     $(".portfolio-gallery").owlCarousel({
-        items: 3,
+        items: 5,
     });
 
     // Magnific Popup jQuery Lightbox Gallery Settings

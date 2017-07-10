@@ -11,10 +11,11 @@ import pickle, theano, pandas as pd, numpy as np
 from keras import optimizers
 from keras.models import load_model, model_from_json
 import matplotlib.pyplot as plt
+import scipy.misc
 
 
 sys.path.insert(0, '../src')
-from img_preprocess_web_redo import process_image
+from img_preprocess_web_redo import process_image, resize_image_to_square
 from my_utils import image_categories_reverse, beautify_name, make_db, crop_thumbnail
 
 sys.setrecursionlimit(1000000)
@@ -46,10 +47,10 @@ def download_file(filename):
     return send_from_directory('maps', filename)'''
     # '/static/maps/', 'flower_map.html')
 
-
-@app.route('/predict')
-def predict():
-    return render_template('predict.html')
+#
+# @app.route('/predict')
+# def predict():
+#     return render_template('predict.html')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -77,9 +78,15 @@ def score():
             # add something here to check if file is an image array/ check if RGB
             prediction = model.predict(prepared_image)
 
-            # move file to static folder for preview
+            # move file to static folder for preview (or to save)
             upload_view_path = 'static/images/uploaded/{}'.format(filename)
             os.rename(file_path, upload_view_path)
+
+            # remove extra dimension from processed image so it can be displayed
+            display_img = np.squeeze(prepared_image)
+
+            scipy.misc.toimage(display_img).save('static/images/uploaded_processed/{}'.format(filename))
+            upload_view_path_processed = 'static/images/uploaded_processed/{}'.format(filename)
 
 
             top_prediction = np.argmax(prediction)
@@ -133,7 +140,18 @@ def score():
             family3 = family3.values[0]
 
     return render_template('score.html',
-    img1 = img1, preview_img=upload_view_path, species1=species1, common1=common1, top_proba_str=top_proba_str, family1=family1, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, family2=family2, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str, family3=family3)
+    img1 = img1, preview_img=upload_view_path_processed, species1=species1, common1=common1, top_proba_str=top_proba_str, family1=family1, img2=img2, species2=species2, common2=common2, second_proba_str=second_proba_str, family2=family2, img3=img3, species3=species3, common3=common3, third_proba_str=third_proba_str, family3=family3)
+
+
+@app.after_request
+def add_header(response):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    return response
 
 # @app.route('/contact')
 # def contact():
@@ -152,7 +170,7 @@ if __name__ == '__main__':
     flower_df = make_db()
     flower_dict = image_categories_reverse()
     path = '../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5'
-    # model = load_model_mine(path)
+    model = load_model_mine(path)
 
     #  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
     # model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')

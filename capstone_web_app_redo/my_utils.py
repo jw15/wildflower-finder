@@ -44,6 +44,18 @@ def crop_thumbnail(file_path, crop_size):
     col_buffer = (img.shape[1] - crop_size[1]) // 2
     return img[row_buffer:(img.shape[0] - row_buffer), col_buffer:(img.shape[1] - col_buffer)]
 
+def resize_submission(file_path, crop_size):
+    '''
+    Crops image to new_dims, centering image in frame.
+    Input: Image, desired cropped size (crop_size=[height, width])
+    Output: Cropped image
+    '''
+    img = cv2.imread(file_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    row_buffer = (img.shape[0] - crop_size[0]) // 2
+    col_buffer = (img.shape[1] - crop_size[1]) // 2
+    return img[row_buffer:(img.shape[0] - row_buffer), col_buffer:(img.shape[1] - col_buffer)]
+
 # def common_names(flower_dict):
 #     flower_commons = {}
 #     for name in flower_dict.keys():

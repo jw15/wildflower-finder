@@ -62,13 +62,17 @@ p {
 
 p.lead {
   font-size: 24px;
-  /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
-  font-family: 'Poiret One', cursive;
+  font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*font-family: 'Poiret One', cursive;*/
   /*font-family: 'Amatic SC', cursive;*/
 
 
-  font-weight: 900;
-  text-transform: uppercase; }
+  font-weight: 900; }
+
+.section_heading {
+    text-transform: uppercase;
+    font-family: 'Poiret One', cursive;
+    font-size: 4rem !important; }
 
 h1,
 h2,
@@ -76,35 +80,21 @@ h3,
 h4,
 h5,
 h6 {
-  /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
   font-family: 'Poiret One', cursive;
   /*font-family: 'Amatic SC', cursive;*/
-
-
-  font-weight: 700;
-  text-transform: uppercase; }
-
-/*h1r,
-h2r,
-h3r,
-h4r,
-h5r,
-h6r {
-font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-font-weight: 300; }*/
-/*text-transform: uppercase; }*/
+  font-weight: 700; }
 
 @media (min-width: 768px) {
-  h1 {
-    font-size: 130px;
-    padding-top: 15px}
-  h2 {
-    font-size: 65px; }
-h3 {
-    font-size: 45px;}
-h4 {
-    font-size: 25px;
-    }}
+    h1 {
+      font-size: 130px;}
+    h2 {
+      font-size: 65px; }
+  h3 {
+      font-size: 45px;}
+  h4 {
+      font-size: 25px; } }
+
+
 
 #mainNav {
   border: none;
@@ -123,7 +113,7 @@ h4 {
       color: #222;
       background-color: white; }
   #mainNav .navbar-brand {
-    font-size: 28px;
+    font-size: 24px;
     text-decoration: none;
     opacity: 1;
     color: white;
@@ -138,7 +128,8 @@ h4 {
     font-weight: 900;
     text-transform: uppercase; }
     #mainNav .navbar-brand img {
-      height: 40px; }
+      height: 36px;
+      padding-right: 5px; }
   #mainNav .navbar-collapse .navbar-nav > .nav-item > .nav-link {
     padding: 15px;
     color: white; }
@@ -158,7 +149,7 @@ h4 {
         padding: 5px 0;
         background-color: #222; }
       #mainNav .navbar-brand img {
-        height: 50px; }
+        height: 30px; }
       #mainNav .navbar-collapse .navbar-nav > .nav-item {
         margin-right: 5px; }
         #mainNav .navbar-collapse .navbar-nav > .nav-item:last-child {
@@ -177,6 +168,60 @@ h4 {
 #mainNav  .navbar-buffer {
 margin-bottom: 30px;
 }
+
+.result_h3 {
+    /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    /*font-family: 'Poiret One', cursive !important;*/
+    /*font-family: 'Amatic SC', cursive !important;*/
+    font-family: 'Quicksand', sans-serif !important;
+    font-weight: 500 !important;
+    line-height: 1.1 !important;
+    /*padding-top: 5px;*/
+    padding-bottom: .3rem;
+    font-size: 1.8rem;}
+
+.result_h4 {
+    /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    /*font-family: 'Poiret One', cursive;*/
+    /*font-family: 'Amatic SC', cursive;*/
+    font-family: 'Quicksand', sans-serif !important;
+    /*font-family: 'Open Sans', sans-serif !important;*/
+    font-weight: 400 !important;
+    line-height: 1.1 !important;
+    padding-bottom: .3rem !important;
+    /*padding-top: 10px !important;*/
+    font-size: 1.2rem;  }
+
+.common_name {
+    font-family: 'Quicksand', sans-serif !important;
+    /*font-family: 'Poiret One', cursive;*/
+
+/*font-family: 'Open Sans', sans-serif !important;*/
+    font-weight: 400 !important;
+    line-height: 1.1 !important;
+    /*padding-top: .1rem !important;*/
+    padding-bottom: .5rem !important;
+    /*padding-top: 10px !important;*/
+    font-size: 1.2rem;
+}
+
+@media (min-width: 768px) {
+    .result_h3 {
+        font-size: 35px !important; }
+        /*flex-shrink: .5 !important; }*/
+    .result_h4 {
+        font-size: 20px !important; }
+    .common_name {
+        font-size: 28px !important;}
+    }
+
+.allcaps {
+  text-transform: uppercase;
+}
+
+.result_your_image {
+    position: sticky;
+    top: 150px; }
 
 header.masthead {
   position: relative;
@@ -204,14 +249,9 @@ header.masthead {
     line-height: 4rem;
     padding-top: 30px;
     /*font-family: 'BioRhyme', serif;*/
-
-
     font-family: 'Poiret One', cursive;
     /*font-family: 'Amatic SC', cursive;*/
-
-
     /*font-family: 'Josefin Sans', sans-serif;*/
-
     /*font-family: 'Amatic SC';*/
     /*font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
     font-weight: 900;
@@ -257,6 +297,10 @@ header.masthead {
       header.masthead .masthead-subtitle {
         font-size: 2rem;
         line-height: 2rem; } }
+/*@media (min-width: 300px) {
+    header.masthead .masthead-title {
+      font-size: 65px !important; } }*/
+
 
 header.video {
   background: transparent; }
@@ -274,7 +318,6 @@ header.video {
 @media (min-width: 992px) {
   header.video .overlay {
     opacity: .5; } }
-
 .team-carousel .item {
   position: relative;
   margin-right: 15px;
@@ -694,6 +737,7 @@ footer.footer {
   -o-background-size: cover;
   background-size: cover;
   background-attachment: scroll; }
+
   @media (min-width: 1024px) {
     footer.footer {
       background-attachment: fixed; } }

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Code for Ajax image preview and upload adapted from www.lazybirder.club. -->
+<!-- Code for Ajax/JS image preview and upload adapted from www.lazybirder.club. -->
 
 <head>
 
@@ -24,6 +24,10 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,600,500,700,800,900' rel='stylesheet' type='text/css'>
 
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|BioRhyme|Calligraffitti|Forum|Josefin+Sans|Pacifico|Poiret+One" rel="stylesheet" type='text/css'>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i|Quicksand:400,500,700" rel="stylesheet" type='text/css'>
+
     <!-- Plugin CSS -->
     <link href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{url_for('static', filename= 'vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet" type="text/css">
@@ -40,7 +44,8 @@
     <link href="{{url_for('static', filename= 'vendor/dropzone/css/basic.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{url_for('static', filename= 'vendor/dropzone/css/dropzone.min.css') }}" rel="stylesheet" type="text/css"> -->
 
-    <link href="{{url_for('static', filename= 'css/square.css') }}" rel="stylesheet" type="text/css">
+    <!-- For square portfolio grid not using -->
+    <!-- <link href="{{url_for('static', filename= 'css/square.css') }}" rel="stylesheet" type="text/css"> -->
 
 
     <!-- Custom styles for this theme -->
@@ -98,27 +103,16 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#upload">Try it!</a>
+                        <a class="nav-link page-scroll" href="#upload">Try It!</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link page-scroll" href="#supported_species">Supported Species</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#about">About</a>
-                    </li>
-
-                    <!-- <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#team">Team</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#services">How It Works</a>
-                    </li>
-
-                    <!-- <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#pricing">Pricing</a>
-                    </li> -->
-                    <li class="nav-item">
                         <a class="nav-link page-scroll" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="https://github.com/jw15/wildflower-finder">How It Works</a>
                     </li>
                 </ul>
             </div>
@@ -130,7 +124,8 @@
             <div class="row h-100">
                 <div class="col-12 my-auto text-center text-white">
                     <img class="masthead-img img-fluid mb-3" src="../static/img/agency/Flowers.svg" alt="">
-                    <div class="masthead-title">Results</div>
+                    <!-- <div class="masthead-title">Wildflower Finder</div> -->
+                    <h1>RESULTS</h1>
                     <!-- <hr class="colored"> -->
                     <!-- <div class="masthead-subtitle">by Start Bootstrap</div> -->
                 </div>
@@ -145,78 +140,103 @@
 
     <!-- Display preview image and result -->
 
-<section class="page-section bg-inverse text-white" id="result" >
-    <div class="row">
-        <div class="col-md-1 "></div>
-        <div class="col-md-2">
-            <img src='{{ preview_img }}' width="200" height="267"/>
-        </div>
-        <div class="col-md-1 "></div>
-        <div class="col-md-4 .col-xs-6">
-            <h3>Your Image</h3>
-        </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-    </div>
-    <!-- <div class="row">
-        <div class="col-md-5 "></div>
-        <div class="col-md-2">
-            <img src='{{ preview_img }}' width="200" height="200"/>
-        </div>
-        <div class="col-md-5 "></div>
-    </div> -->
-    <br>
-    <div class="row">
-        <div class="col-md-1 "></div>
-        <div class="col-md-2">
-            <img src='{{ img1 }}' width="200" height="267"/>
-        </div>
-        <div class="col-md-1 "></div>
-        <div class="col-md-4 .col-xs-6">
-            <h3><i>{{ species1 }}</i></h3>
-            <h4><b>{{ common1 }}</b></h4>
-            <h4>Family: {{ family1 }}</h4>
+<!-- <section class="page-section bg-inverse text-white" id="result" > -->
 
+<section class="page-section" id="result" >
+    <div class="container-fluid">
+<!-- preview image -->
+    <div class="row">
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-2 col-sm-4">
+            <div class="result_your_image">
+                <img src='{{ preview_img }}' width="300" height="414"/>
+            </div>
         </div>
-        <div class="col-md-2">
-            <h2>{{ top_proba_str }}</h2>
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-4 col-xs-8">
+            <!-- <h3>Your Image</h3> -->
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-2 col-sm-4"></div>
+        <div class="col-md-2 col-sm-4"></div>
     </div>
+<!-- first prediction -->
     <br>
     <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-2">
-            <img src='{{ img2 }}' width="200" height="267"/>
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-2 col-sm-4">
+            <img src='{{ img1 }}' width="300" height="414"/>
         </div>
-        <div class="col-md-1 "></div>
-        <div class="col-md-4 .col-xs-6">
-            <h3><i>{{ species2 }}</i></h3>
-            <h4><b>{{ common2 }}</b></h4>
-            <h4>Family: {{ family2 }}</h4>
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-6 col-sm-12">
+            <div class="result_h3">
+                <i>{{ species1 }}</i>
+            </div>
+            <!-- <h3><i>{{ species1 }}</i></h3> -->
+            <div class="common_name">
+            <!-- <div class="result_h4"> -->
+                {{ common1 }}
+            </div>
+            <!-- <div class="result_h4">
+                <b>Family:</b> {{ family1 }}
+            </div> -->
         </div>
-        <div class="col-md-2">
-            <h2>{{ second_proba_str }}</h2>
+        <div class="col-md-1 col-sm-2">
+            <div class="result_h3">{{ top_proba_str }}</div>
         </div>
-        <div class="col-md-2"></div>
+        <!-- <div class="col-md-2 col-sm-4"></div> -->
     </div>
     <br>
+<!-- second prediction -->
     <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-2">
-            <img src='{{ img3 }}' width="200" height="267"/>
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-2 col-sm-4">
+            <img src='{{ img2 }}' width="300" height="414"/>
         </div>
-        <div class="col-md-1 "></div>
-        <div class="col-md-4">
-            <h3><i>{{ species3 }}</i></h3>
-            <h4><b>{{ common3 }}</b></h4>
-            <h4>Family: {{ family3 }}</h4>
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-6 col-sm-12">
+            <div class="result_h3">
+                <i>{{ species2 }}</i>
+            </div>
+            <!-- <div class="result_h4"> -->
+            <div class="common_name">
+                {{ common2 }}
+            </div>
+            <!-- <div class="result_h4">
+                <b>Family:</b> {{ family2 }}
+            </div> -->
         </div>
-        <div class="col-md-2">
-            <h2>{{ third_proba_str }}</h2>
+        <div class="col-md-1 col-sm-2">
+            <div class="result_h3">{{ second_proba_str }}</div>
         </div>
-        <div class="col-md-2"></div>
+        <!-- <div class="col-md-2 col-sm-4"></div> -->
     </div>
+    <br>
+<!-- third prediction -->
+    <div class="row">
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-2 col-sm-4">
+            <img src='{{ img3 }}' width="300" height="414"/>
+        </div>
+        <div class="col-md-1 col-sm-2"></div>
+        <div class="col-md-6 col-sm-12">
+            <div class="result_h3">
+                <i>{{ species3 }}</i>
+            </div>
+            <!-- <div class="result_h4"> -->
+            <div class="common_name">
+                {{ common3 }}
+            </div>
+            <!-- <div class="result_h4">
+                <b>Family:</b> {{ family3 }}
+            </div> -->
+        </div>
+        <div class="col-md-1 col-sm-2">
+            <div class="result_h3">{{ third_proba_str }}</div>
+        </div>
+        <!-- <div class="col-md-2 col-sm-4"></div> -->
+    </div>
+</div>
+
 
         <!-- <left><h1 id="results-text">1. {{ species1 }}, {{ top_proba_str }}</h1></center>
         <left><h1 id="results-text">2. {{ species2 }}, {{ second_proba_str }}</h1></center>
@@ -230,10 +250,10 @@
     <!-- Footer -->
     <footer class="footer" id="contact" style="background-image: url('../static/images/rainbow.jpg')">
         <div class="container text-center">
-            <div class="footer-contact-details">
-                <h2>Jennifer Waller, Ph.D.</h2>
+            <!-- <div class="footer-contact-details">
+                <h3>Jennifer Waller, Ph.D.</h3> -->
                 <!-- <p>Denver, CO</p> -->
-            </div>
+            <!-- </div> -->
             <!-- <div class="row"> -->
                 <!-- <div class="col-md-4 footer-contact-details">
                     <a href="https://github.com/jw15" target="_blank"><i class="fa fa-github fa-fw fa-2x"></i> <h4>Github</h4></a> -->
@@ -246,9 +266,10 @@
                     </p>
                 </div> -->
                 <div class="footer-contact-details">
-                    <h4><i class="fa fa-map-marker"></i></h4> <h4>Denver, CO</h4>
+                    <h3><i class="fa fa-map-marker"></i></h3> <h3>DENVER, CO</h3>
                     <!-- <p>Denver, CO</p> -->
                 </div>
+                <br>
             <!-- </div> -->
             <div class="row footer-social">
                 <div class="col-lg-12">
@@ -265,9 +286,47 @@
                     </ul>
                 </div>
             </div>
+            <br>
 
             <p class="copyright">&copy; 2017 Start Bootstrap Themes (web template) and Jennifer Waller (everything else). All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Image preview JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../static/vendor/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="../static/vendor/tether/tether.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="../static/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="../static/vendor/owl-carousel/owl.carousel.js"></script>
+    <script src="../static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="../static/vendor/vide/jquery.vide.min.js"></script>
+    <script src="../static/vendor/mixitup/mixitup.min.js"></script>
+    <script src="../static/vendor/wowjs/wow.min.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="../static/js/contact_me.js"></script>
+    <script src="../static/js/jqBootstrapValidation.js"></script>
+
+    <!-- Custom scripts for this theme -->
+    <script src="../static/js/vitality.js"></script>
+    <script src="../static/js/vitality-mixitup.js"></script>
+
+    <!-- Dropzone JavaScript -->
+    <script src="../static/vendor/dropzone/js/dropzone.js"></script>
+    <script src="../static/vendor/dropzone/js/dropzone.min.js"></script>
+    <script src="../static/vendor/dropzone/js/dropzone-amd-module.js"></script>
+    <script src="../static/vendor/dropzone/js/dropzone-amd-module.min.js"></script>
+
+
+
+
+
+
+
     </body>
     </html>

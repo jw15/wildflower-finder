@@ -40,7 +40,8 @@
     <link href="{{url_for('static', filename= 'vendor/dropzone/css/basic.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{url_for('static', filename= 'vendor/dropzone/css/dropzone.min.css') }}" rel="stylesheet" type="text/css"> -->
 
-    <link href="{{url_for('static', filename= 'css/square.css') }}" rel="stylesheet" type="text/css">
+    <!-- For square portfolio grid not using -->
+    <!-- <link href="{{url_for('static', filename= 'css/square.css') }}" rel="stylesheet" type="text/css"> -->
 
 
     <!-- Custom styles for this theme -->
@@ -110,15 +111,15 @@
                     <!-- <li class="nav-item">
                         <a class="nav-link page-scroll" href="#team">Team</a>
                     </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="https://github.com/jw15/wildflower-finder">How It Works</a>
-                    </li>
 
                     <!-- <li class="nav-item">
                         <a class="nav-link page-scroll" href="#pricing">Pricing</a>
                     </li> -->
                     <li class="nav-item">
                         <a class="nav-link page-scroll" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="https://github.com/jw15/wildflower-finder">How It Works</a>
                     </li>
                 </ul>
             </div>
@@ -149,7 +150,9 @@
     <section class="page-section" id="upload">
         <div class="container-fluid">
             <div class="wow fadeIn text-center">
-                <h2>Find your flower</h2>
+                <div class="section_heading">
+                    <h2>Find your flower</h2>
+                </div>
                 <hr class="colored">
                 <div id="submit-form-header">
                 <p class="mb-0">Upload image here</p>
@@ -170,7 +173,8 @@
                     </form>
                     <div id="loadingDiv">
                         <center><h3>Finding your wildflower...</h3></center>
-                        <center><img src = 'static/images/bloom.gif'></center>
+                        <!-- <center><img src = 'static/images/bloom.gif'></center> -->
+                        <center><img src = 'static/images/flower-bloom-animated-gif3.gif'></center>
                     </div>
                     <div id="img_result">
                 </div>
@@ -303,7 +307,9 @@
     <!-- Portfolio Grid Section -->
     <section class="page-section" id="supported_species">
         <div class="container text-center wow fadeIn">
-            <h2>Supported Species</h2>
+            <div class="section_heading">
+                <h2>Supported Species</h2>
+            </div>
             <hr class="colored">
             <p>Flower species currently included in the app</p>
             <div class="controls mt-3">
@@ -540,7 +546,9 @@
     <!-- Team Section -->
     <section class="page-section bg-faded" id="team">
         <div class="container text-center wow fadeIn">
-            <h2>Our Team</h2>
+            <div class="section_heading">
+                <h2>Our Team</h2>
+            </div>
             <p class="mb-0">We are a bunch of cats and one human who enjoys computer vision problems.</p>
             <hr class="colored">
             <div class="team-carousel owl-carousel owl-theme mt-4">
@@ -669,17 +677,17 @@
  </section>
 
     <!-- Call to Action -->
-    <section class="call-to-action" style="background-image: url('../static/images/IMG_5228.jpg');">
+    <!-- <section class="call-to-action" style="background-image: url('../static/images/IMG_5228.jpg');">
         <div class="container wow fadeIn">
             <div class="row">
                 <div class="col-md-10 offset-md-1">
                     <span class="quote">If the lightning doesn't kill you, sometimes there are rainbows.</span>
                     <hr class="colored"> -->
                     <!-- <a class="btn btn-primary page-scroll" href="#services">How We Flaunt Death on Weekends</a> -->
-                </div>
+                <!-- </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Services Section -->
     <!-- <section class="page-section services" id="services">
@@ -1088,10 +1096,9 @@
                     </p>
                 </div> -->
                 <div class="footer-contact-details">
-                    <h3><i class="fa fa-map-marker"></i></h3> <h3>Denver, CO</h3>
+                    <h3><i class="fa fa-map-marker"></i></h3> <h3>DENVER, CO</h3>
                     <!-- <p>Denver, CO</p> -->
                 </div>
-                <br>
                 <br>
             <!-- </div> -->
             <div class="row footer-social">
@@ -1109,7 +1116,6 @@
                     </ul>
                 </div>
             </div>
-            <br>
             <br>
 
             <p class="copyright">&copy; 2017 Start Bootstrap Themes (web template) and Jennifer Waller (everything else). All rights reserved.</p>
@@ -1469,7 +1475,7 @@
                              $("<img />", {
                                "src": e.target.result,
                                "class": "img-responsive",
-                               "width": "400"
+                               "width": "360"
                              }).appendTo(image_holder);
                            }
                            image_holder.show();
@@ -1503,6 +1509,18 @@
          $('#result').show();
      });
      </script>
+
+     <!-- <script>
+     function GetWidth(expectedHeight )
+                {
+                   var width = $("#showImage").width();
+                   var height = $("#showImage").height();
+                   var targetWidth = Math.round(expectedHeight * width / height);
+                       $("#showImage").attr("width", targetWidth );
+                       $("#showImage").attr("width", expectedHeight );
+
+                }
+    </script> -->
 
     <!-- <script src="upload.php"></script> -->
 

@@ -39,7 +39,7 @@
     <link href="{{url_for('static', filename= 'device-mockups/device-mockups.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- Dropzone styling -->
-    <link href="{{url_for('static', filename= 'vendor/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css">
+    <!-- <link href="{{url_for('static', filename= 'vendor/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css"> -->
     <!-- <link href="{{url_for('static', filename= 'vendor/dropzone/css/basic.css') }}" rel="stylesheet" type="text/css">
     <link href="{{url_for('static', filename= 'vendor/dropzone/css/basic.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{url_for('static', filename= 'vendor/dropzone/css/dropzone.min.css') }}" rel="stylesheet" type="text/css"> -->
@@ -93,7 +93,7 @@
 
     <!-- Navigation -->
     <!-- <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse navbar-expanded" id="mainNav"> -->
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse navbar-collapse" id="mainNav">
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse navbar-expanded" id="mainNav">
         <div class="container">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu <i class="fa fa-bars"></i>
@@ -121,6 +121,8 @@
     </nav>
     <!-- Masthead -->
     <header class="masthead" style="background-image: url('../static/images/alyssum_darker.jpg');">
+    <!-- <header class="masthead"> -->
+
         <!-- <header class="masthead">
             <div class="result_your_image">
                 <img src='{{ preview_img }}' width="200" height="200" text-align="center"/>
@@ -153,7 +155,7 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-3">
             <!-- <div class="result_your_image"> -->
-                <img src='{{ preview_img }}' width="256" height="256"/>
+                <img src='{{ preview_img }}' width="256" height="256" class="img-responsive"/>
             </div>
         </div>
         <!-- <div class="col-md-1 col-sm-2"></div>
@@ -163,15 +165,16 @@
         <div class="col-md-2 col-sm-4"></div>
         <div class="col-md-2 col-sm-4"></div>
     </div> -->
+
 <!-- first prediction -->
     <br>
     <div class="row">
-        <div class="col-md-1 col-sm-2"></div>
-        <div class="col-md-2 col-sm-4">
-            <img src='{{ img1 }}' width="256" height="342"/>
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-2 col-sm-2">
+            <img src='{{ img1 }}' width="256" height="342" class="img-responsive"/>
         </div>
-        <div class="col-md-1 col-sm-2"></div>
-        <div class="col-md-4 col-sm-8">
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-4 col-sm-4">
             <div class="result_h3">
                 <i>{{ species1 }}</i>
             </div>
@@ -184,20 +187,20 @@
                 <b>Family:</b> {{ family1 }}
             </div> -->
         </div>
-        <div class="col-sm-2">
+        <div class="col-md-1 col-sm-1">
             <div class="result_h3">{{ top_proba_str }}</div>
         </div>
-        <!-- <div class="col-md-2 col-sm-4"></div> -->
+        <div class="col-md-3 col-sm-3"></div>
     </div>
     <br>
 <!-- second prediction -->
     <div class="row">
-        <div class="col-md-1 col-sm-2"></div>
-        <div class="col-md-2 col-sm-4">
-            <img src='{{ img2 }}' width="256" height="342"/>
+        <div class="col-md-1 col-sm-2 col-xs-2"></div>
+        <div class="col-md-2 col-sm-4 col-xs-4">
+            <img src='{{ img2 }}' width="256" height="342" class="img-responsive"/>
         </div>
-        <div class="col-md-1 col-sm-2"></div>
-        <div class="col-md-4 col-sm-8">
+        <div class="col-md-1 col-sm-2 col-xs-4"></div>
+        <div class="col-md-4 col-sm-8 col-xs-8">
             <div class="result_h3">
                 <i>{{ species2 }}</i>
             </div>
@@ -205,7 +208,7 @@
                 {{ common2 }}
             </div>
         </div>
-        <div class="col-md-1 col-sm-2">
+        <div class="col-md-1 col-sm-2 col-xs-2">
             <div class="result_h3">{{ second_proba_str }}</div>
         </div>
     </div>
@@ -214,7 +217,7 @@
     <div class="row">
         <div class="col-md-1 col-sm-2"></div>
         <div class="col-md-2 col-sm-4">
-            <img src='{{ img3 }}' width="256" height="342"/>
+            <img src='{{ img3 }}' width="256" height="342" class="img-responsive"/>
         </div>
         <div class="col-md-1 col-sm-2"></div>
         <div class="col-md-4 col-sm-8">
@@ -235,6 +238,7 @@
         <!-- <div class="col-md-2 col-sm-4"></div> -->
     </div>
 </div>
+
 
 
         <!-- <left><h1 id="results-text">1. {{ species1 }}, {{ top_proba_str }}</h1></center>
@@ -316,10 +320,10 @@
     <script src="../static/js/vitality-mixitup.js"></script>
 
     <!-- Dropzone JavaScript -->
-    <script src="../static/vendor/dropzone/js/dropzone.js"></script>
+    <!-- <script src="../static/vendor/dropzone/js/dropzone.js"></script>
     <script src="../static/vendor/dropzone/js/dropzone.min.js"></script>
     <script src="../static/vendor/dropzone/js/dropzone-amd-module.js"></script>
-    <script src="../static/vendor/dropzone/js/dropzone-amd-module.min.js"></script>
+    <script src="../static/vendor/dropzone/js/dropzone-amd-module.min.js"></script> -->
 
 
 

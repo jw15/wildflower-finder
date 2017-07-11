@@ -62,12 +62,12 @@ def score():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
+            # flash('No file part')
             return redirect(request.url)
         file = request.files['file']
         # if user does not select file, brower also submit empty part w/o filename
         if file.filename == "":
-            flash('No selected file')
+            # flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     flower_df = make_db()
     flower_dict = image_categories_reverse()
     path = '../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5'
-    model = load_model_mine(path)
+    # model = load_model_mine(path)
 
     #  model_from_json(open('../model_outputs/ResNet50_1497216607_2807329/model.json').read())
     # model.load_weights('../model_outputs/ResNet50_1497216607_2807329/ResNet50_1497216607_2807329.h5')
@@ -190,5 +190,5 @@ if __name__ == '__main__':
     # print(type(flower_cats))
     cats = flower_cats.tolist()
     print('Running app')
-    app.run(host='0.0.0.0', port=8080, threaded=True, debug=False)
+    app.run(host='0.0.0.0', port=80, threaded=False, debug=False)
     # flowermap = download_file('flowermap.html')

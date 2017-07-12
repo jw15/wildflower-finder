@@ -60,7 +60,7 @@ def square_thumbnails(img_root, target_root):
                 img = cv2.imread(img_full_path)
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 img = crop_image(img, (200, 200))
-                scipy.misc.toimage(img, cmin=0.0, cmax=...).save('{}/{}'.format(target_root, name))
+                scipy.misc.toimage(img).save('{}/{}'.format(target_root, name))
 
                 # cv2.imwrite('{}/{}'.format(target_root, name), img)
                 # img.save('{}/{}.jpg'.format(target_root, name[:-4]))

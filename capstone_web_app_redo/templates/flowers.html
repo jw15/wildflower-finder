@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="http://ogp.me/ns/fb#">
 
 <!-- Code for Ajax image preview and upload adapted from www.lazybirder.club. -->
 
@@ -9,6 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta property="og:site_name" content="WildflowerFinder"/>
+    <meta property="og:title" content="Web app for identification of Colorado wildflowers via deep learning."/>
+    <meta property="og:image" content="{{ url_for('static', filename='homepage.png') }}" />
+    <meta property="og:url" content="http://wildflowerfinder.com/">
+    <meta property="og:type" content="web app"/>
+    <meta property="og:image:width" content="450"/>
+    <meta property="og:image:height" content="298"/>
 
     <title>WildflowerFinder</title>
 
@@ -997,16 +1005,16 @@
     </section> -->
 
     <!-- Newsletter Signup Call to Action -->
-    <section class="page-section signup-form bg-inverse text-white">
+    <!-- <section class="page-section signup-form bg-inverse text-white">
         <div class="container text-center">
             <h3 class="m0">Subscribe to our newsletter!</h3>
             <hr class="colored">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2"> -->
                     <!-- MailChimp Signup Form -->
-                    <div id="mc_embed_signup">
+                    <!-- <div id="mc_embed_signup"> -->
                         <!-- Replace the form action in the line below with your MailChimp embed action! Visit the documentation for additional instructions! -->
-                        <form role="form" action="//startbootstrap.us3.list-manage.com/subscribe/post?u=531af730d8629808bd96cf489&amp;id=afb284632f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+                        <!-- <form role="form" action="//startbootstrap.us3.list-manage.com/subscribe/post?u=531af730d8629808bd96cf489&amp;id=afb284632f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
                             <div class="input-group input-group-lg">
                                 <input type="email" name="EMAIL" class="form-control" id="mce-EMAIL" placeholder="Email address...">
                                 <span class="input-group-btn">
@@ -1018,12 +1026,12 @@
                                 <div class="response" id="mce-success-response" style="display:none"></div>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                     <!-- End MailChimp Signup Form -->
-             </div>
+             <!-- </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Contact Section -->
     <!-- <section class="page-section" id="contact">
